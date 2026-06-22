@@ -1,19 +1,17 @@
 from fastapi import FastAPI
+from app.api.users import router as users_router
 
-app = FastAPI(
-    title="Blood Report AI",
-    description="AI-powered Blood Test Report Analysis System",
-    version="1.0.0"
+app = FastAPI()
+
+app.include_router(
+    users_router,
+    prefix="/users",
+    tags=["Users"]
 )
+
 
 @app.get("/")
 def home():
     return {
         "message": "Blood Report AI API Running"
-    }
-
-@app.get("/health")
-def health_check():
-    return {
-        "status": "healthy"
     }
