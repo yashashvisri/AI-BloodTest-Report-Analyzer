@@ -122,3 +122,20 @@ users
 ```
 
 ---
+## 🔗 API Endpoints
+
+### Health Check Endpoint
+
+```http
+GET /
+```
+
+Response:
+
+```json
+{
+  "message": "Blood Report AI API Running"
+}
+```
+
+---
