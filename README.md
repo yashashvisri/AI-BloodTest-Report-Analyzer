@@ -139,3 +139,56 @@ Response:
 ```
 
 ---
+## 📖 Development Roadmap
+
+### Phase 1: Backend Foundation ✅
+
+- FastAPI Setup
+- PostgreSQL Setup
+- SQLAlchemy Setup
+- Database Connectivity
+- User Model Creation
+
+### Phase 2: User Management 🚧
+
+- Create User API
+- Get Users API
+- Update User API
+- Delete User API
+
+### Phase 3: Blood Report Processing
+
+- Upload PDF
+- OCR Extraction
+- Data Cleaning
+
+### Phase 4: AI Analysis
+
+- Blood Parameter Extraction
+- Health Risk Detection
+- AI Generated Recommendations
+
+### Phase 5: RAG Pipeline
+
+- Embedding Generation
+- Vector Storage
+- Semantic Search
+
+### Phase 6: Deployment
+
+- Dockerization
+- Production Deployment
+
+---
+
+## 🎯 Project Goal
+
+Build an end-to-end AI healthcare assistant capable of:
+
+- Reading blood reports
+- Extracting medical parameters
+- Detecting abnormalities
+- Answering health-related questions
+- Generating AI-powered recommendations
+
+---
