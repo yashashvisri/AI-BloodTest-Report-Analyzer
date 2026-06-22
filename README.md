@@ -81,3 +81,44 @@ AI-BloodTest-Report-Analyzer/
 ```
 
 ---
+## ⚙️ Tech Stack
+
+### Backend
+- FastAPI
+- Python
+
+### Database
+- PostgreSQL
+- SQLAlchemy
+
+### OCR
+- Tesseract OCR (Planned)
+
+### AI & RAG
+- Gemini / OpenAI
+- LangChain
+- FAISS / ChromaDB
+
+### Deployment
+- Docker
+
+### Frontend
+- React.js (Planned)
+
+---
+
+## 🗄️ Database Setup
+
+### Database
+
+```sql
+blood_report_db
+```
+
+### Tables
+
+```sql
+users
+```
+
+---
