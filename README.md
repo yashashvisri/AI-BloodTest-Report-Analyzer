@@ -45,3 +45,39 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 - Dockerized Deployment
 
 ---
+
+## 🏗️ Project Structure
+
+```text
+AI-BloodTest-Report-Analyzer/
+│
+├── app/
+│   ├── api/
+│   ├── core/
+│   ├── database/
+│   ├── llm/
+│   ├── models/
+│   ├── ocr/
+│   ├── rag/
+│   ├── schemas/
+│   ├── services/
+│   ├── utils/
+│   ├── __init__.py
+│   └── main.py
+│
+├── data/
+├── docker/
+├── docs/
+├── frontend/
+├── scripts/
+├── tests/
+├── uploads/
+├── vector_db/
+│
+├── .env
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
+
+---
