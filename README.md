@@ -190,5 +190,6 @@ Build an end-to-end AI healthcare assistant capable of:
 - Detecting abnormalities
 - Answering health-related questions
 - Generating AI-powered recommendations
+- Generate Diet Plan 
 
 ---
