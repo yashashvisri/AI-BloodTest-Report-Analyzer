@@ -186,6 +186,34 @@ Response:
 
 ---
 
+# 🔄 Current Workflow
+
+```text
+User
+   │
+   ▼
+Upload Blood Report
+   │
+   ▼
+FastAPI
+   │
+   ├────────► Save File
+   │              │
+   │              ▼
+   │         uploads/
+   │
+   └────────► Save Metadata
+                   │
+                   ▼
+             PostgreSQL
+                   │
+                   ▼
+             OCR Extraction
+                   │
+                   ▼
+          Extracted Report Text
+```
+
 ## 🎯 Project Goal
 
 Build an end-to-end AI healthcare assistant capable of:
