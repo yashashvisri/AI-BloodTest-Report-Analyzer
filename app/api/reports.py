@@ -98,3 +98,36 @@ def get_report(
         )
 
     return report
+
+# ============================================
+# Delete Report
+# ============================================
+@router.delete("/{report_id}")
+def delete_report(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    report = (
+        db.query(BloodReport)
+        .filter(BloodReport.id == report_id)
+        .first()
+    )
+
+    if report is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Report not found."
+        )
+
+    # Delete uploaded file
+    if os.path.exists(report.file_path):
+        os.remove(report.file_path)
+
+    # Delete database record
+    db.delete(report)
+    db.commit()
+
+    return {
+        "message": "Report deleted successfully"
+    }
