@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.database.report_models import BloodReport
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 
 router = APIRouter()
 
@@ -74,3 +75,26 @@ def get_reports(db: Session = Depends(get_db)):
         "total_reports": len(reports),
         "reports": reports
     }
+
+# ==========================
+# Get Report By ID
+# ==========================
+@router.get("/{report_id}")
+def get_report(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    report = (
+        db.query(BloodReport)
+        .filter(BloodReport.id == report_id)
+        .first()
+    )
+
+    if report is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Report not found."
+        )
+
+    return report
