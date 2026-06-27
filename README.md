@@ -12,27 +12,25 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
-## 🚀 Current Progress
+# 🎯 Current Progress
 
-### ✅ Completed
+| Module | Status |
+|----------|--------|
+| Project Setup | ✅ |
+| FastAPI Backend | ✅ |
+| PostgreSQL | ✅ |
+| SQLAlchemy ORM | ✅ |
+| User APIs | ✅ |
+| Blood Report APIs | ✅ |
+| File Upload | ✅ |
+| OCR Integration | ✅ |
+| OCR Testing | ✅ |
+| Blood Parameter Extraction | 🚧 |
+| AI Analysis | ⏳ |
+| RAG | ⏳ |
+| Frontend | ⏳ |
+| Deployment | ⏳ |
 
-- Project Architecture Setup
-- GitHub Repository Setup
-- Python Virtual Environment Setup
-- FastAPI Backend Initialization
-- PostgreSQL Database Configuration
-- SQLAlchemy ORM Integration
-- Environment Variable Management (.env)
-- Database Connection Management
-- User Database Model Creation
-- Automatic Table Creation Script
-- Docker Installation & Configuration
-- Health Check API Endpoint
-
-### 🚧 In Progress
-
-- User Management APIs
-- Blood Report Upload API
 
 ### 📅 Upcoming Features
 
