@@ -83,27 +83,26 @@ AI-BloodTest-Report-Analyzer/
 ---
 ## ⚙️ Tech Stack
 
-### Backend
+## Backend
 - FastAPI
-- Python
-
-### Database
-- PostgreSQL
+- Python 3.11
 - SQLAlchemy
+- PostgreSQL
+- Pydantic
 
-### OCR
-- Tesseract OCR (Planned)
+## AI & Machine Learning
+- Tesseract OCR
+- Pillow
+- pdf2image
+- Large Language Models (Planned)
+- RAG (Planned)
 
-### AI & RAG
-- Gemini / OpenAI
-- LangChain
-- FAISS / ChromaDB
-
-### Deployment
-- Docker
-
-### Frontend
-- React.js (Planned)
+## Tools
+- Git
+- GitHub
+- GitHub Desktop
+- VS Code
+- Postman / Swagger UI
 
 ---
 
