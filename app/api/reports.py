@@ -2,18 +2,30 @@ import os
 import shutil
 import uuid
 
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, Depends
+from sqlalchemy.orm import Session
+
+from app.database.database import get_db
+from app.database.report_models import BloodReport
 
 router = APIRouter()
 
-
 UPLOAD_FOLDER = "uploads"
 
+# Create uploads folder if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-@router.post("/upload")
-def upload_report(file: UploadFile = File(...)):
+# ==========================
+# Upload Blood Report
+# ==========================
+@router.post("/upload", status_code=201)
+def upload_report(
+    patient_name: str,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+
     # Generate a unique filename
     unique_filename = f"{uuid.uuid4()}_{file.filename}"
 
@@ -26,9 +38,39 @@ def upload_report(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
+    # Save report metadata to database
+    report = BloodReport(
+        patient_name=patient_name,
+        original_filename=file.filename,
+        stored_filename=unique_filename,
+        file_path=file_path
+    )
+
+    db.add(report)
+    db.commit()
+    db.refresh(report)
+
     return {
         "message": "Report uploaded successfully",
-        "original_filename": file.filename,
-        "stored_filename": unique_filename,
-        "file_path": file_path
+        "report": {
+            "id": report.id,
+            "patient_name": report.patient_name,
+            "original_filename": report.original_filename,
+            "stored_filename": report.stored_filename,
+            "file_path": report.file_path
+        }
+    }
+
+
+# ==========================
+# Get All Blood Reports
+# ==========================
+@router.get("/")
+def get_reports(db: Session = Depends(get_db)):
+
+    reports = db.query(BloodReport).all()
+
+    return {
+        "total_reports": len(reports),
+        "reports": reports
     }
