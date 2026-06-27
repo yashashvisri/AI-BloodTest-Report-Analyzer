@@ -1,63 +1,52 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+import os
+import shutil
+import uuid
+
+from fastapi import APIRouter, UploadFile, File, Depends
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
-from app.database.models import User
-from app.schemas.user import UserCreate
+from app.database.report_models import BloodReport
 
 router = APIRouter()
 
+UPLOAD_FOLDER = "uploads"
 
-# -----------------------------
-# GET ALL USERS
-# -----------------------------
-@router.get("/")
-def get_users(db: Session = Depends(get_db)):
-    users = db.query(User).all()
-
-    return {
-        "total_users": len(users),
-        "users": users
-    }
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-# -----------------------------
-# CREATE NEW USER
-# -----------------------------
-@router.post("/", status_code=status.HTTP_201_CREATED)
-def create_user(
-    user: UserCreate,
+@router.post("/upload")
+def upload_report(
+    patient_name: str,
+    file: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
-    # Check if email already exists
-    existing_user = (
-        db.query(User)
-        .filter(User.email == user.email)
-        .first()
+
+    unique_filename = f"{uuid.uuid4()}_{file.filename}"
+
+    file_path = os.path.join(
+        UPLOAD_FOLDER,
+        unique_filename
     )
 
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Email already registered."
-        )
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    # Create new user
-    new_user = User(
-        name=user.name,
-        email=user.email
+    report = BloodReport(
+        patient_name=patient_name,
+        original_filename=file.filename,
+        stored_filename=unique_filename,
+        file_path=file_path
     )
 
-    # Save to database
-    db.add(new_user)
+    db.add(report)
     db.commit()
-    db.refresh(new_user)
+    db.refresh(report)
 
     return {
-        "message": "User created successfully",
-        "user": {
-            "id": new_user.id,
-            "name": new_user.name,
-            "email": new_user.email
-        }
+        "message": "Report uploaded successfully",
+        "report_id": report.id,
+        "patient_name": report.patient_name,
+        "original_filename": report.original_filename,
+        "stored_filename": report.stored_filename
     }
