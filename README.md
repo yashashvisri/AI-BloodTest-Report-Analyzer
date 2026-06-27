@@ -114,10 +114,16 @@ AI-BloodTest-Report-Analyzer/
 blood_report_db
 ```
 
-### Tables
+## Blood Reports Table
 
-```sql
-users
+| Column | Type |
+|---------|------|
+| id | Integer |
+| patient_name | String |
+| original_filename | String |
+| stored_filename | String |
+| file_path | String |
+
 ```
 
 ---
