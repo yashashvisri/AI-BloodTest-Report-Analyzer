@@ -77,7 +77,31 @@ AI-BloodTest-Report-Analyzer/
 ├── README.md
 └── requirements.txt
 ```
+## ⚡ End-to-End AI Pipeline
 
+```
+Upload PDF
+      │
+      ▼
+Save Report
+      │
+      ▼
+OCR
+      │
+      ▼
+Extract Text
+      │
+      ▼
+Blood Parameter Extraction
+      │
+      ▼
+Reference Range Analysis
+      │
+      ▼
+Gemini AI
+      │
+      ▼
+Medical Report
 ---
 ## ⚙️ Tech Stack
 
