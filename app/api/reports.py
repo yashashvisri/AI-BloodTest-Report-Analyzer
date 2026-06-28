@@ -9,11 +9,7 @@ from app.database.database import get_db
 from app.database.report_models import BloodReport
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 
-from app.ocr.ocr_service import extract_text_from_pdf
-from app.parser.blood_parser import extract_blood_parameters
-from app.services.analyzer import analyze_parameters
-from app.ai.gemini_service import analyze_blood_report
-
+from app.services.report_services import analyze_report
 router = APIRouter()
 
 UPLOAD_FOLDER = "uploads"
