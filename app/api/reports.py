@@ -136,3 +136,55 @@ def delete_report(
     return {
         "message": "Report deleted successfully"
     }
+
+
+@router.post("/analyze/{report_id}")
+def analyze_report(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    report = (
+        db.query(BloodReport)
+        .filter(BloodReport.id == report_id)
+        .first()
+    )
+
+    if report is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Report not found."
+        )
+
+    # OCR
+    extracted_text = extract_text_from_pdf(
+        report.file_path
+    )
+
+    # Parameter Extraction
+    parameters = extract_blood_parameters(
+        extracted_text
+    )
+
+    # Analyzer
+    analysis = analyze_parameters(
+        parameters
+    )
+
+    # Gemini
+    ai_summary = analyze_blood_report(
+        analysis
+    )
+
+    return {
+
+        "report_id": report.id,
+
+        "parameters": parameters,
+
+        "analysis": analysis,
+
+        "ai_summary": ai_summary
+
+    }
