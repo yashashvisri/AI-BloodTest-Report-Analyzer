@@ -12,24 +12,29 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
-# 🎯 Current Progress
+# 📊 Current Progress
 
 | Module | Status |
-|----------|--------|
+|----------|---------|
 | Project Setup | ✅ |
 | FastAPI Backend | ✅ |
 | PostgreSQL | ✅ |
-| SQLAlchemy ORM | ✅ |
+| SQLAlchemy | ✅ |
 | User APIs | ✅ |
-| Blood Report APIs | ✅ |
-| File Upload | ✅ |
-| OCR Integration | ✅ |
-| OCR Testing | ✅ |
-| Blood Parameter Extraction | 🚧 |
-| AI Analysis | ⏳ |
-| RAG | ⏳ |
-| Frontend | ⏳ |
-| Deployment | ⏳ |
+| Report Upload | ✅ |
+| Report CRUD | ✅ |
+| Image OCR | ✅ |
+| PDF OCR | ✅ |
+| Blood Parameter Extraction | ✅ |
+| Blood Parameter Analysis | ✅ |
+| Gemini AI Integration | ✅ |
+| AI Medical Summary | ✅ |
+| End-to-End Analysis API | ✅ |
+| Save AI Analysis | 🚧 |
+| Frontend | 🚧 |
+| Authentication | 🚧 |
+| Docker | 🚧 |
+| Deployment | 🚧 |
 
 
 ### 📅 Upcoming Features
