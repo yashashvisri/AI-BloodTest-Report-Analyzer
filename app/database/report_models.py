@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from app.database.models import Base
+from app.database.base import Base
 
 
 class BloodReport(Base):

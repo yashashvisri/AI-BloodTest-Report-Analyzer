@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.sql import func
 
-from app.database.database import engine
 from app.database.base import Base
 
 
@@ -13,14 +13,15 @@ class ReportAnalysis(Base):
     report_id = Column(
         Integer,
         ForeignKey("blood_reports.id"),
-        nullable=False
+        nullable=False,
+        unique=True
     )
 
     ocr_text = Column(Text, nullable=False)
 
-    extracted_parameters = Column(Text, nullable=False)
+    parameters = Column(JSON, nullable=False)
 
-    analysis_result = Column(Text, nullable=False)
+    analysis = Column(JSON, nullable=False)
 
     ai_summary = Column(Text, nullable=False)
 
