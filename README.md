@@ -12,24 +12,29 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
-# 🎯 Current Progress
+# 📊 Current Progress
 
 | Module | Status |
-|----------|--------|
+|----------|---------|
 | Project Setup | ✅ |
 | FastAPI Backend | ✅ |
 | PostgreSQL | ✅ |
-| SQLAlchemy ORM | ✅ |
+| SQLAlchemy | ✅ |
 | User APIs | ✅ |
-| Blood Report APIs | ✅ |
-| File Upload | ✅ |
-| OCR Integration | ✅ |
-| OCR Testing | ✅ |
-| Blood Parameter Extraction | 🚧 |
-| AI Analysis | ⏳ |
-| RAG | ⏳ |
-| Frontend | ⏳ |
-| Deployment | ⏳ |
+| Report Upload | ✅ |
+| Report CRUD | ✅ |
+| Image OCR | ✅ |
+| PDF OCR | ✅ |
+| Blood Parameter Extraction | ✅ |
+| Blood Parameter Analysis | ✅ |
+| Gemini AI Integration | ✅ |
+| AI Medical Summary | ✅ |
+| End-to-End Analysis API | ✅ |
+| Save AI Analysis | 🚧 |
+| Frontend | 🚧 |
+| Authentication | 🚧 |
+| Docker | 🚧 |
+| Deployment | 🚧 |
 
 
 ### 📅 Upcoming Features
@@ -44,40 +49,74 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
-## 🏗️ Project Structure
+# 📂 Project Structure
 
 ```text
-AI-BloodTest-Report-Analyzer/
+AI-BloodTest-Report-Analyzer
 │
-├── app/
-│   ├── api/
-│   ├── core/
-│   ├── database/
-│   ├── llm/
-│   ├── models/
-│   ├── ocr/
-│   ├── rag/
-│   ├── schemas/
-│   ├── services/
-│   ├── utils/
+├── app
+│
+├── ai
 │   ├── __init__.py
-│   └── main.py
+│   └── gemini_service.py
 │
-├── data/
-├── docker/
-├── docs/
-├── frontend/
-├── scripts/
-├── tests/
-├── uploads/
-├── vector_db/
+├── api
+│   ├── reports.py
+│   └── users.py
 │
-├── .env
-├── .gitignore
+├── database
+│   ├── config.py
+│   ├── create_tables.py
+│   ├── database.py
+│   ├── models.py
+│   └── report_models.py
+│
+├── ocr
+│   ├── __init__.py
+│   └── ocr_service.py
+│
+├── parser
+│   ├── __init__.py
+│   └── blood_parser.py
+│
+├── services
+│   ├── analyzer.py
+│   └── report_service.py
+│
+├── schemas
+│
+├── uploads
+│
+├── sample.pdf
+├── requirements.txt
 ├── README.md
-└── requirements.txt
+└── .env
 ```
+## ⚡ End-to-End AI Pipeline
 
+```
+Upload PDF
+      │
+      ▼
+Save Report
+      │
+      ▼
+OCR
+      │
+      ▼
+Extract Text
+      │
+      ▼
+Blood Parameter Extraction
+      │
+      ▼
+Reference Range Analysis
+      │
+      ▼
+Gemini AI
+      │
+      ▼
+Medical Report
 ---
 ## ⚙️ Tech Stack
 
@@ -222,5 +261,13 @@ Build an end-to-end AI healthcare assistant capable of:
 - Answering health-related questions
 - Generating AI-powered recommendations
 - Generate Diet Plan 
+
+---
+
+# 👨‍💻 Author
+
+**Yashashvi Srivastava**
+
+AI/ML Engineer | Python Developer | FastAPI | Machine Learning | OCR | LLM | Generative AI
 
 ---
