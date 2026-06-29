@@ -263,3 +263,11 @@ Build an end-to-end AI healthcare assistant capable of:
 - Generate Diet Plan 
 
 ---
+
+# 👨‍💻 Author
+
+**Yashashvi Srivastava**
+
+AI/ML Engineer | Python Developer | FastAPI | Machine Learning | OCR | LLM | Generative AI
+
+---
