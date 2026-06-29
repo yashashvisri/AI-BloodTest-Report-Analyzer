@@ -1,9 +1,6 @@
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Column, Integer, String
 
-
-class Base(DeclarativeBase):
-    pass
+from app.database.base import Base
 
 
 class User(Base):
