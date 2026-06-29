@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.database.report_models import BloodReport
-from app.services.report_services import analyze_report
+from app.services.report_service import analyze_report
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 
@@ -149,7 +149,11 @@ def analyze_blood_report_api(
             detail="Report not found.",
         )
 
-    result = analyze_report(report.file_path)
+    result = analyze_report(
+    db=db,
+    report_id=report.id,
+    file_path=report.file_path,
+    )
 
     return {
         "report_id": report.id,
