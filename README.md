@@ -12,6 +12,16 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
+# 🚀 Features
+
+## 📄 Report Upload
+- Upload Blood Test Reports (PDF)
+- Upload patient information
+- Automatic file storage
+- Unique file naming using UUID
+
+---
+
 # 📊 Current Progress
 
 | Module | Status |
