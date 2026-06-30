@@ -3,6 +3,19 @@ from sqlalchemy.orm import Session
 from app.database.analysis_models import ReportAnalysis
 
 
+def get_analysis(
+    db: Session,
+    report_id: int
+):
+    return (
+        db.query(ReportAnalysis)
+        .filter(
+            ReportAnalysis.report_id == report_id
+        )
+        .first()
+    )
+
+
 def save_analysis(
     db: Session,
     report_id: int,
@@ -12,30 +25,17 @@ def save_analysis(
     ai_summary: str,
 ):
 
-    existing = (
-        db.query(ReportAnalysis)
-        .filter(
-            ReportAnalysis.report_id == report_id
-        )
-        .first()
-    )
+    existing = get_analysis(db, report_id)
 
     if existing:
-
         return existing
 
     record = ReportAnalysis(
-
         report_id=report_id,
-
         ocr_text=ocr_text,
-
         parameters=parameters,
-
         analysis=analysis,
-
         ai_summary=ai_summary,
-
     )
 
     db.add(record)
