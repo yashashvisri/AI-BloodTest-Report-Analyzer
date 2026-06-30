@@ -1,5 +1,27 @@
+import { useRef, useState } from "react";
+
 function Home() {
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  function handleChooseFile() {
+    fileInputRef.current.click();
+  }
+
+  function handleFileChange(event) {
+
+    if (event.target.files.length > 0) {
+
+      setSelectedFile(event.target.files[0]);
+
+    }
+
+  }
+
   return (
+
     <div className="min-h-screen bg-slate-100 flex items-center justify-center">
 
       <div className="bg-white shadow-xl rounded-2xl w-[700px] p-10">
@@ -18,20 +40,60 @@ function Home() {
             Upload your Blood Test Report (PDF)
           </p>
 
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition">
+          <input
+
+            type="file"
+
+            accept=".pdf"
+
+            ref={fileInputRef}
+
+            onChange={handleFileChange}
+
+            className="hidden"
+
+          />
+
+          <button
+
+            onClick={handleChooseFile}
+
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition"
+
+          >
             Choose PDF
           </button>
 
+          {selectedFile && (
+
+            <p className="mt-5 text-green-700 font-medium">
+
+              Selected File:
+
+              <br />
+
+              {selectedFile.name}
+
+            </p>
+
+          )}
+
         </div>
 
-        <button className="w-full mt-8 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl text-lg font-semibold transition">
+        <button
+
+          className="w-full mt-8 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl text-lg font-semibold transition"
+
+        >
           Analyze Report
         </button>
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default Home;
