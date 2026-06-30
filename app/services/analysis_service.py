@@ -9,28 +9,39 @@ def save_analysis(
     ocr_text: str,
     parameters: dict,
     analysis: dict,
-    ai_summary: str
+    ai_summary: str,
 ):
 
     existing = (
         db.query(ReportAnalysis)
-        .filter(ReportAnalysis.report_id == report_id)
+        .filter(
+            ReportAnalysis.report_id == report_id
+        )
         .first()
     )
 
     if existing:
+
         return existing
 
     record = ReportAnalysis(
+
         report_id=report_id,
+
         ocr_text=ocr_text,
+
         parameters=parameters,
+
         analysis=analysis,
+
         ai_summary=ai_summary,
+
     )
 
     db.add(record)
+
     db.commit()
+
     db.refresh(record)
 
     return record
