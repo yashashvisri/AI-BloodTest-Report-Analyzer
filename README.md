@@ -281,6 +281,24 @@ If a report has already been analyzed:
 - Cached analysis is returned instantly
 
 ---
+## 🎨 Frontend (React)
+
+Modern React frontend built using:
+
+- React 19
+- Vite
+- Tailwind CSS
+- Axios
+
+Features:
+
+- Patient Name Input
+- PDF Selection
+- Upload Progress
+- FastAPI Integration
+- Responsive Upload Interface
+
+---
 ## 🎯 Project Goal
 
 Build an end-to-end AI healthcare assistant capable of:
