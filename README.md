@@ -260,7 +260,6 @@ FastAPI
                    ▼
           Extracted Report Text
 ```
-
 ## 📊 Blood Report Analysis
 
 Each parameter is compared against medical reference ranges.
@@ -273,8 +272,6 @@ Status generated:
 - ❌ Not Found
 
 ---
-
-
 ## 🎯 Project Goal
 
 Build an end-to-end AI healthcare assistant capable of:
