@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime
-from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy import Column, Integer, Text, ForeignKey, DateTime, JSON
+
 from sqlalchemy.sql import func
 
 from app.database.base import Base
