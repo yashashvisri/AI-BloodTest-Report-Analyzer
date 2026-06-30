@@ -40,8 +40,8 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 | Gemini AI Integration | ✅ |
 | AI Medical Summary | ✅ |
 | End-to-End Analysis API | ✅ |
-| Save AI Analysis | 🚧 |
-| Frontend | 🚧 |
+| Save AI Analysis | ✅ |
+| Frontend | ✅ |
 | Authentication | 🚧 |
 | Docker | 🚧 |
 | Deployment | 🚧 |
