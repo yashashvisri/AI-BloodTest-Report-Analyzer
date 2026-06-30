@@ -59,47 +59,49 @@ Users can upload blood report PDFs, extract text using OCR, store report data in
 
 ---
 
-# 📂 Project Structure
+# 📁 Project Structure
 
-```text
-AI-BloodTest-Report-Analyzer
+```
+AI-BloodTest-Report-Analyzer/
+
 │
-├── app
+
+├── app/
+
+│   ├── ai/
+
+│   ├── api/
+
+│   ├── database/
+
+│   ├── ocr/
+
+│   ├── parser/
+
+│   ├── schemas/
+
+│   ├── services/
+
+│   └── main.py
+
 │
-├── ai
-│   ├── __init__.py
-│   └── gemini_service.py
+
+├── frontend/
+
+│   ├── src/
+
+│   ├── public/
+
+│   └── package.json
+
 │
-├── api
-│   ├── reports.py
-│   └── users.py
-│
-├── database
-│   ├── config.py
-│   ├── create_tables.py
-│   ├── database.py
-│   ├── models.py
-│   └── report_models.py
-│
-├── ocr
-│   ├── __init__.py
-│   └── ocr_service.py
-│
-├── parser
-│   ├── __init__.py
-│   └── blood_parser.py
-│
-├── services
-│   ├── analyzer.py
-│   └── report_service.py
-│
-├── schemas
-│
-├── uploads
-│
-├── sample.pdf
+
+├── uploads/
+
 ├── requirements.txt
+
 ├── README.md
+
 └── .env
 ```
 ## ⚡ End-to-End AI Pipeline
