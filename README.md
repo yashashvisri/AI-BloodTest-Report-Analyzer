@@ -272,6 +272,15 @@ Status generated:
 - ❌ Not Found
 
 ---
+## ⚡ Cached Analysis
+
+If a report has already been analyzed:
+
+- OCR is skipped
+- Gemini API is skipped
+- Cached analysis is returned instantly
+
+---
 ## 🎯 Project Goal
 
 Build an end-to-end AI healthcare assistant capable of:
