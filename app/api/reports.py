@@ -22,7 +22,7 @@ from app.services.report_service import analyze_report
 from app.schemas.analysis import AnalysisResponse
 
 router = APIRouter(
-    prefix="/reports",
+  
     tags=["Reports"]
 )
 
