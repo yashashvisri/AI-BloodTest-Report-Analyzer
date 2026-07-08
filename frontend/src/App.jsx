@@ -1,34 +1,32 @@
 import { Routes, Route } from "react-router-dom";
 
+import Navbar from "./components/Navbar";
+
 import Home from "./pages/Home";
 import History from "./pages/History";
 
 function App() {
-
   return (
+    <>
 
-    <Routes>
+      <Navbar />
 
-      <Route
+      <Routes>
 
-        path="/"
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-        element={<Home />}
+        <Route
+          path="/history"
+          element={<History />}
+        />
 
-      />
+      </Routes>
 
-      <Route
-
-        path="/history"
-
-        element={<History />}
-
-      />
-
-    </Routes>
-
+    </>
   );
-
 }
 
 export default App;
