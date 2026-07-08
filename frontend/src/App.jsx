@@ -1,7 +1,9 @@
-import Home from "./pages/Home";
+import History from "./pages/History";
 
 function App() {
-  return <Home />;
+
+  return <History />;
+
 }
 
 export default App;
