@@ -9,6 +9,10 @@ function Home() {
 
   const [loading, setLoading] = useState(false);
 
+  const [reportId, setReportId] = useState(null);
+
+  const [analysisResult, setAnalysisResult] = useState(null);
+
   const fileInputRef = useRef(null);
 
   function chooseFile() {
@@ -58,6 +62,8 @@ function Home() {
         formData
       );
 
+      setReportId(response.data.report.id);
+
       alert(
         "Report Uploaded Successfully!\n\nReport ID : " +
         response.data.report.id
@@ -72,6 +78,48 @@ function Home() {
       console.error(error);
 
       alert("Upload Failed.");
+
+    }
+
+    finally {
+
+      setLoading(false);
+
+    }
+
+  }
+
+  async function analyzeReport() {
+
+    if (!reportId) {
+
+      alert("Please upload a report first.");
+
+      return;
+
+    }
+
+    try {
+
+      setLoading(true);
+
+      const response = await api.post(
+        `/reports/analyze/${reportId}`
+      );
+
+      setAnalysisResult(response.data);
+
+      alert("Analysis Completed Successfully!");
+
+      console.log(response.data);
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      alert("Analysis Failed.");
 
     }
 
@@ -159,7 +207,15 @@ function Home() {
 
         <button
 
-          onClick={uploadReport}
+          onClick={
+
+            reportId
+
+              ? analyzeReport
+
+              : uploadReport
+
+          }
 
           disabled={loading}
 
@@ -171,7 +227,11 @@ function Home() {
 
             loading
 
-              ? "Uploading..."
+              ? "Processing..."
+
+              : reportId
+
+              ? "Analyze Report"
 
               : "Upload Report"
 
