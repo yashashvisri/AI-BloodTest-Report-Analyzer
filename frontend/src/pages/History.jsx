@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import api from "../services/api";
+
 import ReportTable from "../components/ReportTable";
+
 
 function History() {
 
@@ -8,27 +13,42 @@ function History() {
 
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
+
   useEffect(() => {
 
     fetchReports();
 
   }, []);
 
+
   async function fetchReports() {
 
     try {
 
-      const response = await api.get("/reports/");
+      setLoading(true);
 
-      setReports(response.data.reports);
+      const response = await api.get(
+        "/reports/"
+      );
+
+      setReports(
+        response.data.reports
+      );
 
     }
 
     catch (error) {
 
-      console.error(error);
+      console.error(
+        "History Error:",
+        error
+      );
 
-      alert("Failed to load reports.");
+      toast.error(
+        "Failed to load reports."
+      );
 
     }
 
@@ -40,23 +60,47 @@ function History() {
 
   }
 
+
   function handleView(reportId) {
 
-    alert(`View report ${reportId} (coming in next commit)`);
+    navigate(
+      `/report/${reportId}`
+    );
 
   }
+
 
   if (loading) {
 
     return (
 
-      <div className="min-h-screen flex justify-center items-center">
+      <div
+        className="
+          min-h-screen
+          bg-slate-100
+          flex
+          justify-center
+          items-center
+        "
+      >
 
-        <h2 className="text-2xl font-bold">
+        <div className="text-center">
 
-          Loading Reports...
+          <div className="text-5xl mb-4">
+            📋
+          </div>
 
-        </h2>
+          <h2
+            className="
+              text-2xl
+              font-bold
+              text-blue-700
+            "
+          >
+            Loading Reports...
+          </h2>
+
+        </div>
 
       </div>
 
@@ -64,24 +108,61 @@ function History() {
 
   }
 
+
   return (
 
-    <div className="min-h-screen bg-slate-100 p-10">
+    <div
+      className="
+        min-h-screen
+        bg-slate-100
+        py-10
+        px-6
+      "
+    >
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
-        <h1 className="text-4xl font-bold text-blue-700 mb-8">
+        <div className="mb-8">
 
-          🩸 Blood Report History
+          <p
+            className="
+              text-sm
+              text-blue-600
+              font-semibold
+              uppercase
+              tracking-wide
+            "
+          >
+            Patient Records
+          </p>
 
-        </h1>
+          <h1
+            className="
+              text-4xl
+              font-bold
+              text-gray-800
+              mt-2
+            "
+          >
+            🩸 Blood Report History
+          </h1>
+
+          <p
+            className="
+              text-gray-500
+              mt-2
+            "
+          >
+            View and access your previously uploaded
+            blood reports.
+          </p>
+
+        </div>
+
 
         <ReportTable
-
           reports={reports}
-
           onView={handleView}
-
         />
 
       </div>
@@ -91,5 +172,6 @@ function History() {
   );
 
 }
+
 
 export default History;

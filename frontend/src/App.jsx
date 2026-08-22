@@ -6,6 +6,7 @@ import Footer from "./components/layout/Footer";
 
 import Home from "./pages/Home";
 import History from "./pages/History";
+import ReportDetails from "./pages/ReportDetails";
 
 
 function App() {
@@ -13,8 +14,6 @@ function App() {
   return (
 
     <div className="min-h-screen flex flex-col bg-slate-100">
-
-      {/* Toast Notifications */}
 
       <Toaster
         position="top-right"
@@ -24,11 +23,7 @@ function App() {
         }}
       />
 
-      {/* Navigation */}
-
       <Navbar />
-
-      {/* Main Application */}
 
       <main className="flex-1">
 
@@ -44,11 +39,14 @@ function App() {
             element={<History />}
           />
 
+          <Route
+            path="/report/:reportId"
+            element={<ReportDetails />}
+          />
+
         </Routes>
 
       </main>
-
-      {/* Footer */}
 
       <Footer />
 
