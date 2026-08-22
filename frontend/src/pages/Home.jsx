@@ -1,11 +1,14 @@
 import { useRef, useState } from "react";
 
+import toast from "react-hot-toast";
+
 import api from "../services/api";
 
 import AnalysisTable from "../components/AnalysisTable";
 import SummaryCard from "../components/SummaryCard";
 import Hero from "../components/Hero";
 import FeatureCards from "../components/FeatureCards";
+
 
 function Home() {
 
@@ -21,11 +24,21 @@ function Home() {
 
   const fileInputRef = useRef(null);
 
+
+  // ==========================================================
+  // Choose PDF
+  // ==========================================================
+
   function chooseFile() {
 
     fileInputRef.current.click();
 
   }
+
+
+  // ==========================================================
+  // Handle File Selection
+  // ==========================================================
 
   function handleFileChange(event) {
 
@@ -37,53 +50,76 @@ function Home() {
 
   }
 
+
+  // ==========================================================
+  // Upload Report
+  // ==========================================================
+
   async function uploadReport() {
+
+    // Validate patient name
 
     if (!patientName.trim()) {
 
-      alert("Please enter patient name.");
+      toast.error(
+        "Please enter patient name."
+      );
 
       return;
 
     }
+
+
+    // Validate file
 
     if (!selectedFile) {
 
-      alert("Please choose a PDF.");
+      toast.error(
+        "Please choose a PDF."
+      );
 
       return;
 
     }
+
 
     try {
 
       setLoading(true);
 
+
       const formData = new FormData();
+
 
       formData.append(
         "patient_name",
         patientName
       );
 
+
       formData.append(
         "file",
         selectedFile
       );
+
 
       const response = await api.post(
         "/reports/upload",
         formData
       );
 
+
+      // Save report ID
+
       setReportId(
         response.data.report.id
       );
 
-      alert(
-        `Report Uploaded Successfully!
 
-Report ID: ${response.data.report.id}`
+      // Success notification
+
+      toast.success(
+        `Report uploaded successfully! Report ID: ${response.data.report.id}`
       );
 
     }
@@ -95,7 +131,10 @@ Report ID: ${response.data.report.id}`
         error
       );
 
-      alert("Upload Failed.");
+
+      toast.error(
+        "Upload failed. Please try again."
+      );
 
     }
 
@@ -107,11 +146,16 @@ Report ID: ${response.data.report.id}`
 
   }
 
+
+  // ==========================================================
+  // Analyze Report
+  // ==========================================================
+
   async function analyzeReport() {
 
     if (!reportId) {
 
-      alert(
+      toast.error(
         "Please upload a report first."
       );
 
@@ -119,16 +163,28 @@ Report ID: ${response.data.report.id}`
 
     }
 
+
     try {
 
       setLoading(true);
+
 
       const response = await api.post(
         `/reports/analyze/${reportId}`
       );
 
+
+      // Save analysis result
+
       setAnalysisResult(
         response.data
+      );
+
+
+      // Success notification
+
+      toast.success(
+        "Analysis completed successfully!"
       );
 
     }
@@ -140,7 +196,10 @@ Report ID: ${response.data.report.id}`
         error
       );
 
-      alert("Analysis Failed.");
+
+      toast.error(
+        "Analysis failed. Please try again."
+      );
 
     }
 
@@ -152,21 +211,35 @@ Report ID: ${response.data.report.id}`
 
   }
 
+
+  // ==========================================================
+  // UI
+  // ==========================================================
+
   return (
 
     <div className="py-10 px-6">
 
       <div className="max-w-7xl mx-auto">
 
-        {/* Hero Section */}
+
+        {/* ==================================================
+            Hero
+        ================================================== */}
 
         <Hero />
 
-        {/* Feature Cards */}
+
+        {/* ==================================================
+            Feature Cards
+        ================================================== */}
 
         <FeatureCards />
 
-        {/* Upload Section */}
+
+        {/* ==================================================
+            Upload Section
+        ================================================== */}
 
         <div
           className="
@@ -189,6 +262,7 @@ Report ID: ${response.data.report.id}`
             Upload Blood Report
           </h2>
 
+
           <p
             className="
               text-center
@@ -199,7 +273,10 @@ Report ID: ${response.data.report.id}`
             Upload your PDF blood report to begin analysis.
           </p>
 
-          {/* Patient Name */}
+
+          {/* ==================================================
+              Patient Name
+          ================================================== */}
 
           <div className="mt-8">
 
@@ -213,6 +290,7 @@ Report ID: ${response.data.report.id}`
             >
               Patient Name
             </label>
+
 
             <input
               type="text"
@@ -236,7 +314,10 @@ Report ID: ${response.data.report.id}`
 
           </div>
 
-          {/* Upload Area */}
+
+          {/* ==================================================
+              Upload Area
+          ================================================== */}
 
           <div
             className="
@@ -259,9 +340,11 @@ Report ID: ${response.data.report.id}`
               className="hidden"
             />
 
+
             <div className="text-5xl mb-4">
               📄
             </div>
+
 
             <h3
               className="
@@ -273,6 +356,7 @@ Report ID: ${response.data.report.id}`
               Upload your blood report
             </h3>
 
+
             <p
               className="
                 text-gray-500
@@ -281,6 +365,7 @@ Report ID: ${response.data.report.id}`
             >
               PDF files only
             </p>
+
 
             <button
               onClick={chooseFile}
@@ -298,6 +383,9 @@ Report ID: ${response.data.report.id}`
             >
               Choose PDF
             </button>
+
+
+            {/* Selected File */}
 
             {selectedFile && (
 
@@ -321,6 +409,7 @@ Report ID: ${response.data.report.id}`
                   ✓ Selected File
                 </p>
 
+
                 <p
                   className="
                     text-gray-600
@@ -337,7 +426,10 @@ Report ID: ${response.data.report.id}`
 
           </div>
 
-          {/* Main Action Button */}
+
+          {/* ==================================================
+              Upload / Analyze Button
+          ================================================== */}
 
           <button
             onClick={
@@ -377,11 +469,16 @@ Report ID: ${response.data.report.id}`
 
         </div>
 
-        {/* Analysis Result */}
+
+        {/* ==================================================
+            Analysis Result
+        ================================================== */}
 
         {analysisResult && (
 
           <>
+
+            {/* Report Details */}
 
             <div
               className="
@@ -403,6 +500,7 @@ Report ID: ${response.data.report.id}`
                 Report Details
               </h2>
 
+
               <div className="mt-5 space-y-2">
 
                 <p>
@@ -415,6 +513,7 @@ Report ID: ${response.data.report.id}`
 
                 </p>
 
+
                 <p>
 
                   <strong>
@@ -425,6 +524,7 @@ Report ID: ${response.data.report.id}`
 
                 </p>
 
+
                 <p>
 
                   <strong>
@@ -432,8 +532,11 @@ Report ID: ${response.data.report.id}`
                   </strong>{" "}
 
                   {analysisResult.cached
+
                     ? "Cached Analysis"
+
                     : "Fresh Analysis"
+
                   }
 
                 </p>
@@ -442,11 +545,17 @@ Report ID: ${response.data.report.id}`
 
             </div>
 
+
+            {/* Blood Parameters */}
+
             <AnalysisTable
               analysis={
                 analysisResult.analysis
               }
             />
+
+
+            {/* AI Summary */}
 
             <SummaryCard
               summary={
@@ -465,5 +574,6 @@ Report ID: ${response.data.report.id}`
   );
 
 }
+
 
 export default Home;
