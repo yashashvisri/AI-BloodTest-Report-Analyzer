@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.api.users import router as users_router
 from app.api.reports import router as reports_router
+
+os.makedirs("uploads", exist_ok=True)
 
 
 app = FastAPI(
