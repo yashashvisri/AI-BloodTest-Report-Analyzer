@@ -1,57 +1,101 @@
+import { useState } from "react";
+
 const features = [
   {
+    id: 1,
     title: "OCR Extraction",
     icon: "📄",
-    description:
-      "Extract text accurately from scanned blood reports."
+    description: "Extract text accurately from scanned blood reports.",
+    details: "We use advanced PDF parsing and Optical Character Recognition to safely read and extract medical data directly from your documents."
   },
   {
+    id: 2,
     title: "AI Analysis",
     icon: "🤖",
-    description:
-      "Google Gemini explains abnormal parameters."
+    description: "Google Gemini explains abnormal parameters.",
+    details: "Your extracted data is securely sent to Google's Gemini AI, which maps your results against standard medical ranges to instantly spot deficiencies."
   },
   {
+    id: 3,
     title: "Medical Dashboard",
     icon: "📊",
-    description:
-      "View blood parameters in a professional dashboard."
+    description: "View blood parameters in a professional dashboard.",
+    details: "Get a clear, visual summary of your health. Critical alerts are highlighted automatically so you know exactly what to discuss with your doctor."
+  },
+  {
+    id: 4,
+    title: "Historical Tracking",
+    icon: "📈",
+    description: "Monitor your health progress over time.",
+    details: "Upload multiple reports over months to see interactive graphs comparing your cholesterol, vitamins, and other vitals."
+  },
+  {
+    id: 5,
+    title: "Diet & Lifestyle",
+    icon: "🥗",
+    description: "Get personalized actionable recommendations.",
+    details: "If you have a deficiency, the AI instantly generates a customized meal and exercise plan to help you improve your numbers."
+  },
+  {
+    id: 6,
+    title: "Secure & Private",
+    icon: "🔒",
+    description: "Your medical data is completely encrypted.",
+    details: "We prioritize your privacy. All blood reports are processed securely and your data is never used to train public models."
   }
 ];
 
 function FeatureCards() {
+  const [expandedId, setExpandedId] = useState(null);
+
   return (
     <div className="grid md:grid-cols-3 gap-6 mt-10">
-
       {features.map((feature) => (
-
         <div
-          key={feature.title}
-          className="bg-white rounded-2xl shadow-lg p-8"
+          key={feature.id}
+          onClick={() => setExpandedId(expandedId === feature.id ? null : feature.id)}
+          className={`bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border ${
+            expandedId === feature.id 
+              ? "border-blue-400 ring-4 ring-blue-50" 
+              : "border-gray-100 hover:border-blue-200"
+          } p-8 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 relative`}
         >
-
-          <div className="text-5xl">
-
-            {feature.icon}
-
+          <div className="flex justify-between items-start">
+            <div className="text-5xl drop-shadow-sm">{feature.icon}</div>
+            
+            {/* Expand / Collapse Icon */}
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 text-gray-400 transition-transform duration-300 ${expandedId === feature.id ? "rotate-180 bg-blue-100 text-blue-600" : ""}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
           </div>
-
-          <h2 className="text-2xl font-bold mt-5">
-
+          
+          <h2 className="text-2xl font-extrabold mt-6 text-gray-800">
             {feature.title}
-
           </h2>
-
-          <p className="text-gray-500 mt-4">
-
+          
+          <p className="text-gray-500 mt-3 font-medium">
             {feature.description}
-
           </p>
 
+          {/* Hidden Extra Info Area */}
+          <div 
+            className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              expandedId === feature.id 
+                ? "max-h-48 opacity-100 mt-5 pt-5 border-t border-gray-100" 
+                : "max-h-0 opacity-0"
+            }`}
+          >
+            <p className="text-blue-800 text-sm font-medium leading-relaxed bg-blue-50 p-4 rounded-xl border border-blue-100">
+              {feature.details}
+            </p>
+          </div>
+          
+          {/* Subtle "Click for more" hint if not expanded */}
+          <div className={`absolute bottom-4 right-6 text-xs font-bold text-gray-300 transition-opacity ${expandedId === feature.id ? "opacity-0" : "opacity-100"}`}>
+            CLICK TO EXPAND
+          </div>
         </div>
-
       ))}
-
     </div>
   );
 }
