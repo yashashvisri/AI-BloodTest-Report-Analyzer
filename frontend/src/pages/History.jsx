@@ -13,8 +13,14 @@ function History() {
 
   const [loading, setLoading] = useState(true);
 
+  const [deletingId, setDeletingId] = useState(null);
+
   const navigate = useNavigate();
 
+
+  // ==========================================================
+  // Fetch Reports
+  // ==========================================================
 
   useEffect(() => {
 
@@ -61,6 +67,10 @@ function History() {
   }
 
 
+  // ==========================================================
+  // View Report
+  // ==========================================================
+
   function handleView(reportId) {
 
     navigate(
@@ -69,6 +79,93 @@ function History() {
 
   }
 
+
+  // ==========================================================
+  // Delete Report
+  // ==========================================================
+
+  async function handleDelete(reportId) {
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this report? This action cannot be undone."
+    );
+
+
+    if (!confirmed) {
+
+      return;
+
+    }
+
+
+    try {
+
+      setDeletingId(reportId);
+
+
+      await api.delete(
+        `/reports/${reportId}`
+      );
+
+
+      // Remove deleted report from UI
+
+      setReports(
+        (currentReports) =>
+          currentReports.filter(
+            (report) =>
+              report.id !== reportId
+          )
+      );
+
+
+      toast.success(
+        "Report deleted successfully."
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "Delete Report Error:",
+        error
+      );
+
+
+      if (
+        error.response &&
+        error.response.status === 404
+      ) {
+
+        toast.error(
+          "Report not found."
+        );
+
+      }
+
+      else {
+
+        toast.error(
+          "Failed to delete report."
+        );
+
+      }
+
+    }
+
+    finally {
+
+      setDeletingId(null);
+
+    }
+
+  }
+
+
+  // ==========================================================
+  // Loading State
+  // ==========================================================
 
   if (loading) {
 
@@ -109,6 +206,10 @@ function History() {
   }
 
 
+  // ==========================================================
+  // Page
+  // ==========================================================
+
   return (
 
     <div
@@ -121,6 +222,11 @@ function History() {
     >
 
       <div className="max-w-7xl mx-auto">
+
+
+        {/* ==================================================
+            Header
+        ================================================== */}
 
         <div className="mb-8">
 
@@ -136,6 +242,7 @@ function History() {
             Patient Records
           </p>
 
+
           <h1
             className="
               text-4xl
@@ -147,23 +254,90 @@ function History() {
             🩸 Blood Report History
           </h1>
 
+
           <p
             className="
               text-gray-500
               mt-2
             "
           >
-            View and access your previously uploaded
+            View and manage your previously uploaded
             blood reports.
           </p>
 
         </div>
 
 
-        <ReportTable
-          reports={reports}
-          onView={handleView}
-        />
+        {/* ==================================================
+            Empty State
+        ================================================== */}
+
+        {reports.length === 0 ? (
+
+          <div
+            className="
+              bg-white
+              rounded-2xl
+              shadow-lg
+              p-12
+              text-center
+            "
+          >
+
+            <div className="text-6xl mb-5">
+              📄
+            </div>
+
+
+            <h2
+              className="
+                text-2xl
+                font-bold
+                text-gray-800
+              "
+            >
+              No Reports Found
+            </h2>
+
+
+            <p
+              className="
+                text-gray-500
+                mt-2
+              "
+            >
+              Upload a blood report to see it here.
+            </p>
+
+
+            <button
+              onClick={() => navigate("/")}
+              className="
+                mt-6
+                bg-blue-600
+                hover:bg-blue-700
+                text-white
+                px-6
+                py-3
+                rounded-lg
+                font-semibold
+              "
+            >
+              Upload Report
+            </button>
+
+          </div>
+
+        ) : (
+
+          <ReportTable
+            reports={reports}
+            onView={handleView}
+            onDelete={handleDelete}
+            deletingId={deletingId}
+          />
+
+        )}
 
       </div>
 

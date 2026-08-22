@@ -21,14 +21,20 @@ from app.database.analysis_models import ReportAnalysis
 from app.services.report_service import analyze_report
 from app.schemas.analysis import AnalysisResponse
 
-router = APIRouter(
-  
-    tags=["Reports"]
-)
+
+# ==========================================================
+# Router
+# ==========================================================
+
+router = APIRouter()
+
 
 UPLOAD_DIR = "uploads"
 
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(
+    UPLOAD_DIR,
+    exist_ok=True
+)
 
 
 # ==========================================================
@@ -45,17 +51,28 @@ def upload_report(
     db: Session = Depends(get_db),
 ):
 
-    extension = os.path.splitext(file.filename)[1]
+    extension = os.path.splitext(
+        file.filename
+    )[1]
 
-    unique_filename = f"{uuid.uuid4()}{extension}"
+    unique_filename = (
+        f"{uuid.uuid4()}{extension}"
+    )
 
     file_path = os.path.join(
         UPLOAD_DIR,
         unique_filename
     )
 
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    with open(
+        file_path,
+        "wb"
+    ) as buffer:
+
+        shutil.copyfileobj(
+            file.file,
+            buffer
+        )
 
     report = BloodReport(
         patient_name=patient_name,
@@ -65,7 +82,9 @@ def upload_report(
     )
 
     db.add(report)
+
     db.commit()
+
     db.refresh(report)
 
     return {
@@ -94,7 +113,10 @@ def get_all_reports(
     db: Session = Depends(get_db)
 ):
 
-    reports = db.query(BloodReport).all()
+    reports = (
+        db.query(BloodReport)
+        .all()
+    )
 
     return {
 
@@ -106,143 +128,18 @@ def get_all_reports(
 
 
 # ==========================================================
-# Get Single Report
-# ==========================================================
-
-@router.get("/{report_id}")
-def get_report(
-    report_id: int,
-    db: Session = Depends(get_db)
-):
-
-    report = (
-
-        db.query(BloodReport)
-
-        .filter(BloodReport.id == report_id)
-
-        .first()
-
-    )
-
-    if report is None:
-
-        raise HTTPException(
-
-            status_code=404,
-
-            detail="Report not found."
-
-        )
-
-    return report
-
-
-# ==========================================================
-# Delete Report
-# ==========================================================
-
-@router.delete("/{report_id}")
-def delete_report(
-    report_id: int,
-    db: Session = Depends(get_db)
-):
-
-    report = (
-
-        db.query(BloodReport)
-
-        .filter(BloodReport.id == report_id)
-
-        .first()
-
-    )
-
-    if report is None:
-
-        raise HTTPException(
-
-            status_code=404,
-
-            detail="Report not found."
-
-        )
-
-    if os.path.exists(report.file_path):
-
-        os.remove(report.file_path)
-
-    db.delete(report)
-
-    db.commit()
-
-    return {
-
-        "message": "Report deleted successfully."
-
-    }
-
-
-# ==========================================================
-# AI Analysis
-# ==========================================================
-
-@router.post(
-    "/analyze/{report_id}",
-    response_model=AnalysisResponse
-)
-def analyze_blood_report_api(
-
-    report_id: int,
-
-    db: Session = Depends(get_db)
-
-):
-
-    report = (
-
-        db.query(BloodReport)
-
-        .filter(BloodReport.id == report_id)
-
-        .first()
-
-    )
-
-    if report is None:
-
-        raise HTTPException(
-
-            status_code=404,
-
-            detail="Report not found."
-
-        )
-
-    result = analyze_report(
-
-        db=db,
-
-        report_id=report.id,
-
-        file_path=report.file_path
-
-    )
-
-    return result
-
-
-# ==========================================================
 # Get Saved Analysis
+#
+# IMPORTANT:
+# Keep this BEFORE /{report_id}
 # ==========================================================
 
-@router.get("/analysis/{report_id}")
+@router.get(
+    "/analysis/{report_id}"
+)
 def get_saved_analysis(
-
     report_id: int,
-
     db: Session = Depends(get_db)
-
 ):
 
     analysis = (
@@ -250,9 +147,7 @@ def get_saved_analysis(
         db.query(ReportAnalysis)
 
         .filter(
-
             ReportAnalysis.report_id == report_id
-
         )
 
         .first()
@@ -279,8 +174,204 @@ def get_saved_analysis(
 
         "analysis": analysis.analysis,
 
-        "ai_summary": analysis.ai_summary,
+        "ai_summary": analysis.ai_summary
 
-        "cached": True
+    }
+
+
+# ==========================================================
+# Analyze Blood Report
+# ==========================================================
+
+@router.post(
+    "/analyze/{report_id}",
+    response_model=AnalysisResponse
+)
+def analyze_blood_report_api(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    report = (
+
+        db.query(BloodReport)
+
+        .filter(
+            BloodReport.id == report_id
+        )
+
+        .first()
+
+    )
+
+    if report is None:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Report not found."
+
+        )
+
+    result = analyze_report(
+        file_path=report.file_path,
+        db=db,
+        report_id=report.id
+    )
+
+    return {
+
+        "report_id": report.id,
+
+        **result
+
+    }
+
+
+# ==========================================================
+# Get Single Report
+# ==========================================================
+
+@router.get(
+    "/{report_id}"
+)
+def get_report(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    report = (
+
+        db.query(BloodReport)
+
+        .filter(
+            BloodReport.id == report_id
+        )
+
+        .first()
+
+    )
+
+    if report is None:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Report not found."
+
+        )
+
+    return report
+
+
+# ==========================================================
+# Delete Report
+# ==========================================================
+
+@router.delete(
+    "/{report_id}"
+)
+def delete_report(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    # ------------------------------------------------------
+    # Find report
+    # ------------------------------------------------------
+
+    report = (
+
+        db.query(BloodReport)
+
+        .filter(
+            BloodReport.id == report_id
+        )
+
+        .first()
+
+    )
+
+    if report is None:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Report not found."
+
+        )
+
+
+    # ------------------------------------------------------
+    # Delete associated analysis
+    # ------------------------------------------------------
+
+    analysis = (
+
+        db.query(ReportAnalysis)
+
+        .filter(
+            ReportAnalysis.report_id == report_id
+        )
+
+        .first()
+
+    )
+
+    if analysis is not None:
+
+        db.delete(analysis)
+
+
+    # ------------------------------------------------------
+    # Delete stored PDF
+    # ------------------------------------------------------
+
+    if (
+        report.file_path
+        and os.path.exists(report.file_path)
+    ):
+
+        os.remove(
+            report.file_path
+        )
+
+
+    # ------------------------------------------------------
+    # Delete report
+    # ------------------------------------------------------
+
+    db.delete(report)
+
+
+    # ------------------------------------------------------
+    # Commit
+    # ------------------------------------------------------
+
+    try:
+
+        db.commit()
+
+    except Exception:
+
+        db.rollback()
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail="Failed to delete report."
+
+        )
+
+
+    return {
+
+        "message": "Report deleted successfully.",
+
+        "report_id": report_id
 
     }

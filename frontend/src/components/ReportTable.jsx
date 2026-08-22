@@ -1,110 +1,162 @@
-function ReportTable({ reports, onView }) {
-
-  if (!reports || reports.length === 0) {
-
-    return (
-
-      <div className="bg-white rounded-xl shadow-lg p-6 mt-8 text-center">
-
-        <p className="text-gray-500">
-
-          No reports uploaded yet.
-
-        </p>
-
-      </div>
-
-    );
-
-  }
+function ReportTable({
+  reports,
+  onView,
+  onDelete,
+  deletingId,
+}) {
 
   return (
 
-    <div className="bg-white rounded-xl shadow-lg p-6 mt-8">
+    <div
+      className="
+        bg-white
+        rounded-2xl
+        shadow-lg
+        overflow-hidden
+      "
+    >
 
-      <h2 className="text-2xl font-bold text-blue-700 mb-6">
+      <div className="overflow-x-auto">
 
-        Blood Report History
+        <table className="w-full">
 
-      </h2>
+          <thead>
 
-      <table className="w-full">
+            <tr className="bg-blue-700 text-white">
 
-        <thead>
+              <th className="px-6 py-4 text-left">
+                ID
+              </th>
 
-          <tr className="bg-blue-600 text-white">
+              <th className="px-6 py-4 text-left">
+                Patient
+              </th>
 
-            <th className="p-3">ID</th>
+              <th className="px-6 py-4 text-left">
+                File
+              </th>
 
-            <th className="p-3">Patient</th>
+              <th className="px-6 py-4 text-center">
+                Actions
+              </th>
 
-            <th className="p-3">Filename</th>
+            </tr>
 
-            <th className="p-3">Action</th>
+          </thead>
 
-          </tr>
 
-        </thead>
+          <tbody>
 
-        <tbody>
-
-          {
-
-            reports.map((report) => (
+            {reports.map((report) => (
 
               <tr
                 key={report.id}
-                className="border-b hover:bg-slate-50"
+                className="
+                  border-b
+                  hover:bg-slate-50
+                "
               >
 
-                <td className="p-3 text-center">
-
-                  {report.id}
-
+                <td className="px-6 py-4 font-semibold">
+                  #{report.id}
                 </td>
 
-                <td className="p-3 text-center">
 
+                <td className="px-6 py-4">
                   {report.patient_name}
-
                 </td>
 
-                <td className="p-3 text-center">
 
+                <td
+                  className="
+                    px-6
+                    py-4
+                    text-gray-600
+                    max-w-xs
+                    truncate
+                  "
+                >
                   {report.original_filename}
-
                 </td>
 
-                <td className="p-3 text-center">
 
-                  <button
+                <td className="px-6 py-4">
 
-                    onClick={() => onView(report.id)}
-
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-
+                  <div
+                    className="
+                      flex
+                      justify-center
+                      gap-3
+                    "
                   >
 
-                    View
+                    {/* View */}
 
-                  </button>
+                    <button
+                      onClick={() =>
+                        onView(report.id)
+                      }
+                      className="
+                        bg-blue-600
+                        hover:bg-blue-700
+                        text-white
+                        px-4
+                        py-2
+                        rounded-lg
+                        font-semibold
+                      "
+                    >
+                      View
+                    </button>
+
+
+                    {/* Delete */}
+
+                    <button
+                      onClick={() =>
+                        onDelete(report.id)
+                      }
+                      disabled={
+                        deletingId === report.id
+                      }
+                      className="
+                        bg-red-600
+                        hover:bg-red-700
+                        disabled:bg-gray-400
+                        text-white
+                        px-4
+                        py-2
+                        rounded-lg
+                        font-semibold
+                      "
+                    >
+
+                      {deletingId === report.id
+                        ? "Deleting..."
+                        : "Delete"
+                      }
+
+                    </button>
+
+                  </div>
 
                 </td>
 
               </tr>
 
-            ))
+            ))}
 
-          }
+          </tbody>
 
-        </tbody>
+        </table>
 
-      </table>
+      </div>
 
     </div>
 
   );
 
 }
+
 
 export default ReportTable;
