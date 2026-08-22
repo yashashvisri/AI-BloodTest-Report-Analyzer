@@ -21,27 +21,6 @@ const features = [
     icon: "📊",
     description: "View blood parameters in a professional dashboard.",
     details: "Get a clear, visual summary of your health. Critical alerts are highlighted automatically so you know exactly what to discuss with your doctor."
-  },
-  {
-    id: 4,
-    title: "Historical Tracking",
-    icon: "📈",
-    description: "Monitor your health progress over time.",
-    details: "Upload multiple reports over months to see interactive graphs comparing your cholesterol, vitamins, and other vitals."
-  },
-  {
-    id: 5,
-    title: "Diet & Lifestyle",
-    icon: "🥗",
-    description: "Get personalized actionable recommendations.",
-    details: "If you have a deficiency, the AI instantly generates a customized meal and exercise plan to help you improve your numbers."
-  },
-  {
-    id: 6,
-    title: "Secure & Private",
-    icon: "🔒",
-    description: "Your medical data is completely encrypted.",
-    details: "We prioritize your privacy. All blood reports are processed securely and your data is never used to train public models."
   }
 ];
 
