@@ -65,6 +65,14 @@ def home():
     }
 
 
+@app.get("/health")
+def health_check():
+    return {
+        "status": "ok",
+        "service": "AI-BloodTest-Report-Analyzer"
+    }
+
+
 # ==========================================================
 # Exception Handlers
 # ==========================================================
