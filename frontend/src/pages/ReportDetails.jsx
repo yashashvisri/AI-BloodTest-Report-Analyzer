@@ -20,6 +20,12 @@ function ReportDetails() {
 
   const [loading, setLoading] = useState(true);
 
+  const [downloading, setDownloading] = useState(false);
+
+
+  // ==========================================================
+  // Load Report
+  // ==========================================================
 
   useEffect(() => {
 
@@ -87,9 +93,108 @@ function ReportDetails() {
   }
 
 
-  // ----------------------------------------------------------
+  // ==========================================================
+  // Download PDF
+  // ==========================================================
+
+  async function downloadPDF() {
+
+    try {
+
+      setDownloading(true);
+
+
+      const response = await api.get(
+        `/reports/${reportId}/download`,
+        {
+          responseType: "blob",
+        }
+      );
+
+
+      // ------------------------------------------------------
+      // Create temporary URL for PDF
+      // ------------------------------------------------------
+
+      const blob = new Blob(
+        [response.data],
+        {
+          type: "application/pdf",
+        }
+      );
+
+
+      const url = window.URL.createObjectURL(
+        blob
+      );
+
+
+      // ------------------------------------------------------
+      // Create temporary download link
+      // ------------------------------------------------------
+
+      const link = document.createElement(
+        "a"
+      );
+
+      link.href = url;
+
+      link.download = `blood_report_${reportId}.pdf`;
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      link.click();
+
+
+      // ------------------------------------------------------
+      // Cleanup
+      // ------------------------------------------------------
+
+      document.body.removeChild(
+        link
+      );
+
+      window.URL.revokeObjectURL(
+        url
+      );
+
+
+      toast.success(
+        "PDF downloaded successfully."
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "PDF Download Error:",
+        error
+      );
+
+
+      toast.error(
+        "Failed to download PDF report."
+      );
+
+    }
+
+    finally {
+
+      setDownloading(false);
+
+    }
+
+  }
+
+
+  // ==========================================================
   // Loading State
-  // ----------------------------------------------------------
+  // ==========================================================
 
   if (loading) {
 
@@ -134,9 +239,9 @@ function ReportDetails() {
   }
 
 
-  // ----------------------------------------------------------
+  // ==========================================================
   // Error State
-  // ----------------------------------------------------------
+  // ==========================================================
 
   if (!report || !analysisResult) {
 
@@ -205,6 +310,10 @@ function ReportDetails() {
   }
 
 
+  // ==========================================================
+  // Main Page
+  // ==========================================================
+
   return (
 
     <div
@@ -219,9 +328,9 @@ function ReportDetails() {
       <div className="max-w-7xl mx-auto">
 
 
-        {/* --------------------------------------------------
+        {/* ==================================================
             Back Button
-        -------------------------------------------------- */}
+        ================================================== */}
 
         <button
           onClick={() => navigate("/history")}
@@ -236,9 +345,9 @@ function ReportDetails() {
         </button>
 
 
-        {/* --------------------------------------------------
+        {/* ==================================================
             Report Header
-        -------------------------------------------------- */}
+        ================================================== */}
 
         <div
           className="
@@ -315,7 +424,9 @@ function ReportDetails() {
           </div>
 
 
-          {/* File Information */}
+          {/* ==================================================
+              File Information
+          ================================================== */}
 
           <div
             className="
@@ -382,30 +493,66 @@ function ReportDetails() {
 
           </div>
 
+
+          {/* ==================================================
+              Download PDF Button
+          ================================================== */}
+
+          <div className="mt-8 flex justify-end">
+
+            <button
+              onClick={downloadPDF}
+              disabled={downloading}
+              className="
+                bg-blue-600
+                hover:bg-blue-700
+                disabled:bg-blue-300
+                disabled:cursor-not-allowed
+                text-white
+                px-6
+                py-3
+                rounded-lg
+                font-semibold
+                flex
+                items-center
+                gap-2
+                transition
+              "
+            >
+
+              {downloading
+                ? "Preparing PDF..."
+                : "📄 Download PDF Report"
+              }
+
+            </button>
+
+          </div>
+
         </div>
 
 
-        {/* --------------------------------------------------
+        {/* ==================================================
             Blood Parameters
-        -------------------------------------------------- */}
+        ================================================== */}
 
         <AnalysisTable
           analysis={analysisResult.analysis}
         />
 
 
-        {/* --------------------------------------------------
+        {/* ==================================================
             AI Summary
-        -------------------------------------------------- */}
+        ================================================== */}
 
         <SummaryCard
           summary={analysisResult.ai_summary}
         />
 
 
-        {/* --------------------------------------------------
+        {/* ==================================================
             Disclaimer
-        -------------------------------------------------- */}
+        ================================================== */}
 
         <div
           className="
@@ -432,6 +579,7 @@ function ReportDetails() {
           </p>
 
         </div>
+
 
       </div>
 

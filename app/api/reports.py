@@ -11,6 +11,7 @@ from fastapi import (
     HTTPException,
     status,
 )
+from fastapi.responses import StreamingResponse
 
 from sqlalchemy.orm import Session
 
@@ -19,6 +20,8 @@ from app.database.report_models import BloodReport
 from app.database.analysis_models import ReportAnalysis
 
 from app.services.report_service import analyze_report
+from app.services.pdf_service import generate_report_pdf
+
 from app.schemas.analysis import AnalysisResponse
 
 
@@ -129,9 +132,6 @@ def get_all_reports(
 
 # ==========================================================
 # Get Saved Analysis
-#
-# IMPORTANT:
-# Keep this BEFORE /{report_id}
 # ==========================================================
 
 @router.get(
@@ -227,6 +227,151 @@ def analyze_blood_report_api(
         **result
 
     }
+
+
+# ==========================================================
+# Download PDF Report
+# ==========================================================
+
+@router.get(
+    "/{report_id}/download"
+)
+def download_report_pdf(
+    report_id: int,
+    db: Session = Depends(get_db)
+):
+
+    # ------------------------------------------------------
+    # Find report
+    # ------------------------------------------------------
+
+    report = (
+
+        db.query(BloodReport)
+
+        .filter(
+            BloodReport.id == report_id
+        )
+
+        .first()
+
+    )
+
+    if report is None:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail="Report not found."
+
+        )
+
+
+    # ------------------------------------------------------
+    # Find saved analysis
+    # ------------------------------------------------------
+
+    saved_analysis = (
+
+        db.query(ReportAnalysis)
+
+        .filter(
+            ReportAnalysis.report_id == report_id
+        )
+
+        .first()
+
+    )
+
+    if saved_analysis is None:
+
+        raise HTTPException(
+
+            status_code=404,
+
+            detail=(
+                "Analysis not found. "
+                "Analyze the report before downloading the PDF."
+            )
+
+        )
+
+
+    # ------------------------------------------------------
+    # Prepare analysis data
+    # ------------------------------------------------------
+
+    analysis_result = {
+
+        "analysis": saved_analysis.analysis,
+
+        "ai_summary": saved_analysis.ai_summary,
+
+    }
+
+
+    # ------------------------------------------------------
+    # Generate PDF
+    # ------------------------------------------------------
+
+    try:
+
+        pdf_buffer = generate_report_pdf(
+
+            patient_name=report.patient_name,
+
+            report_id=report.id,
+
+            original_filename=report.original_filename,
+
+            analysis_result=analysis_result,
+
+        )
+
+    except Exception as error:
+
+        print(
+            f"PDF generation error: {error}"
+        )
+
+        raise HTTPException(
+
+            status_code=500,
+
+            detail="Failed to generate PDF report."
+
+        )
+
+
+    # ------------------------------------------------------
+    # File name
+    # ------------------------------------------------------
+
+    filename = (
+        f"blood_report_{report.id}.pdf"
+    )
+
+
+    # ------------------------------------------------------
+    # Return PDF
+    # ------------------------------------------------------
+
+    return StreamingResponse(
+
+        pdf_buffer,
+
+        media_type="application/pdf",
+
+        headers={
+
+            "Content-Disposition": (
+                f'attachment; filename="{filename}"'
+            )
+
+        }
+
+    )
 
 
 # ==========================================================
