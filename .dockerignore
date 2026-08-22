@@ -1,0 +1,17 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+.git
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+uploads/
+frontend/node_modules/
+tests_manual/
