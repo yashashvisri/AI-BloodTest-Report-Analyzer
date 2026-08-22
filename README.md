@@ -178,7 +178,7 @@ blood_report_db
 ---
 ## 🔗 API Endpoints
 
-### Health Check Endpoint
+### Health Check Endpoints
 
 ```http
 GET /
@@ -189,6 +189,19 @@ Response:
 ```json
 {
   "message": "Blood Report AI API Running"
+}
+```
+
+```http
+GET /health
+```
+
+Response:
+
+```json
+{
+  "status": "ok",
+  "service": "AI-BloodTest-Report-Analyzer"
 }
 ```
 
