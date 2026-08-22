@@ -1,13 +1,18 @@
 import { useRef, useState } from "react";
+
 import api from "../services/api";
 
 import AnalysisTable from "../components/AnalysisTable";
 import SummaryCard from "../components/SummaryCard";
+import Hero from "../components/Hero";
+import FeatureCards from "../components/FeatureCards";
 
 function Home() {
 
   const [selectedFile, setSelectedFile] = useState(null);
+
   const [patientName, setPatientName] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [reportId, setReportId] = useState(null);
@@ -17,7 +22,9 @@ function Home() {
   const fileInputRef = useRef(null);
 
   function chooseFile() {
+
     fileInputRef.current.click();
+
   }
 
   function handleFileChange(event) {
@@ -54,28 +61,39 @@ function Home() {
 
       const formData = new FormData();
 
-      formData.append("patient_name", patientName);
+      formData.append(
+        "patient_name",
+        patientName
+      );
 
-      formData.append("file", selectedFile);
+      formData.append(
+        "file",
+        selectedFile
+      );
 
       const response = await api.post(
         "/reports/upload",
         formData
       );
 
-      setReportId(response.data.report.id);
+      setReportId(
+        response.data.report.id
+      );
 
       alert(
         `Report Uploaded Successfully!
 
-Report ID : ${response.data.report.id}`
+Report ID: ${response.data.report.id}`
       );
 
     }
 
     catch (error) {
 
-      console.error(error);
+      console.error(
+        "Upload Error:",
+        error
+      );
 
       alert("Upload Failed.");
 
@@ -91,6 +109,16 @@ Report ID : ${response.data.report.id}`
 
   async function analyzeReport() {
 
+    if (!reportId) {
+
+      alert(
+        "Please upload a report first."
+      );
+
+      return;
+
+    }
+
     try {
 
       setLoading(true);
@@ -99,13 +127,18 @@ Report ID : ${response.data.report.id}`
         `/reports/analyze/${reportId}`
       );
 
-      setAnalysisResult(response.data);
+      setAnalysisResult(
+        response.data
+      );
 
     }
 
     catch (error) {
 
-      console.error(error);
+      console.error(
+        "Analysis Error:",
+        error
+      );
 
       alert("Analysis Failed.");
 
@@ -121,109 +154,222 @@ Report ID : ${response.data.report.id}`
 
   return (
 
-    <div className="min-h-screen bg-slate-100 py-10">
+    <div className="py-10 px-6">
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
-        <div className="bg-white rounded-2xl shadow-xl p-10">
+        {/* Hero Section */}
 
-          <h1 className="text-4xl font-bold text-center text-blue-700">
+        <Hero />
 
-            🩸 AI Blood Test Report Analyzer
+        {/* Feature Cards */}
 
-          </h1>
+        <FeatureCards />
 
-          <p className="text-center text-gray-500 mt-3">
+        {/* Upload Section */}
 
-            Upload your blood report and receive an AI-powered health analysis.
+        <div
+          className="
+            bg-white
+            rounded-2xl
+            shadow-xl
+            p-8
+            mt-10
+          "
+        >
 
+          <h2
+            className="
+              text-3xl
+              font-bold
+              text-center
+              text-blue-700
+            "
+          >
+            Upload Blood Report
+          </h2>
+
+          <p
+            className="
+              text-center
+              text-gray-500
+              mt-2
+            "
+          >
+            Upload your PDF blood report to begin analysis.
           </p>
 
-          <input
+          {/* Patient Name */}
 
-            type="text"
+          <div className="mt-8">
 
-            placeholder="Enter Patient Name"
-
-            value={patientName}
-
-            onChange={(e) => setPatientName(e.target.value)}
-
-            className="mt-8 w-full border rounded-lg p-3"
-
-          />
-
-          <div className="mt-8 border-2 border-dashed border-blue-300 rounded-xl p-10 text-center">
+            <label
+              className="
+                block
+                font-semibold
+                text-gray-700
+                mb-2
+              "
+            >
+              Patient Name
+            </label>
 
             <input
-
-              type="file"
-
-              accept=".pdf"
-
-              ref={fileInputRef}
-
-              className="hidden"
-
-              onChange={handleFileChange}
-
+              type="text"
+              placeholder="Enter patient name"
+              value={patientName}
+              onChange={(event) =>
+                setPatientName(event.target.value)
+              }
+              className="
+                w-full
+                border
+                border-gray-300
+                rounded-lg
+                px-4
+                py-3
+                focus:outline-none
+                focus:ring-2
+                focus:ring-blue-500
+              "
             />
-
-            <button
-
-              onClick={chooseFile}
-
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg"
-
-            >
-
-              Choose PDF
-
-            </button>
-
-            {
-
-              selectedFile &&
-
-              <p className="mt-5 text-green-700 font-semibold">
-
-                {selectedFile.name}
-
-              </p>
-
-            }
 
           </div>
 
-          <button
+          {/* Upload Area */}
 
-            onClick={
-
-              reportId
-
-                ? analyzeReport
-
-                : uploadReport
-
-            }
-
-            disabled={loading}
-
-            className="mt-8 w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl text-lg font-semibold"
-
+          <div
+            className="
+              mt-6
+              border-2
+              border-dashed
+              border-blue-300
+              rounded-2xl
+              p-12
+              text-center
+              bg-blue-50
+            "
           >
 
-            {
+            <input
+              type="file"
+              accept=".pdf,application/pdf"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+            />
 
-              loading
+            <div className="text-5xl mb-4">
+              📄
+            </div>
 
-                ? "Processing..."
+            <h3
+              className="
+                text-xl
+                font-semibold
+                text-gray-700
+              "
+            >
+              Upload your blood report
+            </h3>
 
-                : reportId
+            <p
+              className="
+                text-gray-500
+                mt-2
+              "
+            >
+              PDF files only
+            </p>
 
-                ? "Analyze Report"
+            <button
+              onClick={chooseFile}
+              className="
+                mt-6
+                bg-blue-600
+                hover:bg-blue-700
+                text-white
+                px-8
+                py-3
+                rounded-lg
+                font-semibold
+                transition
+              "
+            >
+              Choose PDF
+            </button>
 
-                : "Upload Report"
+            {selectedFile && (
+
+              <div
+                className="
+                  mt-6
+                  bg-white
+                  border
+                  border-green-200
+                  rounded-lg
+                  p-4
+                "
+              >
+
+                <p
+                  className="
+                    text-green-700
+                    font-semibold
+                  "
+                >
+                  ✓ Selected File
+                </p>
+
+                <p
+                  className="
+                    text-gray-600
+                    mt-1
+                    break-all
+                  "
+                >
+                  {selectedFile.name}
+                </p>
+
+              </div>
+
+            )}
+
+          </div>
+
+          {/* Main Action Button */}
+
+          <button
+            onClick={
+              reportId
+                ? analyzeReport
+                : uploadReport
+            }
+            disabled={loading}
+            className="
+              mt-8
+              w-full
+              bg-green-600
+              hover:bg-green-700
+              disabled:bg-gray-400
+              text-white
+              py-4
+              rounded-xl
+              text-lg
+              font-semibold
+              transition
+            "
+          >
+
+            {loading
+
+              ? "Processing..."
+
+              : reportId
+
+              ? "Analyze Report"
+
+              : "Upload Report"
 
             }
 
@@ -231,43 +377,64 @@ Report ID : ${response.data.report.id}`
 
         </div>
 
-        {
+        {/* Analysis Result */}
 
-          analysisResult &&
+        {analysisResult && (
 
           <>
 
-            <div className="bg-white rounded-xl shadow-lg mt-10 p-6">
+            <div
+              className="
+                bg-white
+                rounded-xl
+                shadow-lg
+                mt-10
+                p-6
+              "
+            >
 
-              <h2 className="text-3xl font-bold text-blue-700">
-
+              <h2
+                className="
+                  text-3xl
+                  font-bold
+                  text-blue-700
+                "
+              >
                 Report Details
-
               </h2>
 
               <div className="mt-5 space-y-2">
 
                 <p>
 
-                  <strong>Patient Name:</strong> {patientName}
+                  <strong>
+                    Patient Name:
+                  </strong>{" "}
+
+                  {patientName}
 
                 </p>
 
                 <p>
 
-                  <strong>Report ID:</strong> {analysisResult.report_id}
+                  <strong>
+                    Report ID:
+                  </strong>{" "}
+
+                  {analysisResult.report_id}
 
                 </p>
 
                 <p>
 
-                  <strong>Analysis Source:</strong>{" "}
+                  <strong>
+                    Analysis Source:
+                  </strong>{" "}
 
                   {analysisResult.cached
-
                     ? "Cached Analysis"
-
-                    : "Fresh Analysis"}
+                    : "Fresh Analysis"
+                  }
 
                 </p>
 
@@ -276,16 +443,20 @@ Report ID : ${response.data.report.id}`
             </div>
 
             <AnalysisTable
-              analysis={analysisResult.analysis}
+              analysis={
+                analysisResult.analysis
+              }
             />
 
             <SummaryCard
-              summary={analysisResult.ai_summary}
+              summary={
+                analysisResult.ai_summary
+              }
             />
 
           </>
 
-        }
+        )}
 
       </div>
 
