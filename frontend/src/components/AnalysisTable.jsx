@@ -1,116 +1,51 @@
 import StatusBadge from "./StatusBadge";
 
 function AnalysisTable({ analysis }) {
-
   if (!analysis) return null;
 
   return (
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mt-10">
+      <div className="px-8 py-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+        <h2 className="text-2xl font-extrabold text-gray-800">
+          Blood Parameter Analysis
+        </h2>
+      </div>
 
-    <div className="bg-white rounded-xl shadow-lg p-6 mt-8">
-
-      <h2 className="text-2xl font-bold text-blue-700 mb-6">
-
-        Blood Parameter Analysis
-
-      </h2>
-
-      <table className="w-full border-collapse">
-
-        <thead>
-
-          <tr className="bg-blue-600 text-white">
-
-            <th className="p-3 text-left">
-
-              Parameter
-
-            </th>
-
-            <th className="p-3 text-center">
-
-              Value
-
-            </th>
-
-            <th className="p-3 text-center">
-
-              Reference Range
-
-            </th>
-
-            <th className="p-3 text-center">
-
-              Status
-
-            </th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          {
-
-            Object.entries(analysis).map(([parameter, details]) => (
-
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-white text-gray-500 uppercase text-xs tracking-wider border-b border-gray-200">
+              <th className="px-8 py-5 font-semibold">Parameter</th>
+              <th className="px-8 py-5 font-semibold text-center">Value</th>
+              <th className="px-8 py-5 font-semibold text-center">Reference Range</th>
+              <th className="px-8 py-5 font-semibold text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {Object.entries(analysis).map(([parameter, details]) => (
               <tr
                 key={parameter}
-                className="border-b hover:bg-slate-50"
+                className="hover:bg-blue-50/50 transition-colors duration-200"
               >
-
-                <td className="p-3 font-semibold capitalize">
-
-                  {parameter.replace("_", " ")}
-
+                <td className="px-8 py-4 font-semibold text-gray-700 capitalize">
+                  {parameter.replace(/_/g, " ")}
                 </td>
-
-                <td className="p-3 text-center">
-
-                  {
-
-                    details.value !== null
-
-                      ? details.value
-
-                      : "--"
-
-                  }
-
+                <td className="px-8 py-4 text-center font-medium text-gray-900">
+                  {details.value !== null ? details.value : <span className="text-gray-400">--</span>}
                 </td>
-
-                <td className="p-3 text-center">
-
-                  {
-
-                    details.reference_range || "--"
-
-                  }
-
+                <td className="px-8 py-4 text-center text-gray-500 text-sm">
+                  {details.reference_range || <span className="text-gray-400">--</span>}
                 </td>
-
-                <td className="p-3 text-center">
-
-                  <StatusBadge
-                    status={details.status}
-                  />
-
+                <td className="px-8 py-4 text-center flex justify-center">
+                  <StatusBadge status={details.status} />
                 </td>
-
               </tr>
-
-            ))
-
-          }
-
-        </tbody>
-
-      </table>
-
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-
   );
-
 }
 
 export default AnalysisTable;

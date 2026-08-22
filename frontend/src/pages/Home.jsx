@@ -241,97 +241,30 @@ function Home() {
             Upload Section
         ================================================== */}
 
-        <div
-          className="
-            bg-white
-            rounded-2xl
-            shadow-xl
-            p-8
-            mt-10
-          "
-        >
-
-          <h2
-            className="
-              text-3xl
-              font-bold
-              text-center
-              text-blue-700
-            "
-          >
+        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-8 md:p-12 mt-10">
+          <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">
             Upload Blood Report
           </h2>
-
-
-          <p
-            className="
-              text-center
-              text-gray-500
-              mt-2
-            "
-          >
-            Upload your PDF blood report to begin analysis.
+          <p className="text-center text-gray-500 mt-3 font-medium">
+            Upload your PDF blood report to begin your AI analysis.
           </p>
 
-
-          {/* ==================================================
-              Patient Name
-          ================================================== */}
-
-          <div className="mt-8">
-
-            <label
-              className="
-                block
-                font-semibold
-                text-gray-700
-                mb-2
-              "
-            >
+          {/* Patient Name */}
+          <div className="mt-10 max-w-2xl mx-auto">
+            <label className="block text-sm font-bold text-gray-700 mb-2">
               Patient Name
             </label>
-
-
             <input
               type="text"
-              placeholder="Enter patient name"
+              placeholder="Enter patient's full name"
               value={patientName}
-              onChange={(event) =>
-                setPatientName(event.target.value)
-              }
-              className="
-                w-full
-                border
-                border-gray-300
-                rounded-lg
-                px-4
-                py-3
-                focus:outline-none
-                focus:ring-2
-                focus:ring-blue-500
-              "
+              onChange={(event) => setPatientName(event.target.value)}
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-sm"
             />
-
           </div>
 
-
-          {/* ==================================================
-              Upload Area
-          ================================================== */}
-
-          <div
-            className="
-              mt-6
-              border-2
-              border-dashed
-              border-blue-300
-              rounded-2xl
-              p-12
-              text-center
-              bg-blue-50
-            "
-          >
-
+          {/* Upload Area */}
+          <div className="mt-8 max-w-2xl mx-auto border-2 border-dashed border-blue-200 rounded-3xl p-12 text-center bg-blue-50/50 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 group cursor-pointer" onClick={chooseFile}>
             <input
               type="file"
               accept=".pdf,application/pdf"
@@ -339,134 +272,58 @@ function Home() {
               onChange={handleFileChange}
               className="hidden"
             />
-
-
-            <div className="text-5xl mb-4">
+            
+            <div className="text-6xl mb-5 group-hover:scale-110 transition-transform duration-300">
               📄
             </div>
-
-
-            <h3
-              className="
-                text-xl
-                font-semibold
-                text-gray-700
-              "
-            >
-              Upload your blood report
+            <h3 className="text-xl font-bold text-gray-800">
+              Click to upload your report
             </h3>
-
-
-            <p
-              className="
-                text-gray-500
-                mt-2
-              "
-            >
-              PDF files only
+            <p className="text-gray-500 mt-2 font-medium">
+              PDF files only (Max 10MB)
             </p>
 
-
             <button
-              onClick={chooseFile}
-              className="
-                mt-6
-                bg-blue-600
-                hover:bg-blue-700
-                text-white
-                px-8
-                py-3
-                rounded-lg
-                font-semibold
-                transition
-              "
+              onClick={(e) => { e.stopPropagation(); chooseFile(); }}
+              className="mt-8 bg-white border border-blue-200 hover:border-blue-500 text-blue-700 px-8 py-3 rounded-xl font-bold shadow-sm hover:shadow-md transition-all"
             >
-              Choose PDF
+              Browse Files
             </button>
 
-
             {/* Selected File */}
-
             {selectedFile && (
-
-              <div
-                className="
-                  mt-6
-                  bg-white
-                  border
-                  border-green-200
-                  rounded-lg
-                  p-4
-                "
-              >
-
-                <p
-                  className="
-                    text-green-700
-                    font-semibold
-                  "
-                >
-                  ✓ Selected File
-                </p>
-
-
-                <p
-                  className="
-                    text-gray-600
-                    mt-1
-                    break-all
-                  "
-                >
-                  {selectedFile.name}
-                </p>
-
+              <div className="mt-8 bg-white border border-green-200 rounded-xl p-5 shadow-sm inline-block w-full text-left flex items-center justify-between">
+                <div>
+                  <p className="text-green-600 font-bold text-sm uppercase tracking-wide">
+                    ✓ Selected File
+                  </p>
+                  <p className="text-gray-700 mt-1 font-medium truncate max-w-xs md:max-w-md">
+                    {selectedFile.name}
+                  </p>
+                </div>
               </div>
-
             )}
-
           </div>
 
-
-          {/* ==================================================
-              Upload / Analyze Button
-          ================================================== */}
-
-          <button
-            onClick={
-              reportId
-                ? analyzeReport
-                : uploadReport
-            }
-            disabled={loading}
-            className="
-              mt-8
-              w-full
-              bg-green-600
-              hover:bg-green-700
-              disabled:bg-gray-400
-              text-white
-              py-4
-              rounded-xl
-              text-lg
-              font-semibold
-              transition
-            "
-          >
-
-            {loading
-
-              ? "Processing..."
-
-              : reportId
-
-              ? "Analyze Report"
-
-              : "Upload Report"
-
-            }
-
-          </button>
-
+          {/* Upload / Analyze Button */}
+          <div className="max-w-2xl mx-auto mt-10">
+            <button
+              onClick={reportId ? analyzeReport : uploadReport}
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-400 text-white py-5 rounded-2xl text-lg font-bold shadow-lg hover:shadow-xl transition-all flex justify-center items-center gap-3"
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                  Processing...
+                </>
+              ) : reportId ? (
+                "Analyze with AI"
+              ) : (
+                "Upload & Continue"
+              )}
+            </button>
+          </div>
         </div>
 
 
