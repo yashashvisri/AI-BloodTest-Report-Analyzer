@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { toast } from "react-hot-toast";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 function DietPlan({ reportId }) {
   const [dietPlan, setDietPlan] = useState(null);
@@ -41,9 +42,7 @@ function DietPlan({ reportId }) {
 
       {dietPlan && (
         <div className="bg-green-50 rounded-xl p-6 border border-green-100 relative">
-          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-            {dietPlan}
-          </p>
+          <MarkdownRenderer content={dietPlan} />
         </div>
       )}
       
