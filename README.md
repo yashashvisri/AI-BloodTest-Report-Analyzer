@@ -1,334 +1,109 @@
 # 🩸 AI-BloodTest-Report-Analyzer
 
-AI-powered Blood Test Report Analysis System built using **FastAPI, PostgreSQL, SQLAlchemy, OCR, RAG, LLMs, and Docker**.
+An advanced, AI-powered Blood Test Report Analysis System built using **FastAPI, React, PostgreSQL, OCR, RAG, and Large Language Models (Google Gemini)**.
 
 ---
 
 ## 📌 Project Overview
 
-This project automates blood test report analysis using Artificial Intelligence.
-
-Users can upload blood report PDFs, extract text using OCR, store report data in PostgreSQL, generate embeddings for RAG-based retrieval, and receive AI-powered health insights using Large Language Models.
+This system automates blood test report analysis to empower patients and doctors. Users can upload blood report PDFs, which are scanned using OCR to extract parameters. The AI then processes these parameters to provide easy-to-understand medical summaries, personalized diet plans, and interactive capabilities like trend analysis and chatting with the report.
 
 ---
 
-# 🚀 Features
+## 🚀 Key Features
 
-## 📄 Report Upload
-- Upload Blood Test Reports (PDF)
-- Upload patient information
-- Automatic file storage
-- Unique file naming using UUID
-
----
-
-# 📊 Current Progress
-
-| Module | Status |
-|----------|---------|
-| Project Setup | ✅ |
-| FastAPI Backend | ✅ |
-| PostgreSQL | ✅ |
-| SQLAlchemy | ✅ |
-| User APIs | ✅ |
-| Report Upload | ✅ |
-| Report CRUD | ✅ |
-| Image OCR | ✅ |
-| PDF OCR | ✅ |
-| Blood Parameter Extraction | ✅ |
-| Blood Parameter Analysis | ✅ |
-| Gemini AI Integration | ✅ |
-| AI Medical Summary | ✅ |
-| End-to-End Analysis API | ✅ |
-| Save AI Analysis | ✅ |
-| Frontend | ✅ |
-| Authentication | 🚧 |
-| Docker | 🚧 |
-| Deployment | 🚧 |
-
-
-### 📅 Upcoming Features
-
-- OCR Integration (Tesseract)
-- PDF Blood Report Processing
-- AI-Powered Report Analysis
-- RAG Pipeline
-- Vector Database Integration
-- React Frontend
-- Dockerized Deployment
+*   **📄 Automated PDF OCR:** Extracts raw medical data directly from scanned blood test reports.
+*   **🤖 AI Medical Summary (Gemini):** Automatically highlights abnormal parameters and explains their significance in plain English.
+*   **🥗 Actionable Diet & Lifestyle Plans:** Instantly generates a personalized 7-day meal and workout plan based on the user's specific blood deficiencies.
+*   **💬 RAG Chatbot ("Chat with your Report"):** Allows users to ask questions (e.g., "Why is my Vitamin D low?") and get answers based strictly on their report context.
+*   **📈 Historical Trend Analysis:** Uses Recharts to visually graph and track how a patient's vitals (e.g., Hemoglobin, WBC) change across multiple blood tests over time.
+*   **🌍 Multi-Language Support:** Instantly translates complex medical summaries into Hindi, Spanish, French, and more.
+*   **⚡ Cached Analysis:** Reports are saved in PostgreSQL to prevent redundant OCR and API calls, loading instantly on subsequent visits.
+*   **📊 PDF Export:** Users can download their AI-analyzed results as a beautifully formatted PDF.
 
 ---
 
-# 📁 Project Structure
+## 🛠️ Tech Stack
+
+### Frontend
+*   React 19 & Vite
+*   Tailwind CSS (Glassmorphism & Modern UI)
+*   Recharts (Trend Graphing)
+*   React Hot Toast
+
+### Backend
+*   FastAPI (Python 3.11)
+*   PostgreSQL & SQLAlchemy
+*   Tesseract OCR (pdf2image)
+*   Google Gemini 2.5 Flash API (LLM)
+
+---
+
+## 📂 Project Structure
 
 ```
 AI-BloodTest-Report-Analyzer/
-
 │
-
 ├── app/
-
-│   ├── ai/
-
-│   ├── api/
-
-│   ├── database/
-
-│   ├── ocr/
-
-│   ├── parser/
-
-│   ├── schemas/
-
-│   ├── services/
-
-│   └── main.py
-
+│   ├── ai/          # Gemini AI integration, Prompts (Diet, Chat, Translate)
+│   ├── api/         # FastAPI routes (reports, diet, chat, trends, translate)
+│   ├── database/    # SQLAlchemy models & session
+│   ├── ocr/         # Tesseract OCR processing
+│   ├── parser/      # Regex-based blood parameter extraction
+│   └── main.py      # FastAPI entry point
 │
-
 ├── frontend/
-
 │   ├── src/
-
-│   ├── public/
-
+│   │   ├── components/ # Reusable UI (TrendGraph, ReportChat, DietPlan)
+│   │   └── pages/      # Views (Home, History, ReportDetails)
 │   └── package.json
-
 │
-
-├── uploads/
-
+├── tests_manual/    # Testing scripts
+├── uploads/         # Secure local storage for PDFs
 ├── requirements.txt
-
-├── README.md
-
-└── .env
-```
-## ⚡ End-to-End AI Pipeline
-
-```
-Upload PDF
-      │
-      ▼
-Save Report
-      │
-      ▼
-OCR
-      │
-      ▼
-Extract Text
-      │
-      ▼
-Blood Parameter Extraction
-      │
-      ▼
-Reference Range Analysis
-      │
-      ▼
-Gemini AI
-      │
-      ▼
-Medical Report
----
-## ⚙️ Tech Stack
-
-## Backend
-- FastAPI
-- Python 3.11
-- SQLAlchemy
-- PostgreSQL
-- Pydantic
-
-## AI & Machine Learning
-- Tesseract OCR
-- Pillow
-- pdf2image
-- Large Language Models (Planned)
-- RAG (Planned)
-
-## Tools
-- Git
-- GitHub
-- GitHub Desktop
-- VS Code
-- Postman / Swagger UI
-
----
-
-## 🗄️ Database Setup
-
-### Database
-
-```sql
-blood_report_db
-```
-
-## Blood Reports Table
-
-| Column | Type |
-|---------|------|
-| id | Integer |
-| patient_name | String |
-| original_filename | String |
-| stored_filename | String |
-| file_path | String |
-
+└── README.md
 ```
 
 ---
+
 ## 🔗 API Endpoints
 
-### Health Check Endpoints
+### Core Endpoints
+*   `GET /health`: System health check
+*   `POST /reports/upload`: Uploads and saves PDF to the database
+*   `POST /reports/analyze/{id}`: Runs OCR and Gemini Analysis
+*   `GET /reports/{id}/download`: Generates a PDF of the analysis
 
-```http
-GET /
+### Advanced AI Endpoints
+*   `GET /reports/{id}/diet-plan`: Generates AI Diet Plan
+*   `POST /reports/{id}/chat`: RAG Chat with the blood report
+*   `POST /reports/{id}/translate`: Translates summary into target language
+*   `GET /trends/{patient_name}`: Aggregates historical parameter data
+
+---
+
+## 🏁 How to Run Locally
+
+### 1. Backend Setup
+```bash
+python -m venv venv
+source venv/Scripts/activate  # On Windows
+pip install -r requirements.txt
+```
+*Create a `.env` file with `DATABASE_URL` and `GEMINI_API_KEY`.*
+```bash
+uvicorn app.main:app --reload
 ```
 
-Response:
-
-```json
-{
-  "message": "Blood Report AI API Running"
-}
-```
-
-```http
-GET /health
-```
-
-Response:
-
-```json
-{
-  "status": "ok",
-  "service": "AI-BloodTest-Report-Analyzer"
-}
+### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
-## 📖 Development Roadmap
 
-### Phase 1: Backend Foundation ✅
-
-- FastAPI Setup
-- PostgreSQL Setup
-- SQLAlchemy Setup
-- Database Connectivity
-- User Model Creation
-
-### Phase 2: User Management 🚧
-
-- Create User API
-- Get Users API
-- Update User API
-- Delete User API
-
-### Phase 3: Blood Report Processing
-
-- Upload PDF
-- OCR Extraction
-- Data Cleaning
-
-### Phase 4: AI Analysis
-
-- Blood Parameter Extraction
-- Health Risk Detection
-- AI Generated Recommendations
-
-### Phase 5: RAG Pipeline
-
-- Embedding Generation
-- Vector Storage
-- Semantic Search
-
-### Phase 6: Deployment
-
-- Dockerization
-- Production Deployment
-
----
-
-# 🔄 Current Workflow
-
-```text
-User
-   │
-   ▼
-Upload Blood Report
-   │
-   ▼
-FastAPI
-   │
-   ├────────► Save File
-   │              │
-   │              ▼
-   │         uploads/
-   │
-   └────────► Save Metadata
-                   │
-                   ▼
-             PostgreSQL
-                   │
-                   ▼
-             OCR Extraction
-                   │
-                   ▼
-          Extracted Report Text
-```
-## 📊 Blood Report Analysis
-
-Each parameter is compared against medical reference ranges.
-
-Status generated:
-
-- ✅ Normal
-- 🔺 High
-- 🔻 Low
-- ❌ Not Found
-
----
-## ⚡ Cached Analysis
-
-If a report has already been analyzed:
-
-- OCR is skipped
-- Gemini API is skipped
-- Cached analysis is returned instantly
-
----
-## 🎨 Frontend (React)
-
-Modern React frontend built using:
-
-- React 19
-- Vite
-- Tailwind CSS
-- Axios
-
-Features:
-
-- Patient Name Input
-- PDF Selection
-- Upload Progress
-- FastAPI Integration
-- Responsive Upload Interface
-
----
-## 🎯 Project Goal
-
-Build an end-to-end AI healthcare assistant capable of:
-
-- Reading blood reports
-- Extracting medical parameters
-- Detecting abnormalities
-- Answering health-related questions
-- Generating AI-powered recommendations
-- Generate Diet Plan 
-
----
-
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Yashashvi Srivastava**
-
----
