@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import api from "../services/api";
 import { toast } from "react-hot-toast";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 function ReportChat({ reportId }) {
   const [messages, setMessages] = useState([
@@ -58,9 +59,13 @@ function ReportChat({ reportId }) {
                     : "bg-white border border-gray-200 text-gray-800 rounded-tl-sm shadow-sm"
                 }`}
               >
-                <p className="whitespace-pre-wrap text-sm leading-relaxed font-medium">
-                  {msg.content}
-                </p>
+                {msg.role === "user" ? (
+                  <p className="whitespace-pre-wrap text-sm leading-relaxed font-medium">
+                    {msg.content}
+                  </p>
+                ) : (
+                  <MarkdownRenderer content={msg.content} />
+                )}
               </div>
             </div>
           ))}

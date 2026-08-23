@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { toast } from "react-hot-toast";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 function SummaryCard({ summary, reportId }) {
   const [currentSummary, setCurrentSummary] = useState(summary);
@@ -60,9 +61,7 @@ function SummaryCard({ summary, reportId }) {
             <span className="text-blue-600 font-medium">Translating...</span>
           </div>
         )}
-        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-          {currentSummary}
-        </p>
+        <MarkdownRenderer content={currentSummary} />
       </div>
     </div>
   );
