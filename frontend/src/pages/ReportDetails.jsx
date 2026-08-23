@@ -6,6 +6,9 @@ import api from "../services/api";
 
 import AnalysisTable from "../components/AnalysisTable";
 import SummaryCard from "../components/SummaryCard";
+import DietPlan from "../components/DietPlan";
+import ReportChat from "../components/ReportChat";
+import TrendGraph from "../components/TrendGraph";
 
 
 function ReportDetails() {
@@ -547,7 +550,26 @@ function ReportDetails() {
 
         <SummaryCard
           summary={analysisResult.ai_summary}
+          reportId={report.id}
         />
+
+        {/* ==================================================
+            Diet Plan
+        ================================================== */}
+
+        <DietPlan reportId={report.id} />
+
+        {/* ==================================================
+            Chat
+        ================================================== */}
+
+        <ReportChat reportId={report.id} />
+
+        {/* ==================================================
+            Trend Graph
+        ================================================== */}
+
+        <TrendGraph patientName={report.patient_name} />
 
 
         {/* ==================================================

@@ -5,6 +5,10 @@ import os
 
 from app.api.users import router as users_router
 from app.api.reports import router as reports_router
+from app.api.diet import router as diet_router
+from app.api.chat import router as chat_router
+from app.api.translate import router as translate_router
+from app.api.trends import router as trends_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -47,6 +51,30 @@ app.include_router(
     reports_router,
     prefix="/reports",
     tags=["Reports"],
+)
+
+app.include_router(
+    diet_router,
+    prefix="/reports",
+    tags=["Diet"],
+)
+
+app.include_router(
+    chat_router,
+    prefix="/reports",
+    tags=["Chat"],
+)
+
+app.include_router(
+    translate_router,
+    prefix="/reports",
+    tags=["Translate"],
+)
+
+app.include_router(
+    trends_router,
+    prefix="/trends",
+    tags=["Trends"],
 )
 
 

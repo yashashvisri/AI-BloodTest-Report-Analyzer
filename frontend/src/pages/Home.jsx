@@ -4,8 +4,11 @@ import toast from "react-hot-toast";
 
 import api from "../services/api";
 
+import StatusBadge from "../components/StatusBadge";
 import AnalysisTable from "../components/AnalysisTable";
 import SummaryCard from "../components/SummaryCard";
+import DietPlan from "../components/DietPlan";
+import ReportChat from "../components/ReportChat";
 import Hero from "../components/Hero";
 import FeatureCards from "../components/FeatureCards";
 
@@ -413,12 +416,16 @@ function Home() {
 
 
             {/* AI Summary */}
-
             <SummaryCard
-              summary={
-                analysisResult.ai_summary
-              }
+              summary={analysisResult.ai_summary}
+              reportId={analysisResult.report_id}
             />
+
+            {/* Diet Plan */}
+            <DietPlan reportId={analysisResult.report_id} />
+
+            {/* Chat */}
+            <ReportChat reportId={analysisResult.report_id} />
 
           </>
 
