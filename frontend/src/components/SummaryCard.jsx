@@ -1,31 +1,71 @@
-function SummaryCard({ summary }) {
+import { useState } from "react";
+import api from "../services/api";
+import { toast } from "react-hot-toast";
+
+function SummaryCard({ summary, reportId }) {
+  const [currentSummary, setCurrentSummary] = useState(summary);
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [language, setLanguage] = useState("English");
 
   if (!summary) return null;
 
+  const handleTranslate = async (e) => {
+    const selectedLang = e.target.value;
+    setLanguage(selectedLang);
+    
+    if (selectedLang === "English") {
+      setCurrentSummary(summary);
+      return;
+    }
+
+    setIsTranslating(true);
+    try {
+      const response = await api.post(`/reports/${reportId}/translate`, {
+        language: selectedLang
+      });
+      setCurrentSummary(response.data.translated_summary);
+      toast.success(`Translated to ${selectedLang}`);
+    } catch (error) {
+      toast.error("Translation failed.");
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
   return (
-
-    <div className="bg-white rounded-xl shadow-lg p-6 mt-8">
-
-      <h2 className="text-2xl font-bold text-blue-700 mb-4">
-
-        🤖 AI Health Summary
-
-      </h2>
-
-      <div className="bg-slate-50 rounded-lg p-5">
-
-        <p className="text-gray-700 whitespace-pre-wrap leading-7">
-
-          {summary}
-
-        </p>
-
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mt-8">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-extrabold text-blue-700">
+          🤖 AI Health Summary
+        </h2>
+        
+        {reportId && (
+          <select 
+            value={language}
+            onChange={handleTranslate}
+            disabled={isTranslating}
+            className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          >
+            <option value="English">🇬🇧 English</option>
+            <option value="Hindi">🇮🇳 Hindi</option>
+            <option value="Spanish">🇪🇸 Spanish</option>
+            <option value="French">🇫🇷 French</option>
+          </select>
+        )}
       </div>
 
+      <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 relative">
+        {isTranslating && (
+          <div className="absolute inset-0 bg-white/60 flex items-center justify-center rounded-xl z-10 backdrop-blur-sm">
+            <span className="text-blue-600 font-medium">Translating...</span>
+          </div>
+        )}
+        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+          {currentSummary}
+        </p>
+      </div>
     </div>
-
   );
-
 }
 
 export default SummaryCard;
