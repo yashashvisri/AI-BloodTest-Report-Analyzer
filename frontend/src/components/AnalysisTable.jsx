@@ -25,7 +25,7 @@ function AnalysisTable({ analysis }) {
             {Object.entries(analysis).map(([parameter, details]) => (
               <tr
                 key={parameter}
-                className="hover:bg-blue-50/50 transition-colors duration-200"
+                className="hover:bg-emerald-50/50 transition-colors duration-200"
               >
                 <td className="px-8 py-4 font-semibold text-gray-700 capitalize">
                   {parameter.replace(/_/g, " ")}
