@@ -174,7 +174,7 @@ function History() {
       <div
         className="
           min-h-screen
-          bg-slate-100
+          bg-gray-50
           flex
           justify-center
           items-center
@@ -191,7 +191,7 @@ function History() {
             className="
               text-2xl
               font-bold
-              text-blue-700
+              text-teal-700
             "
           >
             Loading Reports...
@@ -215,7 +215,7 @@ function History() {
     <div
       className="
         min-h-screen
-        bg-slate-100
+        bg-gray-50
         py-10
         px-6
       "
@@ -233,7 +233,7 @@ function History() {
           <p
             className="
               text-sm
-              text-blue-600
+              text-emerald-600
               font-semibold
               uppercase
               tracking-wide
@@ -314,8 +314,8 @@ function History() {
               onClick={() => navigate("/")}
               className="
                 mt-6
-                bg-blue-600
-                hover:bg-blue-700
+                bg-emerald-600
+                hover:bg-teal-700
                 text-white
                 px-6
                 py-3
