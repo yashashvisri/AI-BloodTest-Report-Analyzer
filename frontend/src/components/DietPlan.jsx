@@ -23,9 +23,9 @@ function DietPlan({ reportId }) {
   if (!reportId) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-green-100 p-6 mt-8">
+    <div className="bg-white rounded-2xl shadow-xl border border-teal-100 p-6 mt-8">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-extrabold text-green-700">
+        <h2 className="text-2xl font-extrabold text-teal-800">
           🥗 Actionable Diet & Lifestyle Plan
         </h2>
         
@@ -33,7 +33,7 @@ function DietPlan({ reportId }) {
           <button
             onClick={generatePlan}
             disabled={loading}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-bold shadow-md transition-all"
+            className="bg-teal-600 hover:bg-teal-800 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-bold shadow-md transition-all"
           >
             {loading ? "Generating..." : "Generate Plan"}
           </button>
@@ -41,7 +41,7 @@ function DietPlan({ reportId }) {
       </div>
 
       {dietPlan && (
-        <div className="bg-green-50 rounded-xl p-6 border border-green-100 relative">
+        <div className="bg-teal-50 rounded-xl p-6 border border-teal-100 relative">
           <MarkdownRenderer content={dietPlan} />
         </div>
       )}
