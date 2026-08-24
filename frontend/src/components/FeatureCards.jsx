@@ -35,15 +35,15 @@ function FeatureCards() {
           onClick={() => setExpandedId(expandedId === feature.id ? null : feature.id)}
           className={`bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border ${
             expandedId === feature.id 
-              ? "border-blue-400 ring-4 ring-blue-50" 
-              : "border-gray-100 hover:border-blue-200"
+              ? "border-emerald-400 ring-4 ring-emerald-50" 
+              : "border-gray-100 hover:border-emerald-200"
           } p-8 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 relative`}
         >
           <div className="flex justify-between items-start">
             <div className="text-5xl drop-shadow-sm">{feature.icon}</div>
             
             {/* Expand / Collapse Icon */}
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 text-gray-400 transition-transform duration-300 ${expandedId === feature.id ? "rotate-180 bg-blue-100 text-blue-600" : ""}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 text-gray-400 transition-transform duration-300 ${expandedId === feature.id ? "rotate-180 bg-emerald-100 text-emerald-600" : ""}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </div>
           </div>
@@ -64,7 +64,7 @@ function FeatureCards() {
                 : "max-h-0 opacity-0"
             }`}
           >
-            <p className="text-blue-800 text-sm font-medium leading-relaxed bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <p className="text-emerald-800 text-sm font-medium leading-relaxed bg-emerald-50 p-4 rounded-xl border border-emerald-100">
               {feature.details}
             </p>
           </div>
