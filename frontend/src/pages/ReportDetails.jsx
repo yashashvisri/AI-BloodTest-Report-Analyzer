@@ -206,7 +206,7 @@ function ReportDetails() {
       <div
         className="
           min-h-screen
-          bg-slate-100
+          bg-gray-50
           flex
           justify-center
           items-center
@@ -223,7 +223,7 @@ function ReportDetails() {
             className="
               text-2xl
               font-bold
-              text-blue-700
+              text-teal-700
             "
           >
             Loading Report...
@@ -253,7 +253,7 @@ function ReportDetails() {
       <div
         className="
           min-h-screen
-          bg-slate-100
+          bg-gray-50
           flex
           justify-center
           items-center
@@ -292,8 +292,8 @@ function ReportDetails() {
             onClick={() => navigate("/history")}
             className="
               mt-6
-              bg-blue-600
-              hover:bg-blue-700
+              bg-emerald-600
+              hover:bg-teal-700
               text-white
               px-6
               py-3
@@ -322,7 +322,7 @@ function ReportDetails() {
     <div
       className="
         min-h-screen
-        bg-slate-100
+        bg-gray-50
         py-10
         px-6
       "
@@ -339,8 +339,8 @@ function ReportDetails() {
           onClick={() => navigate("/history")}
           className="
             mb-6
-            text-blue-600
-            hover:text-blue-800
+            text-emerald-600
+            hover:text-emerald-800
             font-semibold
           "
         >
@@ -389,7 +389,7 @@ function ReportDetails() {
                 className="
                   text-4xl
                   font-bold
-                  text-blue-700
+                  text-teal-700
                   mt-2
                 "
               >
@@ -401,7 +401,7 @@ function ReportDetails() {
 
             <div
               className="
-                bg-blue-50
+                bg-emerald-50
                 rounded-xl
                 px-6
                 py-4
@@ -416,7 +416,7 @@ function ReportDetails() {
                 className="
                   text-2xl
                   font-bold
-                  text-blue-700
+                  text-teal-700
                 "
               >
                 #{report.id}
@@ -507,9 +507,9 @@ function ReportDetails() {
               onClick={downloadPDF}
               disabled={downloading}
               className="
-                bg-blue-600
-                hover:bg-blue-700
-                disabled:bg-blue-300
+                bg-emerald-600
+                hover:bg-teal-700
+                disabled:bg-emerald-300
                 disabled:cursor-not-allowed
                 text-white
                 px-6
