@@ -42,8 +42,8 @@ function ReportChat({ reportId }) {
   if (!reportId) return null;
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-blue-100 p-6 mt-8 flex flex-col h-[500px]">
-      <h2 className="text-2xl font-extrabold text-blue-700 mb-4 flex items-center gap-2">
+    <div className="bg-white rounded-2xl shadow-xl border border-teal-100 p-6 mt-8 flex flex-col h-[500px]">
+      <h2 className="text-2xl font-extrabold text-teal-700 mb-4 flex items-center gap-2">
         💬 Chat with your Report
       </h2>
 
@@ -55,7 +55,7 @@ function ReportChat({ reportId }) {
               <div 
                 className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                   msg.role === "user" 
-                    ? "bg-blue-600 text-white rounded-tr-sm" 
+                    ? "bg-teal-600 text-white rounded-tr-sm" 
                     : "bg-white border border-gray-200 text-gray-800 rounded-tl-sm shadow-sm"
                 }`}
               >
@@ -73,9 +73,9 @@ function ReportChat({ reportId }) {
             <div className="flex justify-start">
               <div className="bg-white border border-gray-200 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm">
                 <div className="flex gap-1.5 items-center h-5">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                  <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                  <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                  <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
                 </div>
               </div>
             </div>
@@ -92,12 +92,12 @@ function ReportChat({ reportId }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask a question..."
           disabled={loading}
-          className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-4 pr-12 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all disabled:opacity-50 font-medium"
+          className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-4 pr-12 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all disabled:opacity-50 font-medium"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="absolute right-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white p-2 rounded-lg transition-colors flex items-center justify-center w-10 h-10"
+          className="absolute right-2 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-300 text-white p-2 rounded-lg transition-colors flex items-center justify-center w-10 h-10"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </button>
