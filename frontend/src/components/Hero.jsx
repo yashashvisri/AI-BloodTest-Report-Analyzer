@@ -1,9 +1,9 @@
 function Hero() {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-700 rounded-[2rem] text-white p-12 shadow-2xl mb-8 border border-white/10">
+    <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-indigo-800 to-blue-700 rounded-[2rem] text-white p-12 shadow-2xl mb-8 border border-white/10">
       
       {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-blue-500 blur-3xl opacity-30"></div>
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-emerald-500 blur-3xl opacity-30"></div>
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-indigo-500 blur-3xl opacity-30"></div>
 
       <div className="relative z-10">
