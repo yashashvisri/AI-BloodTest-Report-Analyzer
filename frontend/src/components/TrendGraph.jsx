@@ -84,7 +84,7 @@ function TrendGraph({ patientName }) {
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mt-6">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
-        <h2 className="text-2xl font-extrabold text-blue-700 flex items-center gap-2">
+        <h2 className="text-2xl font-extrabold text-teal-700 flex items-center gap-2">
           📈 Historical Trends
         </h2>
         
@@ -93,7 +93,7 @@ function TrendGraph({ patientName }) {
             <select 
               value={selectedMetric}
               onChange={(e) => setSelectedMetric(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium"
             >
               {availableMetrics.map(m => (
                 <option key={m} value={m}>{m.replace(/_/g, " ")}</option>
@@ -113,7 +113,7 @@ function TrendGraph({ patientName }) {
           <button 
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2"
+            className="bg-emerald-600 hover:bg-teal-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2"
           >
             {isUploading ? "Processing..." : "➕ Add Report to Compare"}
           </button>
@@ -128,7 +128,7 @@ function TrendGraph({ patientName }) {
           <button 
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg font-bold transition-all"
+            className="bg-white border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-2 rounded-lg font-bold transition-all"
           >
             {isUploading ? "Uploading..." : "Upload Past Report Now"}
           </button>
@@ -148,9 +148,9 @@ function TrendGraph({ patientName }) {
                 <Line 
                   type="monotone" 
                   dataKey={selectedMetric} 
-                  stroke="#2563EB" 
+                  stroke="#059669" 
                   strokeWidth={3}
-                  dot={{ r: 6, fill: '#2563EB', strokeWidth: 2, stroke: '#fff' }}
+                  dot={{ r: 6, fill: '#059669', strokeWidth: 2, stroke: '#fff' }}
                   activeDot={{ r: 8, strokeWidth: 0 }}
                   animationDuration={1500}
                 />
