@@ -245,7 +245,7 @@ function Home() {
         ================================================== */}
 
         <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-8 md:p-12 mt-10">
-          <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-extrabold text-center bg-gradient-to-r from-teal-700 to-indigo-700 bg-clip-text text-transparent">
             Upload Blood Report
           </h2>
           <p className="text-center text-gray-500 mt-3 font-medium">
@@ -262,12 +262,12 @@ function Home() {
               placeholder="Enter patient's full name"
               value={patientName}
               onChange={(event) => setPatientName(event.target.value)}
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-sm"
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all shadow-sm"
             />
           </div>
 
           {/* Upload Area */}
-          <div className="mt-8 max-w-2xl mx-auto border-2 border-dashed border-blue-200 rounded-3xl p-12 text-center bg-blue-50/50 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 group cursor-pointer" onClick={chooseFile}>
+          <div className="mt-8 max-w-2xl mx-auto border-2 border-dashed border-blue-200 rounded-3xl p-12 text-center bg-emerald-50/50 hover:bg-emerald-50 hover:border-blue-400 transition-all duration-300 group cursor-pointer" onClick={chooseFile}>
             <input
               type="file"
               accept=".pdf,application/pdf"
@@ -288,7 +288,7 @@ function Home() {
 
             <button
               onClick={(e) => { e.stopPropagation(); chooseFile(); }}
-              className="mt-8 bg-white border border-blue-200 hover:border-blue-500 text-blue-700 px-8 py-3 rounded-xl font-bold shadow-sm hover:shadow-md transition-all"
+              className="mt-8 bg-white border border-blue-200 hover:border-emerald-500 text-teal-700 px-8 py-3 rounded-xl font-bold shadow-sm hover:shadow-md transition-all"
             >
               Browse Files
             </button>
@@ -313,7 +313,7 @@ function Home() {
             <button
               onClick={reportId ? analyzeReport : uploadReport}
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-400 text-white py-5 rounded-2xl text-lg font-bold shadow-lg hover:shadow-xl transition-all flex justify-center items-center gap-3"
+              className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-teal-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-400 text-white py-5 rounded-2xl text-lg font-bold shadow-lg hover:shadow-xl transition-all flex justify-center items-center gap-3"
             >
               {loading ? (
                 <>
@@ -354,7 +354,7 @@ function Home() {
                 className="
                   text-3xl
                   font-bold
-                  text-blue-700
+                  text-teal-700
                 "
               >
                 Report Details
