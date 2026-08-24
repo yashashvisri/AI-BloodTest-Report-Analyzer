@@ -36,7 +36,7 @@ function SummaryCard({ summary, reportId }) {
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mt-8">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-extrabold text-blue-700">
+        <h2 className="text-2xl font-extrabold text-teal-700">
           🤖 AI Health Summary
         </h2>
         
@@ -45,7 +45,7 @@ function SummaryCard({ summary, reportId }) {
             value={language}
             onChange={handleTranslate}
             disabled={isTranslating}
-            className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
           >
             <option value="English">🇬🇧 English</option>
             <option value="Hindi">🇮🇳 Hindi</option>
@@ -58,7 +58,7 @@ function SummaryCard({ summary, reportId }) {
       <div className="bg-slate-50 rounded-xl p-6 border border-gray-100 relative">
         {isTranslating && (
           <div className="absolute inset-0 bg-white/60 flex items-center justify-center rounded-xl z-10 backdrop-blur-sm">
-            <span className="text-blue-600 font-medium">Translating...</span>
+            <span className="text-emerald-600 font-medium">Translating...</span>
           </div>
         )}
         <MarkdownRenderer content={currentSummary} />
