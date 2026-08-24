@@ -22,7 +22,7 @@ function ReportTable({
 
           <thead>
 
-            <tr className="bg-blue-700 text-white">
+            <tr className="bg-emerald-700 text-white">
 
               <th className="px-6 py-4 text-left">
                 ID
@@ -53,7 +53,7 @@ function ReportTable({
                 key={report.id}
                 className="
                   border-b
-                  hover:bg-slate-50
+                  hover:bg-gray-50
                 "
               >
 
@@ -97,8 +97,8 @@ function ReportTable({
                         onView(report.id)
                       }
                       className="
-                        bg-blue-600
-                        hover:bg-blue-700
+                        bg-emerald-600
+                        hover:bg-emerald-700
                         text-white
                         px-4
                         py-2
