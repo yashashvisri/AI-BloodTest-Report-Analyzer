@@ -14,7 +14,7 @@ function MarkdownRenderer({ content }) {
           li: ({node, ...props}) => <li className="" {...props} />,
           strong: ({node, ...props}) => <strong className="font-bold text-gray-900" {...props} />,
           em: ({node, ...props}) => <em className="italic text-gray-800" {...props} />,
-          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-400 pl-4 italic bg-blue-50 py-2 rounded-r-lg my-4" {...props} />
+          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-emerald-400 pl-4 italic bg-emerald-50 py-2 rounded-r-lg my-4" {...props} />
         }}
       >
         {content}
