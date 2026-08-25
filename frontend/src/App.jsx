@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
 import History from "./pages/History";
 import ReportDetails from "./pages/ReportDetails";
+import NotFound from "./pages/NotFound";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             element={<ReportDetails />}
           />
 
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
       </main>
