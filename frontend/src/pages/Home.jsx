@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 import api from "../services/api";
+import DashboardStats from "../components/DashboardStats";
 
 import StatusBadge from "../components/StatusBadge";
 import AnalysisTable from "../components/AnalysisTable";
