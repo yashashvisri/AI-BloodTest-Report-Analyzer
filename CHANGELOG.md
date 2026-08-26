@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Added Premium Analytics Dashboard with Health Score
+- Added Parameter Distribution Pie Chart
 - Added LoadingSpinner component
 - Added global 404 NotFound page
 - Refactored UI code
