@@ -4,7 +4,6 @@ from app.database.base import Base
 import app.database.models
 import app.database.report_models
 import app.database.analysis_models
-import app.database.auth_models
 
 Base.metadata.create_all(bind=engine)
 
