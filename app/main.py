@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
+from app.api.auth import router as auth_router
 from app.api.users import router as users_router
 from app.api.reports import router as reports_router
 from app.api.diet import router as diet_router
@@ -41,6 +42,12 @@ app.add_middleware(
 # ==========================================================
 # Routers
 # ==========================================================
+
+app.include_router(
+    auth_router,
+    prefix="/auth",
+    tags=["Auth"],
+)
 
 app.include_router(
     users_router,
