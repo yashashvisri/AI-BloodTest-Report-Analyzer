@@ -14,6 +14,8 @@ from fastapi import (
 from fastapi.responses import StreamingResponse
 
 from sqlalchemy.orm import Session
+from app.database.models import User
+from app.api.auth import get_current_user
 
 from app.database.database import get_db
 from app.database.report_models import BloodReport
@@ -82,6 +84,7 @@ def upload_report(
         original_filename=file.filename,
         stored_filename=unique_filename,
         file_path=file_path,
+        user_id=current_user.id
     )
 
     db.add(report)
@@ -113,11 +116,13 @@ def upload_report(
 
 @router.get("/")
 def get_all_reports(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     reports = (
         db.query(BloodReport)
+        .filter(BloodReport.user_id == current_user.id)
         .all()
     )
 
@@ -139,15 +144,17 @@ def get_all_reports(
 )
 def get_saved_analysis(
     report_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     analysis = (
 
         db.query(ReportAnalysis)
-
+        .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
-            ReportAnalysis.report_id == report_id
+            ReportAnalysis.report_id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -189,7 +196,8 @@ def get_saved_analysis(
 )
 def analyze_blood_report_api(
     report_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     report = (
@@ -197,7 +205,8 @@ def analyze_blood_report_api(
         db.query(BloodReport)
 
         .filter(
-            BloodReport.id == report_id
+            BloodReport.id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -238,7 +247,8 @@ def analyze_blood_report_api(
 )
 def download_report_pdf(
     report_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     # ------------------------------------------------------
@@ -250,7 +260,8 @@ def download_report_pdf(
         db.query(BloodReport)
 
         .filter(
-            BloodReport.id == report_id
+            BloodReport.id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -275,9 +286,10 @@ def download_report_pdf(
     saved_analysis = (
 
         db.query(ReportAnalysis)
-
+        .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
-            ReportAnalysis.report_id == report_id
+            ReportAnalysis.report_id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -383,7 +395,8 @@ def download_report_pdf(
 )
 def get_report(
     report_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     report = (
@@ -391,7 +404,8 @@ def get_report(
         db.query(BloodReport)
 
         .filter(
-            BloodReport.id == report_id
+            BloodReport.id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -420,7 +434,8 @@ def get_report(
 )
 def delete_report(
     report_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     # ------------------------------------------------------
@@ -432,7 +447,8 @@ def delete_report(
         db.query(BloodReport)
 
         .filter(
-            BloodReport.id == report_id
+            BloodReport.id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()
@@ -457,9 +473,10 @@ def delete_report(
     analysis = (
 
         db.query(ReportAnalysis)
-
+        .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
-            ReportAnalysis.report_id == report_id
+            ReportAnalysis.report_id == report_id,
+            BloodReport.user_id == current_user.id
         )
 
         .first()

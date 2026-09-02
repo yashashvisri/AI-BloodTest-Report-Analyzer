@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from app.database.models import User
+from app.api.auth import get_current_user
 from pydantic import BaseModel
 import json
 
@@ -10,8 +12,8 @@ from app.database.analysis_models import ReportAnalysis
 router = APIRouter()
 
 @router.get("/{patient_name}")
-def get_trends(patient_name: str, db: Session = Depends(get_db)):
-    reports = db.query(BloodReport).filter(BloodReport.patient_name == patient_name).order_by(BloodReport.id.asc()).all()
+def get_trends(patient_name: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    reports = db.query(BloodReport).filter(BloodReport.patient_name == patient_name, BloodReport.user_id == current_user.id).order_by(BloodReport.id.asc()).all()
     
     if not reports:
         raise HTTPException(status_code=404, detail="No reports found for this patient.")

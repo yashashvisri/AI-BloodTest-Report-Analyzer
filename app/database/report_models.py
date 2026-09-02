@@ -14,3 +14,5 @@ class BloodReport(Base):
     stored_filename = Column(String)
 
     file_path = Column(String)
+
+    user_id = Column(Integer, nullable=True) # Foreign key to users.id

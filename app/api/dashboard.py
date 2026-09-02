@@ -3,20 +3,22 @@ from sqlalchemy.orm import Session
 from app.database.database import get_db
 from app.database.report_models import BloodReport
 from app.database.analysis_models import ReportAnalysis
+from app.database.models import User
+from app.api.auth import get_current_user
 import json
 
 router = APIRouter()
 
 @router.get("/stats")
-def get_dashboard_stats(db: Session = Depends(get_db)):
+def get_dashboard_stats(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """
     Retrieves high-level analytics for the dashboard including total reports,
     unique patients, and an overall health score based on parameter statuses.
     """
-    total_reports = db.query(BloodReport).count()
-    total_patients = db.query(BloodReport.patient_name).distinct().count()
+    total_reports = db.query(BloodReport).filter(BloodReport.user_id == current_user.id).count()
+    total_patients = db.query(BloodReport.patient_name).filter(BloodReport.user_id == current_user.id).distinct().count()
 
-    analyses = db.query(ReportAnalysis).all()
+    analyses = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(BloodReport.user_id == current_user.id).all()
     normal_count = 0
     abnormal_count = 0
 
