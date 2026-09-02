@@ -6,6 +6,8 @@ import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import History from "./pages/History";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
@@ -46,6 +48,8 @@ function App() {
             element={<ReportDetails />}
           />
 
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
