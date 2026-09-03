@@ -1,6 +1,7 @@
 import os
 import shutil
 import uuid
+from app.email_utils import send_analysis_email
 
 from fastapi import (
     BackgroundTasks,
