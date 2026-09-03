@@ -1,6 +1,7 @@
 from app.database.report_models import BloodReport
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from app.database.models import User
 from app.api.auth import get_current_user
 from pydantic import BaseModel
@@ -16,7 +17,7 @@ class ChatRequest(BaseModel):
 
 @router.post("/{report_id}/chat")
 def chat_endpoint(report_id: int, request: ChatRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    analysis = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(ReportAnalysis.report_id == report_id, BloodReport.user_id == current_user.id).first()
+    analysis = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(ReportAnalysis.report_id == report_id, or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')).first()
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found for this report.")
     

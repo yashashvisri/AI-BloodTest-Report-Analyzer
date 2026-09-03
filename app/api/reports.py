@@ -15,6 +15,7 @@ from fastapi import (
 from fastapi.responses import StreamingResponse
 
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from app.database.models import User
 from app.api.auth import get_current_user
 
@@ -126,7 +127,7 @@ def get_all_reports(
     else:
         reports = (
             db.query(BloodReport)
-            .filter(BloodReport.user_id == current_user.id)
+            .filter(or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor'))
             .all()
         )
 
@@ -158,7 +159,7 @@ def get_saved_analysis(
         .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
             ReportAnalysis.report_id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -211,7 +212,7 @@ def analyze_blood_report_api(
 
         .filter(
             BloodReport.id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -267,7 +268,7 @@ def download_report_pdf(
 
         .filter(
             BloodReport.id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -295,7 +296,7 @@ def download_report_pdf(
         .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
             ReportAnalysis.report_id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -411,7 +412,7 @@ def get_report(
 
         .filter(
             BloodReport.id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -454,7 +455,7 @@ def delete_report(
 
         .filter(
             BloodReport.id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()
@@ -482,7 +483,7 @@ def delete_report(
         .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
         .filter(
             ReportAnalysis.report_id == report_id,
-            BloodReport.user_id == current_user.id
+            or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')
         )
 
         .first()

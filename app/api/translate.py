@@ -1,6 +1,7 @@
 from app.database.report_models import BloodReport
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from app.database.models import User
 from app.api.auth import get_current_user
 from pydantic import BaseModel
@@ -16,7 +17,7 @@ class TranslateRequest(BaseModel):
 
 @router.post("/{report_id}/translate")
 def translate_endpoint(report_id: int, request: TranslateRequest, db: Session = Depends(get_db)):
-    analysis = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(ReportAnalysis.report_id == report_id, BloodReport.user_id == current_user.id).first()
+    analysis = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(ReportAnalysis.report_id == report_id, or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')).first()
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found for this report.")
     
