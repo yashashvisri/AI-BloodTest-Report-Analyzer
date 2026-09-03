@@ -3,6 +3,7 @@ import shutil
 import uuid
 
 from fastapi import (
+    BackgroundTasks,
     APIRouter,
     Depends,
     UploadFile,
