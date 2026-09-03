@@ -199,6 +199,7 @@ def get_saved_analysis(
 )
 def analyze_blood_report_api(
     report_id: int,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -232,6 +233,7 @@ def analyze_blood_report_api(
         report_id=report.id
     )
 
+    background_tasks.add_task(send_analysis_email, current_user.email, report.patient_name, report.id)
     return {
 
         "report_id": report.id,
