@@ -6,6 +6,7 @@ class UserCreate(BaseModel):
     password: str
 
 class UserResponse(BaseModel):
+    role: str = 'patient'
     id: int
     username: str
     email: EmailStr
