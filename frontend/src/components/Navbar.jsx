@@ -19,9 +19,15 @@ export default function Navbar() {
         {user ? (
           <>
             <span className="font-semibold text-gray-700 mr-2">Hi, {user.username}</span>
-            <Link to="/history" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">
-              History
-            </Link>
+            {user.role === 'doctor' ? (
+              <Link to="/doctor" className="font-bold text-teal-600 hover:text-emerald-700 transition-colors">
+                Clinic Dashboard
+              </Link>
+            ) : (
+              <Link to="/history" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">
+                History
+              </Link>
+            )}
             <button onClick={logout} className="font-bold text-gray-500 hover:text-rose-600 transition-colors">
               Logout
             </button>

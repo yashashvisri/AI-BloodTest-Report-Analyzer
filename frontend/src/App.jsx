@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import History from "./pages/History";
+import DoctorDashboard from "./pages/DoctorDashboard";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
 
@@ -48,6 +49,7 @@ function App() {
             element={<ReportDetails />}
           />
 
+          <Route path="/doctor" element={<DoctorDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
