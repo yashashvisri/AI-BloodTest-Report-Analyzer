@@ -188,7 +188,7 @@ function Home() {
       // Success notification
 
       toast.success(
-        "Analysis completed successfully!"
+        "Analysis completed successfully! Email notification sent!"
       );
 
     }
