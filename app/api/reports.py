@@ -120,11 +120,14 @@ def get_all_reports(
     current_user: User = Depends(get_current_user)
 ):
 
-    reports = (
-        db.query(BloodReport)
-        .filter(BloodReport.user_id == current_user.id)
-        .all()
-    )
+    if current_user.role == "doctor":
+        reports = db.query(BloodReport).all()
+    else:
+        reports = (
+            db.query(BloodReport)
+            .filter(BloodReport.user_id == current_user.id)
+            .all()
+        )
 
     return {
 
