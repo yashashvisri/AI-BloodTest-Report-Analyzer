@@ -9,3 +9,4 @@ class User(Base):
     name = Column(String, nullable=True) # keep old column
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=True)
+    role = Column(String, default='patient') # 'patient' or 'doctor'
