@@ -80,3 +80,24 @@ function SecurityForm() {
     </form>
   );
 }
+function AccountForm() {
+  const navigate = useNavigate();
+  async function handleDelete() {
+    if (!window.confirm('Are you absolutely sure? This will delete all your blood reports forever.')) return;
+    try {
+      await api.delete('/users/me');
+      localStorage.removeItem('token');
+      toast.success('Account deleted permanently.');
+      window.location.href = '/';
+    } catch (err) {
+      toast.error('Failed to delete account');
+    }
+  }
+  return (
+    <div className="space-y-4 max-w-md">
+      <h3 className="text-2xl font-bold text-rose-600 border-b pb-2 mb-6 border-rose-100">Danger Zone</h3>
+      <p className="text-gray-600 mb-4">Once you delete your account, there is no going back. All of your personal data and reports will be wiped.</p>
+      <button onClick={handleDelete} className="bg-rose-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-rose-700 transition">Delete Account Permanently</button>
+    </div>
+  );
+}
