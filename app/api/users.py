@@ -42,3 +42,12 @@ def update_profile(user_update: UserUpdate, db: Session = Depends(get_db), curre
     db.commit()
     db.refresh(current_user)
     return {"message": "Profile updated successfully"}
+
+@router.put("/me/password")
+def update_password(pw_update: PasswordUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    if not pwd_context.verify(pw_update.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect current password")
+    
+    current_user.hashed_password = pwd_context.hash(pw_update.new_password)
+    db.commit()
+    return {"message": "Password updated successfully"}
