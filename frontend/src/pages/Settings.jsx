@@ -33,3 +33,27 @@ export default function Settings() {
     </div>
   );
 }
+
+function ProfileForm({ user }) {
+  const [name, setName] = useState(user.name || '');
+  const [email, setEmail] = useState(user.email || '');
+  
+  async function handleSave(e) {
+    e.preventDefault();
+    try {
+      await api.put('/users/me', { name, email });
+      toast.success('Profile updated!');
+    } catch (err) {
+      toast.error('Failed to update profile');
+    }
+  }
+  return (
+    <form onSubmit={handleSave} className="space-y-4 max-w-md">
+      <h3 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-6">Profile Details</h3>
+      <div><label className="block text-gray-600 mb-1 font-semibold">Username</label><input disabled value={user.username || ''} className="w-full border p-2 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"/></div>
+      <div><label className="block text-gray-600 mb-1 font-semibold">Full Name</label><input required value={name} onChange={e=>setName(e.target.value)} className="w-full border p-2 rounded-lg focus:outline-emerald-500"/></div>
+      <div><label className="block text-gray-600 mb-1 font-semibold">Email Address</label><input required type="email" value={email} onChange={e=>setEmail(e.target.value)} className="w-full border p-2 rounded-lg focus:outline-emerald-500"/></div>
+      <button type="submit" className="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-emerald-700 transition mt-4">Save Changes</button>
+    </form>
+  );
+}
