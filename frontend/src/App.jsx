@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import History from "./pages/History";
-import DoctorDashboard from "./pages/DoctorDashboard";
+import DoctorDashboard from "./pages/DoctorDashboard";\nimport Settings from "./pages/Settings";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
 
