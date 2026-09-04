@@ -51,3 +51,22 @@ def update_password(pw_update: PasswordUpdate, db: Session = Depends(get_db), cu
     current_user.hashed_password = pwd_context.hash(pw_update.new_password)
     db.commit()
     return {"message": "Password updated successfully"}
+
+@router.delete("/me")
+def delete_account(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    # Cascade delete reports and analysis
+    reports = db.query(BloodReport).filter(BloodReport.user_id == current_user.id).all()
+    for report in reports:
+        analysis = db.query(ReportAnalysis).filter(ReportAnalysis.report_id == report.id).first()
+        if analysis:
+            db.delete(analysis)
+        if report.file_path and os.path.exists(report.file_path):
+            try:
+                os.remove(report.file_path)
+            except:
+                pass
+        db.delete(report)
+    
+    db.delete(current_user)
+    db.commit()
+    return {"message": "Account deleted successfully"}
