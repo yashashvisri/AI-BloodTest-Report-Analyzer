@@ -57,3 +57,26 @@ function ProfileForm({ user }) {
     </form>
   );
 }
+function SecurityForm() {
+  const [current, setCurrent] = useState('');
+  const [newPw, setNewPw] = useState('');
+  
+  async function handleSave(e) {
+    e.preventDefault();
+    try {
+      await api.put('/users/me/password', { current_password: current, new_password: newPw });
+      toast.success('Password changed successfully!');
+      setCurrent(''); setNewPw('');
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'Failed to update password');
+    }
+  }
+  return (
+    <form onSubmit={handleSave} className="space-y-4 max-w-md">
+      <h3 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-6">Security</h3>
+      <div><label className="block text-gray-600 mb-1 font-semibold">Current Password</label><input required type="password" value={current} onChange={e=>setCurrent(e.target.value)} className="w-full border p-2 rounded-lg focus:outline-emerald-500"/></div>
+      <div><label className="block text-gray-600 mb-1 font-semibold">New Password</label><input required type="password" value={newPw} onChange={e=>setNewPw(e.target.value)} className="w-full border p-2 rounded-lg focus:outline-emerald-500"/></div>
+      <button type="submit" className="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-emerald-700 transition mt-4">Change Password</button>
+    </form>
+  );
+}
