@@ -1,52 +1,31 @@
-import os
-import shutil
-import uuid
-
-from fastapi import APIRouter, UploadFile, File, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from pydantic import BaseModel, EmailStr
+from passlib.context import CryptContext
 
 from app.database.database import get_db
+from app.database.models import User
 from app.database.report_models import BloodReport
+from app.database.analysis_models import ReportAnalysis
+from app.api.auth import get_current_user
 
 router = APIRouter()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-UPLOAD_FOLDER = "uploads"
+class UserUpdate(BaseModel):
+    name: str
+    email: EmailStr
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
 
-
-@router.post("/upload")
-def upload_report(
-    patient_name: str,
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db)
-):
-
-    unique_filename = f"{uuid.uuid4()}_{file.filename}"
-
-    file_path = os.path.join(
-        UPLOAD_FOLDER,
-        unique_filename
-    )
-
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    report = BloodReport(
-        patient_name=patient_name,
-        original_filename=file.filename,
-        stored_filename=unique_filename,
-        file_path=file_path
-    )
-
-    db.add(report)
-    db.commit()
-    db.refresh(report)
-
+@router.get("/me")
+def get_my_profile(current_user: User = Depends(get_current_user)):
     return {
-        "message": "Report uploaded successfully",
-        "report_id": report.id,
-        "patient_name": report.patient_name,
-        "original_filename": report.original_filename,
-        "stored_filename": report.stored_filename
+        "id": current_user.id,
+        "username": current_user.username,
+        "name": current_user.name,
+        "email": current_user.email,
+        "role": current_user.role
     }
