@@ -29,3 +29,16 @@ def get_my_profile(current_user: User = Depends(get_current_user)):
         "email": current_user.email,
         "role": current_user.role
     }
+
+@router.put("/me")
+def update_profile(user_update: UserUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    # Check email collision
+    existing = db.query(User).filter(User.email == user_update.email, User.id != current_user.id).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already in use by another account.")
+    
+    current_user.name = user_update.name
+    current_user.email = user_update.email
+    db.commit()
+    db.refresh(current_user)
+    return {"message": "Profile updated successfully"}
