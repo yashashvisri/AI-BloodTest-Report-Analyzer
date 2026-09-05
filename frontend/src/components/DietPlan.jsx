@@ -6,6 +6,7 @@ import MarkdownRenderer from "./MarkdownRenderer";
 function DietPlan({ reportId }) {
   const [dietPlan, setDietPlan] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const generatePlan = async () => {
     setLoading(true);
