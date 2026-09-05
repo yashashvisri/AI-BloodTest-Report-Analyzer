@@ -8,6 +8,27 @@ function DietPlan({ reportId }) {
   const [loading, setLoading] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
+  
+  async function handleDownloadPDF() {
+    try {
+      setIsDownloading(true);
+      const response = await api.get(`/diet/${reportId}/download`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `diet_plan_${reportId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success("Diet Plan PDF downloaded!");
+    } catch (error) {
+      toast.error("Failed to download Diet Plan PDF");
+    } finally {
+      setIsDownloading(false);
+    }
+  }
+
   const generatePlan = async () => {
     setLoading(true);
     try {
@@ -44,6 +65,15 @@ function DietPlan({ reportId }) {
       {dietPlan && (
         <div className="bg-teal-50 rounded-xl p-6 border border-teal-100 relative">
           <MarkdownRenderer content={dietPlan} />
+          <div className="mt-6 flex justify-end">
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="bg-teal-600 hover:bg-teal-700 disabled:bg-teal-300 text-white font-semibold py-2 px-6 rounded-lg shadow transition flex items-center gap-2"
+            >
+              {isDownloading ? "Generating PDF..." : "📄 Download as PDF"}
+            </button>
+          </div>
         </div>
       )}
       
