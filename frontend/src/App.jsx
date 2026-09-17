@@ -9,7 +9,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import History from "./pages/History";
-import DoctorDashboard from "./pages/DoctorDashboard";\nimport Settings from "./pages/Settings";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import Settings from "./pages/Settings";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +40,7 @@ function App() {
             element={<Home />}
           />
 
+          <Route path="/settings" element={<Settings />} />
           <Route
             path="/history"
             element={<History />}

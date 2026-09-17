@@ -28,7 +28,8 @@ export default function Navbar() {
                 History
               </Link>
             )}
-            <Link to="/settings" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">Settings</Link>\n            <button onClick={logout} className="font-bold text-gray-500 hover:text-rose-600 transition-colors">
+            <Link to="/settings" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">Settings</Link>
+            <button onClick={logout} className="font-bold text-gray-500 hover:text-rose-600 transition-colors">
               Logout
             </button>
           </>
