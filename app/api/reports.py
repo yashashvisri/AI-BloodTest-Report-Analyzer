@@ -117,6 +117,163 @@ def upload_report(
 # Get All Reports
 # ==========================================================
 
+from typing import Optional
+
+@router.get(
+    "/",
+    response_model=ReportListResponse
+)
+def get_all_reports(
+    search: Optional[str] = None,
+    sort_by: Optional[str] = "date_desc",
+    page: int = 1,
+    limit: int = 10,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    query = db.query(BloodReport)
+    
+    if current_user.role != 'doctor':
+        query = query.filter(BloodReport.user_id == current_user.id)
+        
+    if search:
+        search_term = f"%{search}%"
+        query = query.filter(
+            or_(
+                BloodReport.patient_name.ilike(search_term),
+                BloodReport.original_filename.ilike(search_term)
+            )
+        )
+        
+    if sort_by == "date_asc":
+        query = query.order_by(BloodReport.id.asc())
+    elif sort_by == "name_asc":
+        query = query.order_by(BloodReport.patient_name.asc())
+    elif sort_by == "name_desc":
+        query = query.order_by(BloodReport.patient_name.desc())
+    else:
+        query = query.order_by(BloodReport.id.desc())
+        
+    offset = (page - 1) * limit
+    reports = query.offset(offset).limit(limit).all()
+    
+    return {"reports": reports}port uuid
+from app.email_utils import send_analysis_email
+
+from fastapi import (
+    BackgroundTasks,
+    APIRouter,
+    Depends,
+    UploadFile,
+    File,
+    Form,
+    HTTPException,
+    status,
+)
+from fastapi.responses import StreamingResponse
+
+from sqlalchemy.orm import Session
+from sqlalchemy import or_
+from app.database.models import User
+from app.api.auth import get_current_user
+
+from app.database.database import get_db
+from app.database.report_models import BloodReport
+from app.database.analysis_models import ReportAnalysis
+
+from app.services.report_service import analyze_report
+from app.services.pdf_service import generate_report_pdf
+
+from app.schemas.analysis import AnalysisResponse
+
+
+# ==========================================================
+# Router
+# ==========================================================
+
+router = APIRouter()
+
+
+UPLOAD_DIR = "uploads"
+
+os.makedirs(
+    UPLOAD_DIR,
+    exist_ok=True
+)
+
+
+# ==========================================================
+# Upload Report
+# ==========================================================
+
+@router.post(
+    "/upload",
+    status_code=status.HTTP_201_CREATED
+)
+def upload_report(
+    patient_name: str = Form(...),
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+
+    extension = os.path.splitext(
+        file.filename
+    )[1]
+
+    unique_filename = (
+        f"{uuid.uuid4()}{extension}"
+    )
+
+    file_path = os.path.join(
+        UPLOAD_DIR,
+        unique_filename
+    )
+
+    with open(
+        file_path,
+        "wb"
+    ) as buffer:
+
+        shutil.copyfileobj(
+            file.file,
+            buffer
+        )
+
+    report = BloodReport(
+        patient_name=patient_name,
+        original_filename=file.filename,
+        stored_filename=unique_filename,
+        file_path=file_path,
+        user_id=current_user.id
+    )
+
+    db.add(report)
+
+    db.commit()
+
+    db.refresh(report)
+
+    return {
+
+        "message": "Report uploaded successfully",
+
+        "report": {
+
+            "id": report.id,
+
+            "patient_name": report.patient_name,
+
+            "filename": report.original_filename
+
+        }
+
+    }
+
+
+# ==========================================================
+# Get All Reports
+# ==========================================================
+
 @router.get("/")
 def get_all_reports(
     db: Session = Depends(get_db),
