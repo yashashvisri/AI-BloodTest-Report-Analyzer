@@ -117,28 +117,38 @@ def upload_report(
 # Get All Reports
 # ==========================================================
 
+from typing import Optional
 @router.get("/")
 def get_all_reports(
+    search: Optional[str] = None,
+    sort_by: Optional[str] = "date_desc",
+    page: int = 1,
+    limit: int = 10,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-
-    if current_user.role == "doctor":
-        reports = db.query(BloodReport).all()
-    else:
-        reports = (
-            db.query(BloodReport)
-            .filter(or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor'))
-            .all()
+    query = db.query(BloodReport)
+    if current_user.role != 'doctor':
+        query = query.filter(BloodReport.user_id == current_user.id)
+    if search:
+        search_term = f"%{search}%"
+        query = query.filter(
+            or_(
+                BloodReport.patient_name.ilike(search_term),
+                BloodReport.original_filename.ilike(search_term)
+            )
         )
-
-    return {
-
-        "total_reports": len(reports),
-
-        "reports": reports
-
-    }
+    if sort_by == "date_asc":
+        query = query.order_by(BloodReport.id.asc())
+    elif sort_by == "name_asc":
+        query = query.order_by(BloodReport.patient_name.asc())
+    elif sort_by == "name_desc":
+        query = query.order_by(BloodReport.patient_name.desc())
+    else:
+        query = query.order_by(BloodReport.id.desc())
+    offset = (page - 1) * limit
+    reports = query.offset(offset).limit(limit).all()
+    return {"total_reports": query.count(), "reports": reports}
 
 
 # ==========================================================
