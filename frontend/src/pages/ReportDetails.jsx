@@ -9,6 +9,7 @@ import SummaryCard from "../components/SummaryCard";
 import DietPlan from "../components/DietPlan";
 import ReportChat from "../components/ReportChat";
 import TrendGraph from "../components/TrendGraph";
+import HealthRiskScore from "../components/HealthRiskScore";
 
 
 function ReportDetails() {
@@ -556,6 +557,8 @@ function ReportDetails() {
         {/* ==================================================
             Diet Plan
         ================================================== */}
+
+        <HealthRiskScore reportId={report.id} />
 
         <DietPlan reportId={report.id} />
 
