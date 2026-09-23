@@ -84,3 +84,56 @@ Text to translate:
 """
     response = model.generate_content(prompt)
     return response.text
+
+def generate_health_risk_score(analysis_data):
+    """Generate a structured health risk score from blood parameters using Gemini AI."""
+    prompt = f"""
+You are a medical AI risk assessment engine. Analyze the following blood test parameters and generate a structured health risk score.
+
+Blood Test Parameters:
+{analysis_data}
+
+Return your response in EXACTLY this JSON format (no markdown, no code blocks, just raw JSON):
+{{
+    "overall_score": <integer 0-100, where 100 is perfect health>,
+    "risk_level": "<Low|Moderate|High|Critical>",
+    "categories": [
+        {{
+            "name": "Cardiovascular Health",
+            "score": <integer 0-100>,
+            "risk": "<Low|Moderate|High|Critical>",
+            "summary": "<one sentence explanation>"
+        }},
+        {{
+            "name": "Metabolic Function",
+            "score": <integer 0-100>,
+            "risk": "<Low|Moderate|High|Critical>",
+            "summary": "<one sentence explanation>"
+        }},
+        {{
+            "name": "Immune System",
+            "score": <integer 0-100>,
+            "risk": "<Low|Moderate|High|Critical>",
+            "summary": "<one sentence explanation>"
+        }},
+        {{
+            "name": "Nutritional Status",
+            "score": <integer 0-100>,
+            "risk": "<Low|Moderate|High|Critical>",
+            "summary": "<one sentence explanation>"
+        }},
+        {{
+            "name": "Organ Function",
+            "score": <integer 0-100>,
+            "risk": "<Low|Moderate|High|Critical>",
+            "summary": "<one sentence explanation>"
+        }}
+    ],
+    "top_concerns": ["<concern 1>", "<concern 2>", "<concern 3>"],
+    "positive_indicators": ["<positive 1>", "<positive 2>"]
+}}
+
+Be medically accurate. If parameters are mostly normal, give high scores. If there are abnormalities, reflect them precisely in the relevant category scores.
+"""
+    response = model.generate_content(prompt)
+    return response.text
