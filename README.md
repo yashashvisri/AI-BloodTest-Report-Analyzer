@@ -288,17 +288,7 @@ This spins up PostgreSQL, FastAPI, and React/Nginx in one command.
 - [ ] Admin Panel for User Management
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 👨‍💻 Author
 
 **Yashashvi Srivastava**
 
----
-
-*Built with ❤️ and AI*
