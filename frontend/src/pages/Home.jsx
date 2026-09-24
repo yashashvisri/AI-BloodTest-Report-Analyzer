@@ -9,6 +9,7 @@ import StatusBadge from "../components/StatusBadge";
 import AnalysisTable from "../components/AnalysisTable";
 import SummaryCard from "../components/SummaryCard";
 import DietPlan from "../components/DietPlan";
+import HealthRiskScore from "../components/HealthRiskScore";
 import ReportChat from "../components/ReportChat";
 import Hero from "../components/Hero";
 import FeatureCards from "../components/FeatureCards";
@@ -426,6 +427,9 @@ function Home() {
               summary={analysisResult.ai_summary}
               reportId={analysisResult.report_id}
             />
+
+            {/* Health Risk Score */}
+            <HealthRiskScore reportId={analysisResult.report_id} />
 
             {/* Diet Plan */}
             <DietPlan reportId={analysisResult.report_id} />
