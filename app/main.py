@@ -11,6 +11,7 @@ from app.api.chat import router as chat_router
 from app.api.translate import router as translate_router
 from app.api.trends import router as trends_router
 from app.api.dashboard import router as dashboard_router
+from app.api.health_score import router as health_score_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -89,6 +90,12 @@ app.include_router(
     dashboard_router,
     prefix="/dashboard",
     tags=["Dashboard"],
+)
+
+app.include_router(
+    health_score_router,
+    prefix="/reports",
+    tags=["Health Score"],
 )
 
 
