@@ -125,3 +125,30 @@ def update_user_role(
     db.refresh(user)
 
     return {"message": f"Role updated from {old_role} to {request.role}", "user_id": user_id}
+
+
+class StatusUpdateRequest(BaseModel):
+    status: str
+
+@router.put("/users/{user_id}/status")
+def update_user_status(
+    user_id: int,
+    request: StatusUpdateRequest,
+    db: Session = Depends(get_db),
+    admin: User = Depends(get_current_admin)
+):
+    """Suspend, ban, or reactivate a user account."""
+    if request.status not in ["active", "suspended", "banned"]:
+        raise HTTPException(status_code=400, detail="Invalid status. Must be active, suspended, or banned.")
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user.id == admin.id:
+        raise HTTPException(status_code=400, detail="Cannot change your own status")
+
+    user.is_active = request.status
+    db.commit()
+
+    return {"message": f"User status updated to {request.status}", "user_id": user_id}
