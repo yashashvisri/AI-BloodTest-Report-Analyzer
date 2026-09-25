@@ -62,3 +62,35 @@ def list_all_users(
             for u in users
         ]
     }
+
+
+@router.get("/users/{user_id}")
+def get_user_details(
+    user_id: int,
+    db: Session = Depends(get_db),
+    admin: User = Depends(get_current_admin)
+):
+    """Get detailed information about a specific user including report stats."""
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    report_count = db.query(BloodReport).filter(BloodReport.user_id == user_id).count()
+    analysis_count = (
+        db.query(ReportAnalysis)
+        .join(BloodReport, ReportAnalysis.report_id == BloodReport.id)
+        .filter(BloodReport.user_id == user_id)
+        .count()
+    )
+
+    return {
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "name": user.name,
+        "role": user.role,
+        "is_active": getattr(user, "is_active", "active"),
+        "created_at": str(getattr(user, "created_at", "N/A")),
+        "report_count": report_count,
+        "analysis_count": analysis_count,
+    }
