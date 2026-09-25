@@ -29,6 +29,9 @@ export default function Navbar() {
               </Link>
             )}
             <Link to="/settings" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">Settings</Link>
+            {user.role === "admin" && (
+              <Link to="/admin" className="font-bold text-purple-600 hover:text-purple-800 transition-colors">Admin</Link>
+            )}
             <button onClick={logout} className="font-bold text-gray-500 hover:text-rose-600 transition-colors">
               Logout
             </button>
