@@ -183,3 +183,32 @@ def admin_delete_user(
     db.commit()
 
     return {"message": f"User {user.username} and all associated data deleted", "user_id": user_id}
+
+
+@router.get("/stats")
+def get_admin_stats(
+    db: Session = Depends(get_db),
+    admin: User = Depends(get_current_admin)
+):
+    """Get admin dashboard statistics: user counts by role, status, and report totals."""
+    total_users = db.query(User).count()
+    total_patients = db.query(User).filter(User.role == "patient").count()
+    total_doctors = db.query(User).filter(User.role == "doctor").count()
+    total_admins = db.query(User).filter(User.role == "admin").count()
+    active_users = db.query(User).filter(User.is_active == "active").count()
+    suspended_users = db.query(User).filter(User.is_active == "suspended").count()
+    banned_users = db.query(User).filter(User.is_active == "banned").count()
+    total_reports = db.query(BloodReport).count()
+    total_analyses = db.query(ReportAnalysis).count()
+
+    return {
+        "total_users": total_users,
+        "total_patients": total_patients,
+        "total_doctors": total_doctors,
+        "total_admins": total_admins,
+        "active_users": active_users,
+        "suspended_users": suspended_users,
+        "banned_users": banned_users,
+        "total_reports": total_reports,
+        "total_analyses": total_analyses,
+    }
