@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import History from "./pages/History";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import Settings from "./pages/Settings";
+import AdminPanel from "./pages/AdminPanel";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +42,7 @@ function App() {
           />
 
           <Route path="/settings" element={<Settings />} />
+          <Route path="/admin" element={<AdminPanel />} />
           <Route
             path="/history"
             element={<History />}
