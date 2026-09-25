@@ -46,7 +46,7 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
     
     hashed_password = get_password_hash(user.password)
     new_user = User(
-        role='doctor' if user.username == 'yashi' else 'patient',
+        role='admin' if user.username == 'yashi' else 'patient',
         username=user.username, 
         name=user.username, # Fallback to satisfy DB constraint
         email=user.email, 
