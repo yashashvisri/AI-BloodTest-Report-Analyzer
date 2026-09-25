@@ -12,6 +12,7 @@ from app.api.translate import router as translate_router
 from app.api.trends import router as trends_router
 from app.api.dashboard import router as dashboard_router
 from app.api.health_score import router as health_score_router
+from app.api.admin import router as admin_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -96,6 +97,12 @@ app.include_router(
     health_score_router,
     prefix="/reports",
     tags=["Health Score"],
+)
+
+app.include_router(
+    admin_router,
+    prefix="/admin",
+    tags=["Admin"],
 )
 
 
