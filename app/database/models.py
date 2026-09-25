@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
 from app.database.base import Base
 
 class User(Base):
@@ -9,4 +10,6 @@ class User(Base):
     name = Column(String, nullable=True) # keep old column
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=True)
-    role = Column(String, default='patient') # 'patient' or 'doctor'
+    role = Column(String, default='patient') # 'patient', 'doctor', or 'admin'
+    is_active = Column(String, default='active') # 'active', 'suspended', 'banned'
+    created_at = Column(DateTime, default=datetime.utcnow)
