@@ -152,3 +152,34 @@ def update_user_status(
     db.commit()
 
     return {"message": f"User status updated to {request.status}", "user_id": user_id}
+
+import os
+
+@router.delete("/users/{user_id}")
+def admin_delete_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    admin: User = Depends(get_current_admin)
+):
+    """Permanently delete a user and all associated data (reports, analyses, files)."""
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user.id == admin.id:
+        raise HTTPException(status_code=400, detail="Cannot delete your own account from admin panel")
+
+    # Delete all reports and their analyses
+    reports = db.query(BloodReport).filter(BloodReport.user_id == user_id).all()
+    for report in reports:
+        analysis = db.query(ReportAnalysis).filter(ReportAnalysis.report_id == report.id).first()
+        if analysis:
+            db.delete(analysis)
+        if report.file_path and os.path.exists(report.file_path):
+            os.remove(report.file_path)
+        db.delete(report)
+
+    db.delete(user)
+    db.commit()
+
+    return {"message": f"User {user.username} and all associated data deleted", "user_id": user_id}
