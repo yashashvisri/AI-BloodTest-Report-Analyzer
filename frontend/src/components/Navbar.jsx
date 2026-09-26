@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -16,6 +17,7 @@ export default function Navbar() {
         </span>
       </Link>
       <div className="flex gap-4 items-center">
+        <ThemeToggle />
         {user ? (
           <>
             <span className="font-semibold text-gray-700 mr-2">Hi, {user.username}</span>
