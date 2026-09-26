@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import api from "../services/api";
 
 import ReportTable from "../components/ReportTable";
+import ExportModal from "../components/ExportModal";
 
 
 function History() {
@@ -14,6 +15,7 @@ function History() {
   const [loading, setLoading] = useState(true);
 
   const [deletingId, setDeletingId] = useState(null);
+  const [showExport, setShowExport] = useState(false);
 
   const navigate = useNavigate();
 
@@ -267,6 +269,17 @@ function History() {
 
         </div>
 
+        {reports.length > 0 && (
+          <div className="mb-6 flex justify-end">
+            <button
+              onClick={() => setShowExport(true)}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-all flex items-center gap-2"
+            >
+              &#x1F4E5; Export as CSV
+            </button>
+          </div>
+        )}
+
 
         {/* ==================================================
             Empty State
@@ -340,6 +353,8 @@ function History() {
         )}
 
       </div>
+
+      {showExport && <ExportModal onClose={() => setShowExport(false)} />}
 
     </div>
 
