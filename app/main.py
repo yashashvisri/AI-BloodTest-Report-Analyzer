@@ -13,6 +13,7 @@ from app.api.trends import router as trends_router
 from app.api.dashboard import router as dashboard_router
 from app.api.health_score import router as health_score_router
 from app.api.admin import router as admin_router
+from app.api.export import router as export_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -103,6 +104,12 @@ app.include_router(
     admin_router,
     prefix="/admin",
     tags=["Admin"],
+)
+
+app.include_router(
+    export_router,
+    prefix="/reports",
+    tags=["Export"],
 )
 
 
