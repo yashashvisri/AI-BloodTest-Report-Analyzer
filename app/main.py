@@ -14,6 +14,7 @@ from app.api.dashboard import router as dashboard_router
 from app.api.health_score import router as health_score_router
 from app.api.admin import router as admin_router
 from app.api.export import router as export_router
+from app.api.compare import router as compare_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -110,6 +111,12 @@ app.include_router(
     export_router,
     prefix="/reports",
     tags=["Export"],
+)
+
+app.include_router(
+    compare_router,
+    prefix="/reports",
+    tags=["Compare"],
 )
 
 
