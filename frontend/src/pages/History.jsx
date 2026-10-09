@@ -272,6 +272,12 @@ function History() {
         {reports.length > 0 && (
           <div className="mb-6 flex justify-end">
             <button
+              onClick={() => navigate("/compare")}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-all flex items-center gap-2"
+            >
+              &#x1F4CA; Compare Reports
+            </button>
+            <button
               onClick={() => setShowExport(true)}
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-all flex items-center gap-2"
             >
