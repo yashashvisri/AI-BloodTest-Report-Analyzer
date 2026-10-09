@@ -30,6 +30,7 @@ export default function Navbar() {
                 History
               </Link>
             )}
+            <Link to="/compare" className="font-bold text-gray-500 hover:text-blue-600 transition-colors">Compare</Link>
             <Link to="/settings" className="font-bold text-gray-500 hover:text-emerald-600 transition-colors">Settings</Link>
             {user.role === "admin" && (
               <Link to="/admin" className="font-bold text-purple-600 hover:text-purple-800 transition-colors">Admin</Link>
