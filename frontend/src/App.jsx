@@ -12,6 +12,7 @@ import History from "./pages/History";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import Settings from "./pages/Settings";
 import AdminPanel from "./pages/AdminPanel";
+import CompareReports from "./pages/CompareReports";
 import ReportDetails from "./pages/ReportDetails";
 import NotFound from "./pages/NotFound";
 
@@ -43,6 +44,7 @@ function App() {
 
           <Route path="/settings" element={<Settings />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/compare" element={<CompareReports />} />
           <Route
             path="/history"
             element={<History />}
