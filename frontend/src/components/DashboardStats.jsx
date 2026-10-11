@@ -41,17 +41,17 @@ export default function DashboardStats() {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 flex flex-col justify-center items-center text-center">
         <p className="text-gray-500 font-medium mb-1">Total Reports</p>
-        <h3 className="text-4xl font-black text-emerald-700">{stats.total_reports}</h3>
+        <h3 className="text-4xl font-black text-emerald-400">{stats.total_reports}</h3>
       </div>
       
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-teal-100 flex flex-col justify-center items-center text-center">
         <p className="text-gray-500 font-medium mb-1">Unique Patients</p>
-        <h3 className="text-4xl font-black text-teal-700">{stats.total_patients}</h3>
+        <h3 className="text-4xl font-black text-emerald-400">{stats.total_patients}</h3>
       </div>
 
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 flex flex-col justify-center items-center text-center">
         <p className="text-gray-500 font-medium mb-1">Overall Health Score</p>
-        <h3 className="text-4xl font-black text-emerald-700">{stats.health_score}%</h3>
+        <h3 className="text-4xl font-black text-emerald-400">{stats.health_score}%</h3>
         <p className="text-xs text-gray-400 mt-2">Based on parameter ratios</p>
       </div>
 
