@@ -21,7 +21,7 @@ function App() {
 
   return (
 
-    <div className="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-900 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col transition-colors duration-300">
       <ScrollToTop />
       <Toaster
         position="top-right"
