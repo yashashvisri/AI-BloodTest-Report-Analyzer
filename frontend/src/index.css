@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-html,
-body,
-#root {
+html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -10,106 +8,173 @@ body,
 }
 
 body {
-  background-color: #f5f7fb;
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0a0f1c;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  color: #e2e8f0;
 }
 
 /* ==========================================
-   DARK MODE THEME
+   GLASSMORPHISM UTILITIES
    ========================================== */
 
-.dark body,
-.dark #root {
-  background-color: #0f172a;
-  color: #e2e8f0;
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dark .bg-white {
-  background-color: #1e293b !important;
-  color: #e2e8f0;
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
 }
 
-.dark .bg-gray-50,
-.dark .bg-slate-50,
-.dark .bg-slate-100 {
-  background-color: #0f172a !important;
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-4px);
 }
 
-.dark .bg-emerald-50\/50,
-.dark .bg-emerald-50 {
-  background-color: #0f291e !important;
+.nav-glass {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.dark .bg-teal-50 {
-  background-color: #0f2927 !important;
+/* ==========================================
+   GRADIENT & ANIMATION
+   ========================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
-.dark .text-gray-800,
-.dark .text-gray-700,
-.dark .text-gray-900 {
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.3); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.float { animation: float 3s ease-in-out infinite; }
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+.gradient-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 30%, #0d4f4f 60%, #1a2e1a 100%);
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.glow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 12px #10b981;
+}
+
+/* ==========================================
+   BUTTON STYLES
+   ========================================== */
+
+.btn-primary {
+  background: linear-gradient(135deg, #059669, #0d9488);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #047857, #0f766e);
+  box-shadow: 0 8px 30px rgba(5, 150, 105, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   STAT CARDS
+   ========================================== */
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(13, 148, 136, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+/* ==========================================
+   FORM ELEMENTS
+   ========================================== */
+
+input, select, textarea {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   color: #e2e8f0 !important;
 }
 
-.dark .text-gray-600 {
-  color: #94a3b8 !important;
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.dark .text-gray-500 {
-  color: #94a3b8 !important;
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15) !important;
 }
 
-.dark .text-gray-400 {
-  color: #64748b !important;
+/* ==========================================
+   TABLE STYLES
+   ========================================== */
+
+table thead tr {
+  background: rgba(255, 255, 255, 0.03) !important;
 }
 
-.dark .border-gray-100,
-.dark .border-gray-200,
-.dark .border-gray-50 {
-  border-color: #334155 !important;
+table tbody tr {
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-.dark .shadow-lg,
-.dark .shadow-xl,
-.dark .shadow-sm {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3) !important;
+table tbody tr:hover {
+  background: rgba(16, 185, 129, 0.05) !important;
 }
 
-.dark input,
-.dark select,
-.dark textarea {
-  background-color: #1e293b !important;
-  border-color: #475569 !important;
-  color: #e2e8f0 !important;
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ==========================================
+   OVERRIDES FOR LIGHT-THEMED COMPONENTS
+   ========================================== */
+
+.bg-white { background-color: rgba(30, 41, 59, 0.8) !important; }
+.bg-gray-50, .bg-slate-50, .bg-slate-100 { background-color: #0f172a !important; }
+.bg-emerald-50, .bg-emerald-50\/50 { background-color: rgba(16, 185, 129, 0.08) !important; }
+.bg-teal-50 { background-color: rgba(13, 148, 136, 0.08) !important; }
+.bg-yellow-50 { background-color: rgba(234, 179, 8, 0.08) !important; }
+.bg-red-50 { background-color: rgba(239, 68, 68, 0.08) !important; }
+.bg-blue-50 { background-color: rgba(59, 130, 246, 0.08) !important; }
+.bg-purple-50 { background-color: rgba(139, 92, 246, 0.08) !important; }
+.bg-indigo-50 { background-color: rgba(99, 102, 241, 0.08) !important; }
+
+.text-gray-800, .text-gray-700, .text-gray-900 { color: #e2e8f0 !important; }
+.text-gray-600 { color: #94a3b8 !important; }
+.text-gray-500 { color: #64748b !important; }
+.text-gray-400 { color: #475569 !important; }
+
+.border-gray-100, .border-gray-200, .border-gray-50 { border-color: rgba(255, 255, 255, 0.08) !important; }
+.border-dashed { border-color: rgba(255, 255, 255, 0.15) !important; }
+
+.shadow-lg, .shadow-xl, .shadow-sm, .shadow-2xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: #64748b !important;
-}
-
-.dark nav {
-  background-color: #1e293b !important;
-  border-color: #334155 !important;
-}
-
-.dark .bg-slate-50.rounded-xl,
-.dark .bg-gray-50.rounded-xl {
-  background-color: #0f172a !important;
-}
-
-.dark table thead tr {
-  background-color: #1e293b !important;
-}
-
-.dark table tbody tr:hover {
-  background-color: #334155 !important;
-}
-
-.dark .border-dashed {
-  border-color: #475569 !important;
-}
-
-.dark footer {
-  background-color: #1e293b !important;
-  border-color: #334155 !important;
-}
+nav { background-color: rgba(15, 23, 42, 0.85) !important; border-color: rgba(255, 255, 255, 0.06) !important; }
+footer { background-color: rgba(15, 23, 42, 0.9) !important; border-color: rgba(255, 255, 255, 0.06) !important; }
