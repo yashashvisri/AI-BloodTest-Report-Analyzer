@@ -333,6 +333,16 @@ Spins up PostgreSQL, FastAPI, and React/Nginx under a unified bridge network.
 
 ---
 
+## 🚀 Production Deployment Guidelines
+
+For enterprise or clinical SaaS environments:
+1. **TLS / SSL Termination**: Ensure Nginx or Cloudflare terminates HTTPS before routing requests to FastAPI.
+2. **Database Connection Pooling**: Configure SQLAlchemy pool size (`pool_size=20`, `max_overflow=10`) for optimal throughput.
+3. **OCR Compute Allocation**: Tesseract execution consumes brief CPU spikes; ensure containers are allocated at least 2 vCPUs and 2GB RAM.
+4. **Persistent Asset Storage**: Store uploaded raw PDFs and generated reports on an S3-compatible bucket or dedicated block volume.
+
+---
+
 ## 🗺️ Roadmap & Progress
 
 - [x] PDF OCR extraction with Tesseract
