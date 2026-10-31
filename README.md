@@ -1,6 +1,6 @@
 # 🩸 AI-BloodTest-Report-Analyzer
 
-An advanced, AI-powered Blood Test Report Analysis System built using **FastAPI, React, PostgreSQL, OCR, RAG, and Large Language Models (Google Gemini)**.
+An advanced, full-stack, AI-powered Blood Test Report Analysis System built with **FastAPI, React, PostgreSQL, OCR, RAG, and Large Language Models (Google Gemini)**.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://python.org)
@@ -12,52 +12,62 @@ An advanced, AI-powered Blood Test Report Analysis System built using **FastAPI,
 
 ## 📌 Project Overview
 
-This system automates blood test report analysis to empower patients and doctors. Users can upload blood report PDFs, which are scanned using OCR to extract parameters. The AI then processes these parameters to provide easy-to-understand medical summaries, personalized diet plans, and interactive capabilities like trend analysis and chatting with the report.
+This system automates blood test report analysis to empower both patients and healthcare providers. Users can upload blood report PDFs, which are processed using OCR to extract laboratory parameters. The AI system interprets these metrics, providing plain-language medical summaries, actionable diet & lifestyle plans, interactive RAG chatting, longitudinal trend analysis, smart health risk scores, and side-by-side report comparisons.
 
 ---
 
 ## ✨ Key Features
 
-### 🔬 Core AI Analysis
-- **📄 Automated PDF OCR** — Extracts raw medical data directly from scanned blood test reports using Tesseract.
-- **🤖 AI Medical Summary (Gemini)** — Highlights abnormal parameters and explains their significance in plain English.
-- **🥗 Actionable Diet & Lifestyle Plans** — Generates a personalized 7-day meal and workout plan based on the user's specific blood deficiencies.
-- **📥 Diet Plan PDF Export** — Download your personalized diet plan as a beautifully formatted PDF document.
-- **💬 RAG Chatbot ("Chat with your Report")** — Ask questions like "Why is my Vitamin D low?" and get answers grounded in your actual report data.
-- **📈 Historical Trend Analysis** — Visually graph and track how vitals (Hemoglobin, WBC, etc.) change across multiple blood tests over time using Recharts.
-- **🌍 Multi-Language Translation** — Instantly translates complex medical summaries into Hindi, Spanish, French, and more.
-- **⚡ Cached Analysis** — Reports are saved in PostgreSQL to prevent redundant OCR/API calls, loading instantly on subsequent visits.
-- **📊 Analysis PDF Export** — Download your complete AI-analyzed results as a formatted PDF report.
+### 🔬 Core AI Analysis & Diagnostics
+- **📄 Automated PDF OCR** — Extracts raw medical data directly from scanned blood test reports using Tesseract OCR.
+- **🤖 AI Medical Summary (Gemini)** — Identifies abnormal parameters and explains their clinical significance in plain, patient-friendly language.
+- **🛡️ AI Health Risk Score** — Generates a 0–100 health risk assessment with color-coded animated SVG gauges and categorical risk evaluations (Cardiovascular, Metabolic, Hematologic, Hepatic/Renal).
+- **📊 Side-by-Side Report Comparison** — Select any two historical reports to compare parameters with automated status diffs and directional indicators (⬆️ Improved, ⬇️ Worsened, ➖ Unchanged, ➕ New).
+- **🥗 Actionable Diet & Lifestyle Plans** — Generates personalized 7-day nutritional plans tailored to address detected blood deficiencies.
+- **📥 Diet Plan PDF Export** — Download custom diet plans as cleanly formatted PDF documents.
+- **💬 RAG Chatbot ("Chat with your Report")** — Ask questions like *"Why is my Vitamin D low?"* and receive answers grounded strictly in your report data.
+- **📈 Historical Trend Analysis** — Visually graph vitals over time (Hemoglobin, WBC, Cholesterol, etc.) using interactive Recharts line charts.
+- **🌍 Multi-Language Translation** — Translate medical findings into Hindi, Spanish, French, and other languages.
+- **⚡ Cached Analysis** — Analyses are securely persisted in PostgreSQL to prevent duplicate API processing and provide instant loading.
+- **📊 Analysis PDF & CSV Export** — Export comprehensive analysis reports as formatted PDFs or raw tabular CSV spreadsheets.
+
+### 🎨 Modern Dark Glassmorphism UI
+- **🌌 Ambient Dark Theme** — Deep navy aesthetic (`#0a0f1c`) paired with frosted glass panels (`backdrop-filter: blur(16px)`).
+- **✨ Animated Visual Elements** — Floating particle orbs, smooth gradient transitions, and responsive hover-lift cards.
+- **🌓 Dynamic Theme Toggle** — Seamlessly switch between light and dark modes with persistent local storage.
 
 ### 🔐 Authentication & Security
-- **🔑 JWT Authentication** — Secure login and signup with bcrypt password hashing and JSON Web Token sessions.
-- **🛡️ Role-Based Access Control (RBAC)** — Dual roles: `patient` (default) and `doctor`. Doctors get global access to all patient reports across the clinic.
-- **🔒 Data Privacy & Isolation** — Every API endpoint is secured so patients can only access their own reports.
+- **🔑 JWT Authentication** — Secure user sessions via bcrypt password hashing and JSON Web Tokens.
+- **🛡️ Role-Based Access Control (RBAC)** — Three-tier permissions:
+  - `patient`: Isolated access to personal records and reports.
+  - `doctor`: Clinic-wide visibility and search capabilities across all patients.
+  - `admin`: Full administrative control with user role assignment and status management.
+- **🔒 Data Privacy & Isolation** — Strict database querying enforced by user ID checks across all endpoints.
+
+### 👑 Admin Management Panel
+- **👥 User Administration** — Paginated, searchable user registry.
+- **🔄 Role Elevation** — Promote or change user roles (`patient`, `doctor`, `admin`).
+- **🚫 Account Moderation** — Suspend, ban, or delete accounts with cascading relationship cleanups.
+- **📊 System Stats** — High-level metrics on registered users, active sessions, and analyzed documents.
 
 ### 🏥 Clinic Dashboard (Doctor View)
-- **🔍 Real-Time Patient Search** — Debounced search bar filters patients by name or document filename instantly.
-- **📋 Sortable Records** — Sort the patient table by Newest, Oldest, or Alphabetically (A-Z / Z-A).
-- **📄 Paginated Results** — Backend-driven pagination for efficient handling of large patient databases.
-- **🏷️ Visual Status Tags** — "Analyzed" badges on each report row for quick status identification.
-- **🖼️ Empty State Illustrations** — Graceful UI when no records match the search criteria.
+- **🔍 Real-Time Patient Search** — Debounced search filtering patients by name or report filename.
+- **📋 Multi-Criteria Sorting** — Sort records by Newest, Oldest, or Alphabetically.
+- **📄 Server-Side Pagination** — High-performance pagination for large clinical record volumes.
+- **🏷️ Visual Status Badges** — Instant visual confirmation of analyzed vs. pending documents.
 
-### 👤 User Profile & Settings
-- **✏️ Profile Management** — Update display name and email address from a tabbed Settings page.
-- **🔐 Security Panel** — Securely change your password with bcrypt verification.
-- **⚠️ Danger Zone** — Full account deletion with cascading cleanup (user data, reports, analyses, and uploaded PDFs).
-
-### 📊 Dashboard Analytics
-- **📈 Total Reports & Unique Patients** — Real-time stat cards on the home page.
-- **💚 Overall Health Score** — Computed from normal vs. abnormal parameter ratios.
-- **🍩 Parameter Distribution Chart** — Recharts pie chart showing Normal vs. Abnormal distribution.
+### 👤 User Settings & Profile
+- **✏️ Profile Customization** — Update name and email address with inline validation.
+- **🔐 Password Management** — Secure password changes verified against existing bcrypt hashes.
+- **⚠️ Danger Zone** — Self-service cascading account deletion.
 
 ### 📧 Email Notifications
-- **📬 Automated Analysis Alerts** — Background email notifications triggered after every report analysis using FastAPI `BackgroundTasks`.
-- **🖨️ Terminal-Friendly Mock SMTP** — Nicely formatted email previews printed to the terminal for local development.
+- **📬 Automated Analysis Alerts** — Background notification delivery upon completed report analysis using FastAPI `BackgroundTasks`.
+- **🖨️ Local SMTP Simulation** — Cleanly formatted email terminal previews for streamlined local testing.
 
-### 🐳 Docker Support
-- **🏗️ Full Containerization** — `docker-compose.yml` orchestrates PostgreSQL, FastAPI backend, and React/Nginx frontend.
-- **⚡ One-Command Deploy** — `docker-compose up --build` spins up the entire stack.
+### 🐳 DevOps & Deployment
+- **🏗️ Containerized Architecture** — `docker-compose.yml` orchestrating PostgreSQL, FastAPI backend, and React/Nginx frontend.
+- **⚡ Single-Command Startup** — Spin up the entire infrastructure with `docker-compose up --build`.
 
 ---
 
@@ -66,29 +76,28 @@ This system automates blood test report analysis to empower patients and doctors
 ### Frontend
 | Technology | Purpose |
 |---|---|
-| React 19 & Vite | SPA framework and build tool |
-| Tailwind CSS | Modern UI with glassmorphism effects |
-| Recharts | Trend graphs and pie charts |
-| React Router v6 | Client-side routing |
-| Axios | HTTP client with JWT interceptor |
-| React Hot Toast | Toast notifications |
+| React 19 & Vite | SPA framework & high-speed development bundle |
+| Tailwind CSS v4 | Custom utility-first styling & glassmorphic dark theme |
+| Recharts | Interactive trend charts and analytical graphs |
+| React Router v6 | Client-side routing and protected paths |
+| Axios | API communication with JWT interceptors |
+| React Hot Toast | Real-time notifications and system feedback |
 
 ### Backend
 | Technology | Purpose |
 |---|---|
-| FastAPI (Python 3.11) | REST API framework |
-| PostgreSQL & SQLAlchemy | Database and ORM |
-| Tesseract OCR & pdf2image | PDF text extraction |
-| Google Gemini 2.5 Flash | LLM for AI analysis |
-| python-jose & passlib | JWT tokens and password hashing |
-| pdfkit & wkhtmltopdf | PDF report generation |
-| Markdown | Diet plan formatting for PDF export |
+| FastAPI (Python 3.11) | High-performance asynchronous REST API framework |
+| PostgreSQL & SQLAlchemy | Relational persistence with ORM modeling |
+| Tesseract OCR & pdf2image | Optical character recognition on uploaded PDFs |
+| Google Gemini 2.5 Flash | Large language model for clinical summarization & risk scoring |
+| python-jose & passlib | JWT creation, validation, and bcrypt password hashing |
+| pdfkit & wkhtmltopdf | Headless PDF rendering & document generation |
 
 ### DevOps
 | Technology | Purpose |
 |---|---|
-| Docker & Docker Compose | Containerization |
-| Nginx | Frontend static file serving |
+| Docker & Docker Compose | Multi-container environment orchestration |
+| Nginx | Production reverse proxy & frontend static serving |
 
 ---
 
@@ -98,60 +107,67 @@ This system automates blood test report analysis to empower patients and doctors
 AI-BloodTest-Report-Analyzer/
 │
 ├── app/
-│   ├── ai/              # Gemini AI integration (Diet, Chat, Translate prompts)
+│   ├── ai/                    # Gemini AI integration (Diet, Chat, Translate, Risk Score)
 │   ├── api/
-│   │   ├── auth.py      # Login, Signup, JWT, RBAC role assignment
-│   │   ├── reports.py   # Upload, Analyze, Download, Search, Paginate
-│   │   ├── chat.py      # RAG Chatbot endpoint
-│   │   ├── diet.py      # Diet plan generation + PDF download
-│   │   ├── translate.py # Multi-language translation
-│   │   ├── trends.py    # Historical trend aggregation
-│   │   ├── dashboard.py # Analytics stats (reports, patients, health score)
-│   │   └── users.py     # Profile update, password change, account deletion
+│   │   ├── auth.py            # Login, Signup, JWT & RBAC dependencies
+│   │   ├── admin.py           # User management, role moderation & admin stats
+│   │   ├── compare.py         # Side-by-side report comparison & diffing
+│   │   ├── export.py          # CSV export generation
+│   │   ├── health_score.py    # AI Health Risk Score endpoint
+│   │   ├── reports.py         # Upload, Analyze, Download, Search, Paginate
+│   │   ├── chat.py            # RAG Chatbot endpoint
+│   │   ├── diet.py            # Diet plan generation & PDF download
+│   │   ├── translate.py       # Multi-language translation
+│   │   ├── trends.py          # Parameter historical trend aggregation
+│   │   ├── dashboard.py       # Analytics stats
+│   │   └── users.py           # Profile management, security & account deletion
 │   ├── database/
-│   │   ├── models.py          # User model (with role column)
-│   │   ├── report_models.py   # BloodReport model (with user_id FK)
+│   │   ├── models.py          # User model (roles, status, timestamps)
+│   │   ├── report_models.py   # BloodReport model
 │   │   ├── analysis_models.py # ReportAnalysis model
-│   │   └── database.py        # SQLAlchemy session & engine
+│   │   └── database.py        # SQLAlchemy session & database engine
 │   ├── services/
-│   │   └── pdf_service.py     # PDF generation (analysis + diet plan)
-│   ├── email_utils.py         # Mock SMTP email notifications
-│   ├── ocr/                   # Tesseract OCR processing
-│   ├── parser/                # Regex-based blood parameter extraction
-│   └── main.py                # FastAPI entry point & router mounting
+│   │   └── pdf_service.py     # PDF generation (analysis reports & diet plans)
+│   ├── email_utils.py         # Background email dispatching & terminal mock
+│   ├── ocr/                   # Tesseract OCR PDF text extraction
+│   ├── parser/                # Regex & semantic blood parameter extraction
+│   └── main.py                # FastAPI app initialization & router registration
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── AnalysisTable.jsx     # Blood parameter results table
-│   │   │   ├── DashboardStats.jsx    # Home page stat cards + pie chart
-│   │   │   ├── DietPlan.jsx          # Diet plan display + PDF download button
-│   │   │   ├── FeatureCards.jsx      # Landing page feature showcase
-│   │   │   ├── Hero.jsx              # Landing page hero section
-│   │   │   ├── MarkdownRenderer.jsx  # Renders AI markdown responses
-│   │   │   ├── Navbar.jsx            # Navigation with role-aware links
-│   │   │   ├── ReportChat.jsx        # Interactive RAG chat interface
-│   │   │   ├── ReportTable.jsx       # Paginated report listing
-│   │   │   ├── SummaryCard.jsx       # AI summary + translation dropdown
-│   │   │   └── TrendGraph.jsx        # Historical line chart with metric selector
+│   │   │   ├── AnalysisTable.jsx     # Parameter results with status badges
+│   │   │   ├── DashboardStats.jsx    # Metric cards & distribution chart
+│   │   │   ├── DietPlan.jsx          # Diet plan display & PDF download
+│   │   │   ├── ExportModal.jsx       # CSV export modal dialog
+│   │   │   ├── FeatureCards.jsx      # Glassmorphism feature cards
+│   │   │   ├── HealthRiskScore.jsx   # SVG score gauge & risk assessment
+│   │   │   ├── Hero.jsx              # Hero with animated particles
+│   │   │   ├── Navbar.jsx            # Frosted glass navigation with avatar
+│   │   │   ├── ReportChat.jsx        # RAG interactive chat interface
+│   │   │   ├── SummaryCard.jsx       # AI summary & multi-language translation
+│   │   │   ├── ThemeToggle.jsx       # Light/Dark mode switch
+│   │   │   └── TrendGraph.jsx        # Historical longitudinal charts
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx       # Global auth state management
+│   │   │   ├── AuthContext.jsx       # Global authentication & user session state
+│   │   │   └── ThemeContext.jsx      # Dark mode state & local persistence
 │   │   ├── pages/
-│   │   │   ├── Home.jsx              # Upload, analyze, and view results
-│   │   │   ├── History.jsx           # Patient report history
-│   │   │   ├── ReportDetails.jsx     # Full analysis view for a single report
-│   │   │   ├── DoctorDashboard.jsx   # Clinic-wide search, sort, and pagination
-│   │   │   ├── Settings.jsx          # Profile, security, and account management
-│   │   │   ├── Login.jsx             # Login page
-│   │   │   ├── Signup.jsx            # Registration page
-│   │   │   └── NotFound.jsx          # 404 page
+│   │   │   ├── Home.jsx              # Main report upload & interactive analysis
+│   │   │   ├── History.jsx           # Historical report log with CSV export
+│   │   │   ├── CompareReports.jsx    # Side-by-side comparison screen
+│   │   │   ├── DoctorDashboard.jsx   # Clinic-wide patient management (Doctor view)
+│   │   │   ├── AdminPanel.jsx        # Administrative user moderation console
+│   │   │   ├── ReportDetails.jsx     # Comprehensive single-report view
+│   │   │   ├── Settings.jsx          # User settings, security & deletion
+│   │   │   ├── Login.jsx             # User authentication
+│   │   │   └── Signup.jsx            # User registration
 │   │   └── services/
-│   │       └── api.js                # Axios instance with JWT interceptor
-│   ├── Dockerfile                    # Multi-stage build → Nginx
+│   │       └── api.js                # Axios instance with auth interceptor
+│   ├── Dockerfile                    # Multi-stage production Nginx container
 │   └── package.json
 │
-├── backend.Dockerfile                # Python 3.11 + wkhtmltopdf
-├── docker-compose.yml                # PostgreSQL + FastAPI + Nginx
+├── backend.Dockerfile                # Python 3.11 + wkhtmltopdf + dependencies
+├── docker-compose.yml                # Multi-container orchestration
 ├── requirements.txt
 ├── .env.example
 ├── CHANGELOG.md
@@ -162,43 +178,47 @@ AI-BloodTest-Report-Analyzer/
 
 ## 🔗 API Endpoints
 
-### Authentication
+### Authentication & Users
 | Method | Endpoint | Description |
 |---|---|---|
 | `POST` | `/auth/signup` | Register a new user account |
-| `POST` | `/auth/login` | Login and receive JWT token |
+| `POST` | `/auth/login` | Authenticate and obtain JWT token |
+| `PUT` | `/users/me/profile` | Update profile display name and email |
+| `PUT` | `/users/me/password` | Change user password securely |
+| `DELETE` | `/users/me` | Delete account with cascading data deletion |
 
-### Reports
+### Reports & Diagnostics
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/reports/upload` | Upload a blood test PDF |
-| `POST` | `/reports/analyze/{id}` | Run OCR + AI analysis |
-| `GET` | `/reports/` | List reports (search, sort, paginate) |
-| `GET` | `/reports/{id}` | Get single report details |
-| `GET` | `/reports/{id}/download` | Download analysis as PDF |
-| `DELETE` | `/reports/{id}` | Delete report and associated data |
+| `POST` | `/reports/upload` | Upload a blood test report (PDF) |
+| `POST` | `/reports/analyze/{id}` | Execute OCR & AI analysis on report |
+| `GET` | `/reports/` | List reports (search, sort, and paginate) |
+| `GET` | `/reports/{id}` | Fetch detailed analysis for a specific report |
+| `GET` | `/reports/{id}/download` | Download complete medical report as PDF |
+| `GET` | `/reports/export/csv` | Export blood parameter records to CSV |
+| `GET` | `/reports/compare/{id_a}/{id_b}` | Side-by-side parameter diff of two reports |
+| `DELETE` | `/reports/{id}` | Delete report, analysis, and stored PDF |
 
-### AI Features
+### AI Analysis & Health Features
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/reports/{id}/diet-plan` | Generate personalized diet plan |
-| `GET` | `/diet/{id}/download` | Download diet plan as PDF |
-| `POST` | `/reports/{id}/chat` | Chat with your blood report (RAG) |
-| `POST` | `/reports/{id}/translate` | Translate summary to another language |
-| `GET` | `/trends/{patient_name}` | Get historical parameter trends |
+| `GET` | `/reports/{id}/risk-score` | Calculate AI health risk score (0-100) & risk factors |
+| `GET` | `/reports/{id}/diet-plan` | Generate personalized nutritional plan |
+| `GET` | `/diet/{id}/download` | Download personalized diet plan as PDF |
+| `POST` | `/reports/{id}/chat` | Ask questions grounded in report data (RAG) |
+| `POST` | `/reports/{id}/translate` | Translate medical summary into target language |
+| `GET` | `/trends/{patient_name}` | Fetch longitudinal parameter trends over time |
 
-### Dashboard & User Management
+### Administration & Analytics
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/dashboard/stats` | Aggregated analytics (reports, patients, health score) |
-| `PUT` | `/users/me/profile` | Update display name and email |
-| `PUT` | `/users/me/password` | Change password securely |
-| `DELETE` | `/users/me` | Delete account (cascading cleanup) |
-
-### System
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Health check |
+| `GET` | `/dashboard/stats` | Retrieve aggregate clinic metrics |
+| `GET` | `/admin/users` | List all users with pagination and search |
+| `PUT` | `/admin/users/{id}/role` | Update user role (`patient`, `doctor`, `admin`) |
+| `PUT` | `/admin/users/{id}/status` | Update account status (`active`, `suspended`, `banned`) |
+| `DELETE` | `/admin/users/{id}` | Permanently delete user and records |
+| `GET` | `/admin/stats` | Fetch system-wide administrative statistics |
+| `GET` | `/health` | Health check endpoint |
 
 ---
 
@@ -208,7 +228,7 @@ AI-BloodTest-Report-Analyzer/
 - Python 3.11+
 - Node.js 18+
 - PostgreSQL 15+
-- Tesseract OCR installed
+- Tesseract OCR installed on host system
 - Google Gemini API key
 
 ### 1. Backend Setup
@@ -219,26 +239,26 @@ cd AI-BloodTest-Report-Analyzer
 
 # Create virtual environment
 python -m venv venv
-source venv/Scripts/activate   # Windows
-# source venv/bin/activate     # macOS/Linux
+source venv/Scripts/activate   # Windows PowerShell: .\venv\Scripts\Activate.ps1
+# source venv/bin/activate     # macOS / Linux
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-Create a `.env` file from the template:
+Create a `.env` file from the example:
 ```bash
 cp .env.example .env
 ```
 
-Configure your environment variables:
+Set your environment variables:
 ```env
 DATABASE_URL=postgresql://postgres:password@localhost:5432/blood_report_db
 GEMINI_API_KEY=your_gemini_api_key_here
-JWT_SECRET_KEY=your_secret_key_here
+JWT_SECRET_KEY=your_jwt_secret_key_here
 ```
 
-Start the backend:
+Start the FastAPI application:
 ```bash
 uvicorn app.main:app --reload
 ```
@@ -250,45 +270,38 @@ npm install
 npm run dev
 ```
 
-### 3. Docker (Alternative)
+### 3. Docker Deployment (Alternative)
 ```bash
 docker-compose up --build
 ```
-This spins up PostgreSQL, FastAPI, and React/Nginx in one command.
+Spins up PostgreSQL, FastAPI, and React/Nginx under a unified bridge network.
 
 ---
 
-## 🖥️ Screenshots
+## 🗺️ Roadmap & Progress
 
-| Feature | Description |
-|---|---|
-| 🏠 Home Page | Upload reports, view AI analysis, stat cards, and feature showcase |
-| 🧪 Analysis View | Blood parameters table, AI summary, translate, diet plan, and chat |
-| 🏥 Clinic Dashboard | Search, sort, paginate patient records (doctor role) |
-| ⚙️ Settings | Profile management, password change, and account deletion |
-| 📈 Trend Graph | Historical comparison of blood parameters across tests |
-
----
-
-## 🗺️ Roadmap
-
-- [x] PDF OCR & AI Analysis
-- [x] Diet & Lifestyle Plans with PDF Export
-- [x] RAG Chatbot
-- [x] Historical Trend Analysis
+- [x] PDF OCR extraction with Tesseract
+- [x] AI Medical Summarization with Google Gemini
+- [x] Actionable Diet & Lifestyle Plans with PDF export
+- [x] Grounded RAG Chatbot ("Chat with your Report")
+- [x] Longitudinal Parameter Trend Graphs
 - [x] Multi-Language Translation
-- [x] JWT Authentication & RBAC
-- [x] Email Notifications
-- [x] User Settings & Profile Management
-- [x] Clinic Dashboard with Search & Pagination
-- [x] Docker Containerization
-- [ ] Dark Mode Theme
-- [ ] Export Full Report History as CSV
-- [ ] Push Notifications (WebSocket)
-- [ ] Admin Panel for User Management
+- [x] JWT Authentication & Role-Based Access Control (RBAC)
+- [x] Clinic Dashboard with Search, Sort & Pagination
+- [x] Profile Management & Cascading Account Deletion
+- [x] Background Email Notifications
+- [x] Dark Mode & Glassmorphic UI Redesign
+- [x] CSV Export for Report History
+- [x] AI Health Risk Score Gauge & Assessment
+- [x] Side-by-Side Report Comparison & Diff Analysis
+- [x] Full Admin Panel for User & Role Management
+- [x] Docker & Docker Compose Containerization
+- [ ] Real-time WebSocket analysis progress indicators
+- [ ] Critical parameter SMS / Push notifications
 
 ---
+
 ## 👨‍💻 Author
 
 **Yashashvi Srivastava**
-
+- GitHub: [@yashashvisri](https://github.com/yashashvisri)
