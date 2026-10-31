@@ -12,6 +12,10 @@ An advanced, full-stack, AI-powered Blood Test Report Analysis System built with
 
 ## 📌 Project Overview
 
+Routine blood testing is essential for preventive healthcare, yet patients frequently encounter laboratory reports dense with clinical jargon and incomprehensible numerical ranges. **AI-BloodTest-Report-Analyzer** bridges the communication divide between clinical diagnostics and patient comprehension by translating complex lab results into clear, structured, and actionable medical intelligence.
+
+The platform serves both **individual patients** seeking clarity on their health indicators and **healthcare providers** managing longitudinal patient databases with role-based clinical dashboards.
+
 This system automates blood test report analysis to empower both patients and healthcare providers. Users can upload blood report PDFs, which are processed using OCR to extract laboratory parameters. The AI system interprets these metrics, providing plain-language medical summaries, actionable diet & lifestyle plans, interactive RAG chatting, longitudinal trend analysis, smart health risk scores, and side-by-side report comparisons.
 
 ---
