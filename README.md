@@ -366,6 +366,17 @@ For enterprise or clinical SaaS environments:
 
 ---
 
+## 🤝 Contributing Guidelines
+
+Contributions are welcome! Please follow these standards:
+1. Fork the Project Repository.
+2. Create a Feature Branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your Changes (`git commit -m 'feat: add AmazingFeature'`).
+4. Push to the Branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request for review.
+
+---
+
 ## 👨‍💻 Author
 
 **Yashashvi Srivastava**
