@@ -285,9 +285,21 @@ cp .env.example .env
 
 Set your environment variables:
 ```env
+# Database Connection
 DATABASE_URL=postgresql://postgres:password@localhost:5432/blood_report_db
+
+# Google Gemini API Key (Obtain from Google AI Studio)
 GEMINI_API_KEY=your_gemini_api_key_here
+
+# Security & Session Management
 JWT_SECRET_KEY=your_jwt_secret_key_here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+
+# Server Configuration
+PORT=8000
+HOST=127.0.0.1
+DEBUG=True
 ```
 
 Start the FastAPI application:
