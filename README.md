@@ -20,6 +20,28 @@ This system automates blood test report analysis to empower both patients and he
 
 ---
 
+## 🏛️ System Architecture
+
+```
+   [ Patient / Doctor Client ]
+               │
+        (React 19 + Vite)
+               │ REST / JWT
+               ▼
+       [ FastAPI Gateway ]
+        ├── Auth & RBAC Middleware
+        ├── Background Notification Dispatcher
+        ▼
+   [ Core Services ]
+    ├── OCR Ingestion (Tesseract + pdf2image)
+    ├── Clinical Parsing Engine (Regex + Semantic Normalizer)
+    ├── Google Gemini 2.5 Flash (Analysis, Risk Score, Diet & RAG)
+    ├── Document Rendering (pdfkit / wkhtmltopdf)
+    └── Relational Storage (PostgreSQL 15 via SQLAlchemy ORM)
+```
+
+---
+
 ## ✨ Key Features
 
 ### 🔬 Core AI Analysis & Diagnostics
