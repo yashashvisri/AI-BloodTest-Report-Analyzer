@@ -65,7 +65,10 @@ This system automates blood test report analysis to empower both patients and he
 - **✨ Animated Visual Elements** — Floating particle orbs, smooth gradient transitions, and responsive hover-lift cards.
 - **🌓 Dynamic Theme Toggle** — Seamlessly switch between light and dark modes with persistent local storage.
 
-### 🔐 Authentication & Security
+### 🔐 Authentication, Privacy & Clinical Security
+- **🔒 Zero-Leakage Data Isolation** — All report queries strictly filter by authenticated `user_id`, guaranteeing cross-tenant patient privacy.
+- **🛡️ Secure File Sanitation** — Uploaded filenames and MIME types undergo strict server-side validation to prevent path traversal and execution exploits.
+- **🔑 Cryptographic Standards** — Passwords hashed with salted bcrypt algorithms; access tokens encrypted via HS256 JWT sessions.
 - **🔑 JWT Authentication** — Secure user sessions via bcrypt password hashing and JSON Web Tokens.
 - **🛡️ Role-Based Access Control (RBAC)** — Three-tier permissions:
   - `patient`: Isolated access to personal records and reports.
