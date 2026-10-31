@@ -254,6 +254,17 @@ AI-BloodTest-Report-Analyzer/
 
 ---
 
+## ❓ Troubleshooting & FAQs
+
+- **Q: TesseractNotFoundError when uploading PDF?**
+  - *A:* Ensure Tesseract OCR binary is installed and present in your system PATH (or configure `pytesseract.pytesseract.tesseract_cmd`).
+- **Q: wkhtmltopdf missing when exporting PDF?**
+  - *A:* Install `wkhtmltopdf` package on your host OS or deploy via Docker where all binary binaries are pre-installed.
+- **Q: Database connection refused?**
+  - *A:* Verify PostgreSQL server is actively running on port 5432 and credentials match your `.env` configuration.
+
+---
+
 ## 🏁 How to Run Locally
 
 ### Prerequisites
