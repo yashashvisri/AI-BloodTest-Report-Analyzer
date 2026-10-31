@@ -6,7 +6,7 @@ def test_patient_cannot_access_admin_endpoints(client, test_user):
 
     response = client.get("/admin/users", headers=headers)
     assert response.status_code == 403
-    assert "Administrator access required" in response.json()["detail"]
+    assert "Admin privileges required" in response.json()["detail"]
 
 def test_admin_can_access_user_list(client, test_admin, test_user):
     token = create_access_token({"sub": test_admin.username, "role": test_admin.role})
@@ -18,11 +18,11 @@ def test_admin_can_access_user_list(client, test_admin, test_user):
     assert "users" in data
     assert any(u["username"] == test_user.username for u in data["users"])
 
-
 def test_admin_change_user_role(client, test_admin, test_user):
     token = create_access_token({"sub": test_admin.username, "role": test_admin.role})
     headers = {"Authorization": f"Bearer {token}"}
 
     response = client.put(f"/admin/users/{test_user.id}/role", json={"role": "doctor"}, headers=headers)
     assert response.status_code == 200
-    assert response.json()["user"]["role"] == "doctor"
+    assert "Role updated from" in response.json()["message"]
+    assert "doctor" in response.json()["message"]

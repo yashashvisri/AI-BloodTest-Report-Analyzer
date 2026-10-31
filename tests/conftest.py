@@ -5,7 +5,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.main import app
-from app.database.database import Base, get_db
+from app.database.base import Base
+from app.database.database import get_db
 from app.api.auth import get_password_hash
 from app.database.models import User
 

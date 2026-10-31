@@ -1,9 +1,6 @@
 from app.api.auth import verify_password, get_password_hash, create_access_token
+from app.auth_utils import SECRET_KEY, ALGORITHM
 from jose import jwt
-import os
-
-SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-here-for-development-change-in-production")
-ALGORITHM = "HS256"
 
 def test_password_hashing():
     pwd = "SecretPassword123"
