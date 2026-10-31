@@ -43,3 +43,52 @@ def client(db_session):
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def test_user(db_session):
+    """Seed a standard patient user."""
+    user = User(
+        username="testpatient",
+        name="Test Patient",
+        email="patient@example.com",
+        hashed_password=get_password_hash("password123"),
+        role="patient",
+        is_active="active"
+    )
+    db_session.add(user)
+    db_session.commit()
+    db_session.refresh(user)
+    return user
+
+@pytest.fixture
+def test_doctor(db_session):
+    """Seed a clinic doctor user."""
+    doctor = User(
+        username="testdoctor",
+        name="Dr. Smith",
+        email="doctor@example.com",
+        hashed_password=get_password_hash("doctor123"),
+        role="doctor",
+        is_active="active"
+    )
+    db_session.add(doctor)
+    db_session.commit()
+    db_session.refresh(doctor)
+    return doctor
+
+@pytest.fixture
+def test_admin(db_session):
+    """Seed an administrator user."""
+    admin = User(
+        username="testadmin",
+        name="Admin User",
+        email="admin@example.com",
+        hashed_password=get_password_hash("admin123"),
+        role="admin",
+        is_active="active"
+    )
+    db_session.add(admin)
+    db_session.commit()
+    db_session.refresh(admin)
+    return admin
