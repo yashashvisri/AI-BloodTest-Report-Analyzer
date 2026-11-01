@@ -36,3 +36,16 @@ def test_change_password_wrong_current(client, test_user):
     response = client.put("/users/me/password", json=payload, headers=headers)
     assert response.status_code == 400
     assert "Incorrect current password" in response.json()["detail"]
+from app.api.auth import create_access_token
+
+def test_delete_user_account_cascades(client, test_user, test_report):
+    token = create_access_token({"sub": test_user.username, "role": test_user.role})
+    headers = {"Authorization": f"Bearer {token}"}
+
+    response = client.delete("/users/me", headers=headers)
+    assert response.status_code == 200
+    assert "Account deleted successfully" in response.json()["message"]
+
+    # Verify login no longer works
+    login_resp = client.post("/auth/login", data={"username": test_user.username, "password": "password123"})
+    assert login_resp.status_code == 401
