@@ -46,3 +46,33 @@ def test_get_nonexistent_report_404(client, test_user):
 
     response = client.get("/reports/99999", headers=headers)
     assert response.status_code == 404
+
+
+def test_doctor_can_access_patient_reports(client, test_doctor, test_report):
+    token = create_access_token({"sub": test_doctor.username, "role": test_doctor.role})
+    headers = {"Authorization": f"Bearer {token}"}
+
+    response = client.get(f"/reports/{test_report.id}", headers=headers)
+    assert response.status_code == 200
+    assert response.json()["patient_name"] == test_report.patient_name
+
+def test_patient_cannot_access_other_patient_report(client, db_session, test_report):
+    from app.database.models import User
+    from app.api.auth import get_password_hash
+
+    other_user = User(
+        username="otherpatient",
+        name="Other",
+        email="other@example.com",
+        hashed_password=get_password_hash("pass123"),
+        role="patient",
+        is_active="active"
+    )
+    db_session.add(other_user)
+    db_session.commit()
+
+    token = create_access_token({"sub": other_user.username, "role": other_user.role})
+    headers = {"Authorization": f"Bearer {token}"}
+
+    response = client.get(f"/reports/{test_report.id}", headers=headers)
+    assert response.status_code == 404
