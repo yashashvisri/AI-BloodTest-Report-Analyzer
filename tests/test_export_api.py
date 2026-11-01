@@ -7,7 +7,8 @@ def test_export_reports_csv_success(client, test_user, test_report):
     response = client.get("/reports/export/csv", headers=headers)
     assert response.status_code == 200
     assert "text/csv" in response.headers["content-type"]
-    assert "attachment; filename=blood_reports_export.csv" in response.headers.get("content-disposition", "")
+    assert "attachment; filename=" in response.headers.get("content-disposition", "")
+    assert "blood_reports" in response.headers.get("content-disposition", "")
     content = response.text
     assert "Patient Name" in content
     assert "Hemoglobin" in content

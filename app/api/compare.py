@@ -38,11 +38,11 @@ def compare_reports(
     # Fetch both reports
     report_a = db.query(BloodReport).filter(
         BloodReport.id == report_id_a,
-        or_(BloodReport.user_id == current_user.id, current_user.role.in_(["doctor", "admin"]))
+        or_(BloodReport.user_id == current_user.id, current_user.role in ["doctor", "admin"])
     ).first()
     report_b = db.query(BloodReport).filter(
         BloodReport.id == report_id_b,
-        or_(BloodReport.user_id == current_user.id, current_user.role.in_(["doctor", "admin"]))
+        or_(BloodReport.user_id == current_user.id, current_user.role in ["doctor", "admin"])
     ).first()
 
     if not report_a or not report_b:

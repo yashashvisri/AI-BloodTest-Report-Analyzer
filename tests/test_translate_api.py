@@ -7,10 +7,10 @@ def test_translate_summary_mocked(client, test_user, test_report):
 
     mock_translation = "सभी पैरामीटर सामान्य सीमाओं के भीतर हैं।"
 
-    with patch("app.ai.gemini_service.translate_text", return_value=mock_translation):
-        payload = {"target_language": "hi"}
+    with patch("app.api.translate.translate_summary", return_value=mock_translation):
+        payload = {"language": "hi"}
         response = client.post(f"/reports/{test_report.id}/translate", json=payload, headers=headers)
         assert response.status_code == 200
         data = response.json()
-        assert "translated_text" in data
-        assert "सामान्य" in data["translated_text"]
+        assert "translated_summary" in data
+        assert "सामान्य" in data["translated_summary"]

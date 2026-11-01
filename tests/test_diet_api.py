@@ -7,7 +7,7 @@ def test_get_diet_plan_mocked(client, test_user, test_report):
 
     mock_diet_response = "### 7-Day Nutrition Plan\n- **Breakfast**: Oatmeal with blueberries\n- **Lunch**: Grilled chicken salad"
 
-    with patch("app.ai.gemini_service.generate_diet_plan", return_value=mock_diet_response):
+    with patch("app.api.diet.generate_diet_plan", return_value=mock_diet_response):
         response = client.get(f"/reports/{test_report.id}/diet-plan", headers=headers)
         assert response.status_code == 200
         data = response.json()

@@ -16,7 +16,7 @@ class TranslateRequest(BaseModel):
     language: str
 
 @router.post("/{report_id}/translate")
-def translate_endpoint(report_id: int, request: TranslateRequest, db: Session = Depends(get_db)):
+def translate_endpoint(report_id: int, request: TranslateRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     analysis = db.query(ReportAnalysis).join(BloodReport, ReportAnalysis.report_id == BloodReport.id).filter(ReportAnalysis.report_id == report_id, or_(BloodReport.user_id == current_user.id, current_user.role == 'doctor')).first()
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found for this report.")

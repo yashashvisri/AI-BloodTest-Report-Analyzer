@@ -9,6 +9,8 @@ from app.database.base import Base
 from app.database.database import get_db
 from app.api.auth import get_password_hash
 from app.database.models import User
+from app.database.report_models import BloodReport
+from app.database.analysis_models import ReportAnalysis
 
 # In-memory SQLite for isolated, fast testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
@@ -62,6 +64,7 @@ def test_user(db_session):
     db_session.refresh(user)
     return user
 
+
 @pytest.fixture
 def test_doctor(db_session):
     """Seed a clinic doctor user."""
@@ -77,6 +80,7 @@ def test_doctor(db_session):
     db_session.commit()
     db_session.refresh(doctor)
     return doctor
+
 
 @pytest.fixture
 def test_admin(db_session):
@@ -95,9 +99,6 @@ def test_admin(db_session):
     return admin
 
 
-from app.database.report_models import BloodReport
-from app.database.analysis_models import ReportAnalysis
-
 @pytest.fixture
 def test_report(db_session, test_user):
     """Seed a sample blood report belonging to test_user."""
@@ -113,6 +114,8 @@ def test_report(db_session, test_user):
 
     analysis = ReportAnalysis(
         report_id=report.id,
+        ocr_text="Hemoglobin 14.5 g/dL WBC 7500 /cumm Platelets 250000",
+        parameters={"hemoglobin": 14.5, "wbc": 7500.0, "platelets": 250000.0},
         analysis={
             "Hemoglobin": {"value": "14.5 g/dL", "status": "normal", "reference_range": "13.0 - 17.0"},
             "WBC": {"value": "7500 /cumm", "status": "normal", "reference_range": "4000 - 11000"},
@@ -124,6 +127,7 @@ def test_report(db_session, test_user):
     db_session.commit()
     db_session.refresh(analysis)
     return report
+
 
 @pytest.fixture
 def test_second_report(db_session, test_user):
@@ -140,6 +144,8 @@ def test_second_report(db_session, test_user):
 
     analysis = ReportAnalysis(
         report_id=report.id,
+        ocr_text="Hemoglobin 11.2 g/dL WBC 7200 /cumm Platelets 240000",
+        parameters={"hemoglobin": 11.2, "wbc": 7200.0, "platelets": 240000.0},
         analysis={
             "Hemoglobin": {"value": "11.2 g/dL", "status": "low", "reference_range": "13.0 - 17.0"},
             "WBC": {"value": "7200 /cumm", "status": "normal", "reference_range": "4000 - 11000"},
