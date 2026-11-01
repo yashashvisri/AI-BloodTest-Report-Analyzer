@@ -93,3 +93,61 @@ def test_admin(db_session):
     db_session.commit()
     db_session.refresh(admin)
     return admin
+
+
+from app.database.report_models import BloodReport
+from app.database.analysis_models import ReportAnalysis
+
+@pytest.fixture
+def test_report(db_session, test_user):
+    """Seed a sample blood report belonging to test_user."""
+    report = BloodReport(
+        patient_name="John Doe",
+        user_id=test_user.id,
+        original_filename="sample_report.pdf",
+        stored_filename="stored_sample.pdf"
+    )
+    db_session.add(report)
+    db_session.commit()
+    db_session.refresh(report)
+
+    analysis = ReportAnalysis(
+        report_id=report.id,
+        analysis={
+            "Hemoglobin": {"value": "14.5 g/dL", "status": "normal", "reference_range": "13.0 - 17.0"},
+            "WBC": {"value": "7500 /cumm", "status": "normal", "reference_range": "4000 - 11000"},
+            "Platelets": {"value": "250000", "status": "normal", "reference_range": "150000 - 450000"}
+        },
+        ai_summary="All parameters are within normal physiological limits."
+    )
+    db_session.add(analysis)
+    db_session.commit()
+    db_session.refresh(analysis)
+    return report
+
+@pytest.fixture
+def test_second_report(db_session, test_user):
+    """Seed a second report for the same patient to enable comparison and trends."""
+    report = BloodReport(
+        patient_name="John Doe",
+        user_id=test_user.id,
+        original_filename="followup_report.pdf",
+        stored_filename="stored_followup.pdf"
+    )
+    db_session.add(report)
+    db_session.commit()
+    db_session.refresh(report)
+
+    analysis = ReportAnalysis(
+        report_id=report.id,
+        analysis={
+            "Hemoglobin": {"value": "11.2 g/dL", "status": "low", "reference_range": "13.0 - 17.0"},
+            "WBC": {"value": "7200 /cumm", "status": "normal", "reference_range": "4000 - 11000"},
+            "Platelets": {"value": "240000", "status": "normal", "reference_range": "150000 - 450000"}
+        },
+        ai_summary="Mild anemia observed with reduced hemoglobin levels."
+    )
+    db_session.add(analysis)
+    db_session.commit()
+    db_session.refresh(analysis)
+    return report
