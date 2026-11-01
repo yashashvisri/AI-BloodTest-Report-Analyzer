@@ -76,3 +76,16 @@ def test_patient_cannot_access_other_patient_report(client, db_session, test_rep
 
     response = client.get(f"/reports/{test_report.id}", headers=headers)
     assert response.status_code == 404
+from app.api.auth import create_access_token
+
+def test_delete_report_success(client, test_user, test_report):
+    token = create_access_token({"sub": test_user.username, "role": test_user.role})
+    headers = {"Authorization": f"Bearer {token}"}
+
+    response = client.delete(f"/reports/{test_report.id}", headers=headers)
+    assert response.status_code == 200
+    assert "deleted successfully" in response.json()["message"].lower()
+
+    # Verify report is no longer accessible
+    verify_resp = client.get(f"/reports/{test_report.id}", headers=headers)
+    assert verify_resp.status_code == 404
