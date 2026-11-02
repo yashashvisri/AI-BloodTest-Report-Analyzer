@@ -228,6 +228,8 @@ AI-BloodTest-Report-Analyzer/
 | `GET` | `/reports/{id}` | Fetch detailed analysis for a specific report |
 | `GET` | `/reports/{id}/download` | Download complete medical report as PDF |
 | `GET` | `/reports/export/csv` | Export blood parameter records to CSV |
+| `GET` | `/reports/progress/{id}` | Real-time SSE analysis progress stream |
+| `GET` | `/reports/progress/{id}/status` | Fallback JSON polling progress endpoint |
 | `GET` | `/reports/compare/{id_a}/{id_b}` | Side-by-side parameter diff of two reports |
 | `DELETE` | `/reports/{id}` | Delete report, analysis, and stored PDF |
 
@@ -361,7 +363,7 @@ For enterprise or clinical SaaS environments:
 - [x] Side-by-Side Report Comparison & Diff Analysis
 - [x] Full Admin Panel for User & Role Management
 - [x] Docker & Docker Compose Containerization
-- [ ] Real-time WebSocket analysis progress indicators
+- [x] Real-time SSE analysis progress indicators (OCR ➔ Parser ➔ Gemini LLM ➔ Dashboard)
 - [ ] Critical parameter SMS / Push notifications
 
 ---
