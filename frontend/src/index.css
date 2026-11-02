@@ -178,3 +178,9 @@ table tbody tr:hover {
 
 nav { background-color: rgba(15, 23, 42, 0.85) !important; border-color: rgba(255, 255, 255, 0.06) !important; }
 footer { background-color: rgba(15, 23, 42, 0.9) !important; border-color: rgba(255, 255, 255, 0.06) !important; }
+
+@keyframes progress-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4)); }
+  50% { filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.8)); }
+}
+.progress-glow { animation: progress-glow 2s infinite ease-in-out; }
