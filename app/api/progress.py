@@ -34,3 +34,18 @@ async def get_report_progress_stream(
             "X-Accel-Buffering": "no"
         }
     )
+
+@router.get("/progress/{report_id}/status")
+def get_report_progress_status(report_id: int, db: Session = Depends(get_db)):
+    """Fallback JSON polling endpoint for clients with strict proxy SSE restrictions."""
+    report = db.query(BloodReport).filter(BloodReport.id == report_id).first()
+    if not report:
+        raise HTTPException(status_code=404, detail="Report not found")
+
+    status_data = progress_manager._progress.get(report_id, {
+        "report_id": report_id,
+        "step": "idle",
+        "progress": 0,
+        "message": "Ready"
+    })
+    return status_data
