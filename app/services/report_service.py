@@ -1,3 +1,4 @@
+from app.services.progress_manager import progress_manager
 from sqlalchemy.orm import Session
 
 from app.ocr.ocr_service import extract_text_from_pdf
@@ -58,6 +59,8 @@ def analyze_report(
     # OCR
     # ----------------------------------------
 
+    progress_manager.init_report(report_id)
+    progress_manager.update_step(report_id, "ocr", 25, "Extracting laboratory parameters via OCR...")
     extracted_text = extract_text_from_pdf(
         file_path
     )
@@ -66,6 +69,7 @@ def analyze_report(
     # Extract Blood Parameters
     # ----------------------------------------
 
+    progress_manager.update_step(report_id, "parsing", 50, "Normalizing biological units and metrics...")
     parameters = extract_blood_parameters(
         extracted_text
     )
@@ -82,6 +86,7 @@ def analyze_report(
     # Generate AI Summary
     # ----------------------------------------
 
+    progress_manager.update_step(report_id, "gemini_ai", 75, "Generating clinical AI summary with Google Gemini...")
     ai_summary = analyze_blood_report(
         analysis
     )
@@ -90,6 +95,7 @@ def analyze_report(
     # Save Analysis to Database
     # ----------------------------------------
 
+    progress_manager.update_step(report_id, "completed", 100, "Analysis complete! Rendering dashboard...")
     save_analysis(
         db=db,
         report_id=report_id,
