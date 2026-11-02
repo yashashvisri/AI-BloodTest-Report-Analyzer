@@ -15,6 +15,7 @@ from app.api.health_score import router as health_score_router
 from app.api.admin import router as admin_router
 from app.api.export import router as export_router
 from app.api.compare import router as compare_router
+from app.api.progress import router as progress_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -152,3 +153,9 @@ async def global_exception_handler(request: Request, exc: Exception):
     )# Configured global prefix and CORS
 
 
+
+app.include_router(
+    progress_router,
+    prefix="/reports",
+    tags=["Real-Time Progress"],
+)
