@@ -13,6 +13,8 @@ import HealthRiskScore from "../components/HealthRiskScore";
 import ReportChat from "../components/ReportChat";
 import Hero from "../components/Hero";
 import FeatureCards from "../components/FeatureCards";
+import AnalysisProgressBar from "../components/AnalysisProgressBar";
+import { useAnalysisProgress } from "../hooks/useAnalysisProgress";
 
 
 function Home() {
@@ -28,6 +30,7 @@ function Home() {
   const [analysisResult, setAnalysisResult] = useState(null);
 
   const fileInputRef = useRef(null);
+  const { progress, currentStep, statusMessage } = useAnalysisProgress(reportId, loading, () => {});
 
 
   // ==========================================================
@@ -314,6 +317,15 @@ function Home() {
               </div>
             )}
           </div>
+
+          {/* Real-time Analysis Progress */}
+          {loading && (
+            <AnalysisProgressBar
+              progress={progress}
+              currentStep={currentStep}
+              message={statusMessage}
+            />
+          )}
 
           {/* Upload / Analyze Button */}
           <div className="max-w-2xl mx-auto mt-10">
