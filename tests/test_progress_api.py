@@ -1,11 +1,18 @@
+from app.services.progress_manager import progress_manager
+
 def test_progress_stream_not_found(client):
     response = client.get("/reports/progress/99999")
     assert response.status_code == 404
 
 def test_progress_stream_success(client, test_report):
+    # Set progress to completed so stream closes immediately
+    progress_manager.init_report(test_report.id)
+    progress_manager.update_step(test_report.id, "completed", 100, "Done")
+
     response = client.get(f"/reports/progress/{test_report.id}")
     assert response.status_code == 200
     assert "text/event-stream" in response.headers["content-type"]
+    assert "completed" in response.text
 
 def test_progress_status_polling(client, test_report):
     response = client.get(f"/reports/progress/{test_report.id}/status")
