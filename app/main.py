@@ -16,6 +16,7 @@ from app.api.admin import router as admin_router
 from app.api.export import router as export_router
 from app.api.compare import router as compare_router
 from app.api.progress import router as progress_router
+from app.api.critical_alerts import router as critical_alerts_router
 
 os.makedirs("uploads", exist_ok=True)
 
@@ -158,4 +159,10 @@ app.include_router(
     progress_router,
     prefix="/reports",
     tags=["Real-Time Progress"],
+)
+
+app.include_router(
+    critical_alerts_router,
+    prefix="/reports",
+    tags=["Critical Alerts"],
 )
