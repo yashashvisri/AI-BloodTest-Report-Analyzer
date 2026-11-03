@@ -1,3 +1,4 @@
+from app.services.critical_rules import evaluate_critical_alerts
 from app.services.progress_manager import progress_manager
 from sqlalchemy.orm import Session
 
@@ -51,8 +52,8 @@ def analyze_report(
 
             "ai_summary": existing.ai_summary,
 
-            "cached": True
-
+            "cached": True,
+            "critical_alerts": evaluate_critical_alerts(existing.parameters)
         }
 
     # ----------------------------------------
@@ -121,6 +122,6 @@ def analyze_report(
 
         "ai_summary": ai_summary,
 
-        "cached": False
-
+        "cached": False,
+        "critical_alerts": evaluate_critical_alerts(parameters)
     }
