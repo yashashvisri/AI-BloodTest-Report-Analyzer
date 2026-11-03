@@ -243,6 +243,7 @@ AI-BloodTest-Report-Analyzer/
 ### AI Analysis & Health Features
 | Method | Endpoint | Description |
 |---|---|---|
+| `GET` | `/reports/{id}/critical-alerts` | Retrieve emergency clinical panic values & alerts |
 | `GET` | `/reports/{id}/risk-score` | Calculate AI health risk score (0-100) & risk factors |
 | `GET` | `/reports/{id}/diet-plan` | Generate personalized nutritional plan |
 | `GET` | `/diet/{id}/download` | Download personalized diet plan as PDF |
