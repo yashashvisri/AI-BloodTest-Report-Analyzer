@@ -10,6 +10,7 @@ import DietPlan from "../components/DietPlan";
 import ReportChat from "../components/ReportChat";
 import TrendGraph from "../components/TrendGraph";
 import HealthRiskScore from "../components/HealthRiskScore";
+import CriticalAlertBanner from "../components/CriticalAlertBanner";
 
 
 function ReportDetails() {

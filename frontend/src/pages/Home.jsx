@@ -13,6 +13,7 @@ import HealthRiskScore from "../components/HealthRiskScore";
 import ReportChat from "../components/ReportChat";
 import Hero from "../components/Hero";
 import FeatureCards from "../components/FeatureCards";
+import CriticalAlertBanner from "../components/CriticalAlertBanner";
 import AnalysisProgressBar from "../components/AnalysisProgressBar";
 import { useAnalysisProgress } from "../hooks/useAnalysisProgress";
 
