@@ -2,6 +2,7 @@
 
 An advanced, full-stack, AI-powered Blood Test Report Analysis System built with **FastAPI, React, PostgreSQL, OCR, RAG, and Large Language Models (Google Gemini)**.
 
+[![CI/CD Pipeline](https://github.com/yashashvisri/AI-BloodTest-Report-Analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/yashashvisri/AI-BloodTest-Report-Analyzer/actions)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://python.org)
 [![React 19](https://img.shields.io/badge/React-19-61DAFB.svg)](https://react.dev)
