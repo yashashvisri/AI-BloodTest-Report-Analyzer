@@ -66,6 +66,12 @@ This system automates blood test report analysis to empower both patients and he
 - **✨ Animated Visual Elements** — Floating particle orbs, smooth gradient transitions, and responsive hover-lift cards.
 - **🌓 Dynamic Theme Toggle** — Seamlessly switch between light and dark modes with persistent local storage.
 
+
+### 🚨 Clinical Emergency Safety System
+- **⚠️ Panic Value Detection Engine** — Evaluates incoming biomarkers against emergency laboratory thresholds (e.g., Hemoglobin < 7.0 g/dL, Platelets < 30,000 /cumm, Blood Sugar > 350 mg/dL).
+- **🔴 Pulsing Emergency Banners** — Renders high-visibility amber/red clinical advisory banners with condition summaries and suggested physician escalation directives.
+- **🛡️ Medical Action Directives** — Contextual clinical guidance reminding patients of critical lab deviations prior to routine consultation.
+
 ### 🔐 Authentication, Privacy & Clinical Security
 - **🔒 Zero-Leakage Data Isolation** — All report queries strictly filter by authenticated `user_id`, guaranteeing cross-tenant patient privacy.
 - **🛡️ Secure File Sanitation** — Uploaded filenames and MIME types undergo strict server-side validation to prevent path traversal and execution exploits.
