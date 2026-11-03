@@ -24,7 +24,7 @@ os.makedirs("uploads", exist_ok=True)
 app = FastAPI(
     title="AI Blood Test Report Analyzer",
     description="AI-powered blood test report analysis API",
-    version="1.0.0",
+    version="1.0.0" # Production Release,
 )
 
 
