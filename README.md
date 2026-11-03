@@ -372,7 +372,8 @@ For enterprise or clinical SaaS environments:
 - [x] Full Admin Panel for User & Role Management
 - [x] Docker & Docker Compose Containerization
 - [x] Real-time SSE analysis progress indicators (OCR ➔ Parser ➔ Gemini LLM ➔ Dashboard)
-- [ ] Critical parameter SMS / Push notifications
+- [x] Critical biomarker panic alert engine & emergency clinical banners
+- [x] Automated GitHub Actions CI/CD pipeline (Pytest + Vite Build)
 
 ---
 
