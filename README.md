@@ -159,6 +159,42 @@ This system automates blood test report analysis to empower both patients and he
 ```
 AI-BloodTest-Report-Analyzer/
 │
+## 🗄️ Database Schema & Entities
+
+```mermaid
+erDiagram
+    USERS ||--o{ BLOOD_REPORTS : owns
+    BLOOD_REPORTS ||--o| REPORT_ANALYSIS : contains
+    USERS {
+        int id PK
+        string username UK
+        string email UK
+        string hashed_password
+        string role "patient | doctor | admin"
+        string is_active "active | suspended | banned"
+        datetime created_at
+    }
+    BLOOD_REPORTS {
+        int id PK
+        int user_id FK
+        string patient_name
+        string original_filename
+        string stored_filename
+        datetime uploaded_at
+    }
+    REPORT_ANALYSIS {
+        int id PK
+        int report_id FK
+        text ocr_text
+        json parameters
+        json analysis
+        text ai_summary
+        datetime created_at
+    }
+```
+
+---
+
 ├── app/
 │   ├── ai/                    # Gemini AI integration (Diet, Chat, Translate, Risk Score)
 │   ├── api/
