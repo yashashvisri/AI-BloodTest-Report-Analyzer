@@ -63,6 +63,11 @@ This system automates blood test report analysis to empower both patients and he
 - **⚡ Cached Analysis** — Analyses are securely persisted in PostgreSQL to prevent duplicate API processing and provide instant loading.
 - **📊 Analysis PDF & CSV Export** — Export comprehensive analysis reports as formatted PDFs or raw tabular CSV spreadsheets.
 
+### ⚡ Real-Time Streaming & Observability
+- **📡 Server-Sent Events (SSE)** — Real-time event streaming pipeline (`/reports/progress/{id}`) reporting live progression through OCR, parameter mapping, Gemini LLM reasoning, and dashboard preparation.
+- **🔄 Resilient Fallback Polling** — Provides JSON status polling (`/reports/progress/{id}/status`) for networks with strict proxy buffering.
+- **✨ Milestone Progress UI** — Live animated progress bar with milestone badges and glowing progress tracks on the dashboard.
+
 ### 🎨 Modern Dark Glassmorphism UI
 - **🌌 Ambient Dark Theme** — Deep navy aesthetic (`#0a0f1c`) paired with frosted glass panels (`backdrop-filter: blur(16px)`).
 - **✨ Animated Visual Elements** — Floating particle orbs, smooth gradient transitions, and responsive hover-lift cards.
