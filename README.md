@@ -129,7 +129,9 @@ This system automates blood test report analysis to empower both patients and he
 ### Frontend
 | Technology | Purpose |
 |---|---|
-| React 19 & Vite | SPA framework & high-speed development bundle |
+| React 19 & Vite | Modern Single-Page Application bundle with zero-config Fast Refresh |
+| Context API | Modular state management (`AuthContext`, `ThemeContext`) |
+| Custom Hooks | Encapsulated business logic (`useAnalysisProgress`) |
 | Tailwind CSS v4 | Custom utility-first styling & glassmorphic dark theme |
 | Recharts | Interactive trend charts and analytical graphs |
 | React Router v6 | Client-side routing and protected paths |
