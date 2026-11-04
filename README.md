@@ -316,6 +316,14 @@ erDiagram
 
 ---
 
+## 🔒 Security, HIPAA & Data Governance
+- **Cross-Tenant Isolation**: Enforced at the SQLAlchemy ORM layer with strict `user_id` filtering on all non-administrative queries.
+- **Cryptographic Storage**: User passwords hashed using industry-standard salted bcrypt algorithms with adaptive work factors.
+- **Stateless Tokens**: HS256-signed JSON Web Tokens with configurable expiration windows (`ACCESS_TOKEN_EXPIRE_MINUTES`).
+- **MIME & File Verification**: Uploaded binary validation ensuring only valid PDF structures pass to Tesseract OCR ingestion.
+
+---
+
 ## ❓ Troubleshooting & FAQs
 
 - **Q: TesseractNotFoundError when uploading PDF?**
