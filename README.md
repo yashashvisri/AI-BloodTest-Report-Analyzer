@@ -332,6 +332,8 @@ erDiagram
   - *A:* Install `wkhtmltopdf` package on your host OS or deploy via Docker where all binary binaries are pre-installed.
 - **Q: Database connection refused?**
   - *A:* Verify PostgreSQL server is actively running on port 5432 and credentials match your `.env` configuration.
+- **Q: EventSource / SSE connection issues?**
+  - *A:* Verify your reverse proxy (Nginx) has `proxy_buffering off` and `X-Accel-Buffering: no` enabled for `/reports/progress` endpoints.
 
 ---
 
