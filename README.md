@@ -385,7 +385,17 @@ npm install
 npm run dev
 ```
 
-### 3. Docker Deployment (Alternative)
+### 3. Running Automated Tests
+Execute the complete 50-test regression suite:
+```bash
+# Run all unit and integration tests
+pytest tests/ -v
+
+# Run with coverage report
+pytest tests/ --cov=app --disable-warnings
+```
+
+### 4. Docker Deployment (Alternative)
 ```bash
 docker-compose up --build
 ```
