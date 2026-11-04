@@ -468,6 +468,14 @@ Contributions are welcome! Please follow these standards:
 
 ---
 
+## 🏷️ Release Notes (v1.0.0 Production Release)
+- **Diagnostic Pipeline**: Full PDF OCR text extraction + Gemini LLM medical reasoning.
+- **Real-Time Streaming**: Server-Sent Events (SSE) tracking live analysis progression milestones.
+- **Clinical Panic Safeguards**: Emergency alert banner triggered by dangerous lab values.
+- **Quality Assurance**: Complete 50-test Pytest automated regression suite with automated GitHub Actions CI/CD.
+
+---
+
 ## 👨‍💻 Author
 
 **Yashashvi Srivastava**
