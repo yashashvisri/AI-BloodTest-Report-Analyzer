@@ -51,6 +51,13 @@ This system automates blood test report analysis to empower both patients and he
 
 ### 🔬 Core AI Analysis & Diagnostics
 - **🧪 Supported Biomarker Panels** — Comprehensive parsing support across Complete Blood Count (CBC), Comprehensive Metabolic Panel (CMP), Lipid Panels (HDL/LDL/Triglycerides), Thyroid Function (TSH, T3, T4), Vitamin Deficiencies (Vit D, B12), and Renal/Liver Function Tests.
+
+| Biomarker | Standard Reference Range | Panic Low Threshold | Panic High Threshold |
+|---|---|---|---|
+| **Hemoglobin** | 13.0 – 17.0 g/dL | < 7.0 g/dL (Severe Anemia) | > 20.0 g/dL (Polycythemia) |
+| **Platelets** | 150,000 – 450,000 /cumm | < 30,000 /cumm (Hemorrhage) | > 1,000,000 /cumm (Thrombosis) |
+| **WBC** | 4,000 – 11,000 /cumm | < 2,000 /cumm (Leukopenia) | > 30,000 /cumm (Leukocytosis) |
+| **Blood Sugar** | 70 – 140 mg/dL | < 50 mg/dL (Hypoglycemia) | > 350 mg/dL (Hyperglycemia) |
 - **📄 Automated PDF OCR** — Extracts raw medical data directly from scanned blood test reports using Tesseract OCR.
 - **🤖 AI Medical Summary (Gemini)** — Identifies abnormal parameters and explains their clinical significance in plain, patient-friendly language.
 - **🛡️ AI Health Risk Score** — Generates a 0–100 composite health risk assessment with color-coded animated SVG gauges and categorical risk evaluations (Cardiovascular, Metabolic, Hematologic, Hepatic/Renal). The scoring engine weighs parameter deviations from reference bounds against clinical severity markers to generate positive factors and actionable warnings.
