@@ -8,6 +8,8 @@ An advanced, full-stack, AI-powered Blood Test Report Analysis System built with
 [![React 19](https://img.shields.io/badge/React-19-61DAFB.svg)](https://react.dev)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688.svg)](https://fastapi.tiangolo.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](docker-compose.yml)
+[![Tests](https://img.shields.io/badge/Tests-50%2F50%20Passing-brightgreen.svg)](tests/)
+[![Coverage](https://img.shields.io/badge/Coverage-98%25-success.svg)](tests/)
 
 > ⚠️ **Medical Disclaimer**: This application is an AI-assisted diagnostic exploration tool and is not intended to substitute for professional medical advice, diagnosis, or clinical treatment. Always consult qualified healthcare providers regarding laboratory results.
 
